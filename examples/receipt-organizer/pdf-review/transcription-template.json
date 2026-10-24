@@ -1,0 +1,16 @@
+{
+  "source": "simulated-receipt.pdf",
+  "simulation": true,
+  "receipts": [
+    {
+      "id": "R1",
+      "date": null,
+      "vendor": null,
+      "items": null,
+      "amount": null,
+      "currency": null,
+      "category": null,
+      "evidence": "待人工確認：simulated-receipt.pdf，請補頁碼／區域與辨識原文"
+    }
+  ]
+}

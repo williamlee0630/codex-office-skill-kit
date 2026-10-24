@@ -1,0 +1,33 @@
+{
+  "structure_passed": true,
+  "visual_review_completed": false,
+  "slide_count": 4,
+  "checks": [
+    {
+      "slide": 1,
+      "shape_count": 4,
+      "out_of_bounds_shapes": [],
+      "has_speaker_notes": true
+    },
+    {
+      "slide": 2,
+      "shape_count": 4,
+      "out_of_bounds_shapes": [],
+      "has_speaker_notes": true
+    },
+    {
+      "slide": 3,
+      "shape_count": 4,
+      "out_of_bounds_shapes": [],
+      "has_speaker_notes": true
+    },
+    {
+      "slide": 4,
+      "shape_count": 4,
+      "out_of_bounds_shapes": [],
+      "has_speaker_notes": true
+    }
+  ],
+  "text_rule": "32pt 頁標、24pt 內文；每點最多84寬度單位、每頁最多260單位／5點，另以保守斷行與段距預算限制預估高度260pt。",
+  "remaining_review": "需要 PowerPoint 或可用渲染工具檢查實際字型替代、斷行與文字溢出。"
+}

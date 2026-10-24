@@ -1,0 +1,62 @@
+{
+  "mode": "offline",
+  "network_used": false,
+  "question": "24人部門訓練應優先確認哪個方案？",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "模擬甲方案",
+      "path": "examples/research-assistant/sources/plan-a.md",
+      "published_at": "2026-10-01",
+      "kind": "模擬供應方方案",
+      "quality": "供應方自述，無獨立成效證據",
+      "sha256": "63a02cb8d6699dcdf932b918193bc6e29e938c26d00d29143002d3bc2ebf7056",
+      "freshness": "一年內資料，仍需依主題核對時效"
+    },
+    {
+      "id": "S2",
+      "title": "模擬乙方案",
+      "path": "examples/research-assistant/sources/plan-b.md",
+      "published_at": "2025-08-15",
+      "kind": "模擬供應方舊方案",
+      "quality": "2025年資料，需更新報價及名額",
+      "sha256": "79c1b477a4c4a40be4a5840ac6970639e9bb64bd2227a163ab3c632cd20320c1",
+      "freshness": "超過一年，需核對是否仍適用"
+    }
+  ],
+  "claims": [
+    {
+      "text": "甲方案有24個名額並含一次諮詢。",
+      "kind": "fact",
+      "source_ids": [
+        "S1"
+      ],
+      "excerpts": {
+        "S1": "甲方案提供24個名額，每人費用1200元，包含一次課後諮詢。"
+      }
+    },
+    {
+      "text": "乙方案既有資料最多20名且不含諮詢。",
+      "kind": "fact",
+      "source_ids": [
+        "S2"
+      ],
+      "excerpts": {
+        "S2": "乙方案每人費用950元，不包含課後諮詢。\n最多可提供20個名額。"
+      }
+    },
+    {
+      "text": "可優先向甲確認正式含稅報價與服務條款。",
+      "kind": "recommendation",
+      "source_ids": [
+        "S1",
+        "S2"
+      ]
+    }
+  ],
+  "gaps": [
+    "正式含稅報價、可授課日期與取消條款。",
+    "甲諮詢時數及乙擴增至24人的可能性。",
+    "缺少學習成效與口碑的獨立證據。"
+  ]
+}

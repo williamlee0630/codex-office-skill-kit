@@ -1,0 +1,4 @@
+interface:
+  display_name: "智慧週報生成器"
+  short_description: "將工作日誌整理為雙版本週報，以 STAR 呈現成果並保留未知數字"
+  default_prompt: "請用 $weekly-report 將本週工作紀錄整理成精簡版與詳細版 Word 週報，不補造績效。"

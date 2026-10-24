@@ -1,0 +1,124 @@
+{
+  "source": "examples/data-analyst/sales.csv",
+  "source_sheet": null,
+  "row_count": 6,
+  "columns": {
+    "date": {
+      "type": "date",
+      "missing_count": 0,
+      "nonempty_count": 6,
+      "invalid_count": 0,
+      "min_date": "2026-10-01",
+      "max_date": "2026-10-06"
+    },
+    "category": {
+      "type": "text",
+      "missing_count": 0,
+      "nonempty_count": 6,
+      "distinct_count": 2,
+      "invalid_count": 0
+    },
+    "amount": {
+      "type": "number",
+      "missing_count": 0,
+      "nonempty_count": 6,
+      "count": 6,
+      "invalid_count": 0,
+      "invalid_rows": [],
+      "sum": 33900.0,
+      "mean": 5650.0,
+      "median": 1950.0,
+      "min": 1200.0,
+      "max": 25000.0,
+      "sample_stdev": 9487.834315585407,
+      "outlier_rows": [
+        7
+      ]
+    },
+    "units": {
+      "type": "number",
+      "missing_count": 0,
+      "nonempty_count": 6,
+      "count": 6,
+      "invalid_count": 0,
+      "invalid_rows": [],
+      "sum": 11.0,
+      "mean": 1.8333333333333333,
+      "median": 2.0,
+      "min": 1.0,
+      "max": 3.0,
+      "sample_stdev": 0.752772652709081,
+      "outlier_rows": []
+    },
+    "source": {
+      "type": "text",
+      "missing_count": 0,
+      "nonempty_count": 6,
+      "distinct_count": 6,
+      "invalid_count": 0
+    }
+  },
+  "duplicate_row_count": 0,
+  "groups": {
+    "模擬北區": {
+      "count": 3,
+      "sum": 4800.0,
+      "mean": 1600.0
+    },
+    "模擬南區": {
+      "count": 3,
+      "sum": 29100.0,
+      "mean": 9700.0
+    }
+  },
+  "trend": [
+    {
+      "date": "2026-10-01",
+      "count": 1,
+      "sum": 1200.0,
+      "mean": 1200.0
+    },
+    {
+      "date": "2026-10-02",
+      "count": 1,
+      "sum": 1800.0,
+      "mean": 1800.0
+    },
+    {
+      "date": "2026-10-03",
+      "count": 1,
+      "sum": 1500.0,
+      "mean": 1500.0
+    },
+    {
+      "date": "2026-10-04",
+      "count": 1,
+      "sum": 2300.0,
+      "mean": 2300.0
+    },
+    {
+      "date": "2026-10-05",
+      "count": 1,
+      "sum": 2100.0,
+      "mean": 2100.0
+    },
+    {
+      "date": "2026-10-06",
+      "count": 1,
+      "sum": 25000.0,
+      "mean": 25000.0
+    }
+  ],
+  "group_column": "category",
+  "value_column": "amount",
+  "date_column": "date",
+  "group_omitted_rows": [],
+  "trend_omitted_rows": [],
+  "method": "Python statistics；數值欄須至少 60% 非空值可轉為有限數值；IQR inclusive，至少四筆且 IQR > 0；空白列排除。",
+  "limitations": [
+    "靜態計算，修改資料後須重新執行。",
+    "缺漏不補零；異常列仍保留。",
+    "描述趨勢不代表因果關係。"
+  ],
+  "chart_note": "日期合計折線圖，顯示前 12 個日期，完整數值見 Excel。"
+}

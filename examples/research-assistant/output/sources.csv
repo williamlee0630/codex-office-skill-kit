@@ -1,0 +1,3 @@
+﻿來源ID,標題,日期,檔案,時效,SHA256
+S1,模擬甲方案,2026-10-01,examples/research-assistant/sources/plan-a.md,一年內資料，仍需依主題核對時效,63a02cb8d6699dcdf932b918193bc6e29e938c26d00d29143002d3bc2ebf7056
+S2,模擬乙方案,2025-08-15,examples/research-assistant/sources/plan-b.md,超過一年，需核對是否仍適用,79c1b477a4c4a40be4a5840ac6970639e9bb64bd2227a163ab3c632cd20320c1

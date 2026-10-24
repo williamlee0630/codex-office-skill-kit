@@ -1,0 +1,6 @@
+id,date,vendor,items,amount,currency,category,evidence
+R1,2026-10-01,SIMULATED CAFE,LUNCH,120.00,TWD,餐飲,模擬收據第1頁：TOTAL TWD 120.00
+R2,2026-10-01,SIMULATED CAFE,LUNCH,120.00,TWD,餐飲,模擬清單故意複製供疑似重複練習
+R3,2026-10-02,模擬文具店,影印紙,450.00,TWD,辦公用品,模擬清單第3筆：TWD 450.00
+R4,2026-10-03,模擬交通商店,車票,12.50,USD,交通,模擬清單第4筆：USD 12.50
+R5,,,字跡不清,,,,模擬清單第5筆未知欄位不猜測

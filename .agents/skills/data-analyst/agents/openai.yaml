@@ -1,0 +1,4 @@
+interface:
+  display_name: "Excel 資料分析助理"
+  short_description: "用 Python 分析表格缺漏、異常、分組與趨勢，產生圖表及 Excel 報告"
+  default_prompt: "使用 $data-analyst 分析我提供的 CSV 或 XLSX，保留來源與未知欄位，以真實計算產生圖表和 Excel，區分事實與推測。"

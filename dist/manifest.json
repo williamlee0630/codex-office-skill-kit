@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "date": "2026-10-24",
+  "scope": "complete-release",
+  "packages": [
+    {
+      "name": "practice-data-1.0.0.zip",
+      "bytes": 379789,
+      "file_count": 103,
+      "sha256": "20235cff5980c0885ea1fa7f71d301aac5a0f802ca797f6c3d4502c9e70a65a7"
+    },
+    {
+      "name": "office-skills-1.0.0.zip",
+      "bytes": 560087,
+      "file_count": 194,
+      "sha256": "4e2a51b6e422363bbbae3b4aec340fef76d2a44b549da49040c533485f15c1ac"
+    },
+    {
+      "name": "codex-office-skill-kit-1.0.0.zip",
+      "bytes": 1668122,
+      "file_count": 231,
+      "sha256": "818c97e4ebdfd9ee4d2ea16d525d9e7827a999437acc0f89e874faf4bafa4c52"
+    }
+  ]
+}

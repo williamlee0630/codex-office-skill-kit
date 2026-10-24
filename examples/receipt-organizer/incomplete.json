@@ -1,0 +1,5 @@
+{
+  "simulation": true,
+  "source": "模擬不完整收據資料，日期未知",
+  "receipts": [{"id": "R1", "date": null, "vendor": "模擬商店", "items": null, "amount": null, "currency": null, "category": null, "evidence": "模擬：只看得到店名，其他欄位字跡不清"}]
+}

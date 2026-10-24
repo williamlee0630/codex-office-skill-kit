@@ -1,0 +1,11 @@
+{
+  "simulation": true,
+  "source": "原創模擬收據轉錄，2026-10-01 至 2026-10-03；R1 對應 simulated-receipt.png/pdf，其餘為清單練習",
+  "receipts": [
+    {"id": "R1", "date": "2026-10-01", "vendor": "SIMULATED CAFE", "items": "LUNCH", "amount": "120.00", "currency": "TWD", "category": "餐飲", "evidence": "simulated-receipt.png 或 PDF 第1頁，DATE 2026-10-01 / LUNCH / TOTAL TWD 120.00"},
+    {"id": "R2", "date": "2026-10-01", "vendor": "SIMULATED CAFE", "items": "LUNCH", "amount": "120.00", "currency": "TWD", "category": "餐飲", "evidence": "模擬清單第2筆，故意複製 R1 供疑似重複演練，未確認是否同筆交易"},
+    {"id": "R3", "date": "2026-10-02", "vendor": "模擬文具店", "items": "影印紙", "amount": "450.00", "currency": "TWD", "category": "辦公用品", "evidence": "模擬清單第3筆：影印紙 TWD 450.00，無對應影像，不得假稱已核對影像"},
+    {"id": "R4", "date": "2026-10-03", "vendor": "模擬交通商店", "items": "車票", "amount": "12.50", "currency": "USD", "category": "交通", "evidence": "模擬清單第4筆：車票 USD 12.50，無對應影像"},
+    {"id": "R5", "date": null, "vendor": null, "items": "字跡不清", "amount": null, "currency": null, "category": null, "evidence": "模擬清單第5筆：資料不完整，不猜測金額與幣別"}
+  ]
+}

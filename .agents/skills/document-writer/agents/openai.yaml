@@ -1,0 +1,4 @@
+interface:
+  display_name: "商務文件撰寫助理"
+  short_description: "依有來源的事實撰寫或改寫商務文件，輸出正式與精簡 Word 版本"
+  default_prompt: "請用 $document-writer 依原始素材撰寫正式版與精簡版提案，保留事實與待確認事項。"

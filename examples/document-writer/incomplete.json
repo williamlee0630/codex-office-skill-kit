@@ -1,0 +1,32 @@
+{
+  "title": "模擬 不完整商務文件",
+  "purpose": null,
+  "audience": null,
+  "sources": [
+    {
+      "id": "s1",
+      "label": "模擬不完整素材",
+      "date": null
+    }
+  ],
+  "facts": [],
+  "versions": {
+    "formal": [
+      {
+        "heading": "待確認內容",
+        "text": "文件目的、讀者與原始事實尚待確認。",
+        "fact_ids": []
+      }
+    ],
+    "concise": [
+      {
+        "heading": "待補資料",
+        "text": "請補充文件目的與原始事實。",
+        "fact_ids": []
+      }
+    ]
+  },
+  "pending_questions": [
+    "文件類型與日期待確認。"
+  ]
+}

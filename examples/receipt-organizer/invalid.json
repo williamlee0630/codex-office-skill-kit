@@ -1,0 +1,5 @@
+{
+  "simulation": true,
+  "source": "模擬錯誤格式：非有限金額",
+  "receipts": [{"id": "R1", "date": "2026-10-01", "vendor": "模擬店", "items": "餐點", "amount": "NaN", "currency": "TWD", "category": "餐飲", "evidence": "模擬錯誤金額不能當成零"}]
+}

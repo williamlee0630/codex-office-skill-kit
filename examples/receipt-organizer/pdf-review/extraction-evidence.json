@@ -1,0 +1,24 @@
+{
+  "input_path": "examples/receipt-organizer/simulated-receipt.pdf",
+  "preserved_path": "examples/receipt-organizer/pdf-review/originals/simulated-receipt.pdf",
+  "sha256": "18ed14668d75da07f03554f777136da494aca0de8390988832577e694dba740e",
+  "status": "needs_review",
+  "simulation": true,
+  "ocr_performed": false,
+  "extraction_tools": {
+    "pypdf": true,
+    "Pillow": true,
+    "tesseract_path": null,
+    "pdftoppm_path": "pdftoppm.EXE",
+    "note": "有工具不代表已辨識；本腳本不自動執行 OCR。文字型 PDF 使用 pypdf 擷取。"
+  },
+  "extracted_text": "第 1 頁\nSIMULATED RECEIPT\nNOT VALID FOR CLAIMS\nSIMULATED CAFE\nDATE 2026-10-01\nLUNCH                 120.00\nTOTAL TWD 120.00\nORIGINAL TRAINING DATA\nNOT A REAL TRANSACTION\n",
+  "pages": [
+    {
+      "page": 1,
+      "text": "SIMULATED RECEIPT\nNOT VALID FOR CLAIMS\nSIMULATED CAFE\nDATE 2026-10-01\nLUNCH                 120.00\nTOTAL TWD 120.00\nORIGINAL TRAINING DATA\nNOT A REAL TRANSACTION\n"
+    }
+  ],
+  "image_info": null,
+  "instruction": "請由 Codex 可用的視覺工具或人工逐欄確認後填入 transcription-template.json。未辨識值保留 null，並註明頁碼／區域與原文證據。"
+}

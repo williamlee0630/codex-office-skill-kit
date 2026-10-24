@@ -1,0 +1,128 @@
+"""初學者入口的內容契約；不代替瀏覽器、Codex 觸發或 Office 人工驗收。"""
+import re
+import unittest
+from html.parser import HTMLParser
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+BOOK = ROOT / "handbook"
+SKILLS = ["email-assistant", "meeting-assistant", "project-tracker", "weekly-report",
+          "receipt-organizer", "presentation-maker", "document-writer", "data-analyst",
+          "idea-generator", "research-assistant"]
+
+
+class LearnerPage(HTMLParser):
+    """讀取預設展開內容與各可複製區塊，確認進階資訊確實可收合。"""
+    def __init__(self, source):
+        super().__init__()
+        self.details = []
+        self.visible = []
+        self.blocks = []
+        self.current = None
+        self.feed(source)
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "details":
+            self.details.append("open" not in attrs)
+        if tag == "pre":
+            self.current = {"text": "", "collapsed": any(self.details)}
+
+    def handle_endtag(self, tag):
+        if tag == "details":
+            self.details.pop()
+        if tag == "pre" and self.current is not None:
+            self.blocks.append(self.current)
+            self.current = None
+
+    def handle_data(self, data):
+        if not any(self.details):
+            self.visible.append(data)
+        if self.current is not None:
+            self.current["text"] += data
+
+
+def read(name):
+    return (BOOK / name).read_text(encoding="utf-8")
+
+
+class LearnerHandbookTests(unittest.TestCase):
+    def test_home_explains_course_review_and_three_downloads(self):
+        source = read("index.html")
+        for expected in ["開課方審閱版", "課程目標", "操作方式", "人工確認", "Python",
+                         "../dist/office-skills-1.0.0.zip",
+                         "../dist/practice-data-1.0.0.zip"]:
+            self.assertIn(expected, source)
+        for name in ["office-skills-1.0.0.zip", "practice-data-1.0.0.zip"]:
+            self.assertIn(f'href="../dist/{name}"', source)
+            self.assertTrue((ROOT / "dist" / name).is_file(), f"缺少可下載教材：{name}")
+        full_name = "codex-office-skill-kit-1.0.0.zip"
+        if (ROOT / "dist" / full_name).is_file():
+            # 原始網站仍須提供三份下載；不能用離線包說明替代完整包連結。
+            self.assertIn(f'href="../dist/{full_name}"', source)
+        else:
+            # 完整 ZIP 不包含自己，解壓版改為可用的 README 導覽。
+            self.assertNotIn(f"../dist/{full_name}", source)
+            self.assertIn('href="../README.md"', source)
+            self.assertIn("已解壓", source)
+            self.assertTrue((ROOT / "README.md").is_file())
+        self.assertNotIn("100%", source)
+
+    def test_first_chapter_starts_with_the_four_step_learner_path(self):
+        page = LearnerPage(read("chapter-01.html"))
+        visible = " ".join(page.visible)
+        previous = -1
+        for step in ["下載並解壓縮", "在 Codex 開啟專案", "貼上工作需求", "開啟並核對成果"]:
+            position = visible.find(step)
+            self.assertGreater(position, previous, step)
+            previous = position
+        self.assertIn("資訊同仁", visible)
+        self.assertIn("不需要先學 Python 或 JSON 語法", visible)
+        self.assertIn("格式套件", visible)
+
+    def test_manual_commands_stay_in_closed_maintainer_details(self):
+        for path in BOOK.glob("*.html"):
+            page = LearnerPage(path.read_text(encoding="utf-8"))
+            for block in page.blocks:
+                if re.search(r"(?m)^(?:python |py |\.\\.venv\\|---$|codex-office-skill-kit/)", block["text"]):
+                    with self.subTest(page=path.name, block=block["text"].splitlines()[0]):
+                        self.assertTrue(block["collapsed"], "手動命令與原始結構應預設收合")
+
+    def test_each_work_prompt_can_run_from_source_to_real_files(self):
+        for number, skill in enumerate(SKILLS, 2):
+            page = LearnerPage(read(f"chapter-{number:02}.html"))
+            prompts = [b["text"] for b in page.blocks
+                       if not b["collapsed"] and f"使用 ${skill}" in b["text"]
+                       and f"outputs/{skill}/" in b["text"]]
+            with self.subTest(skill=skill):
+                self.assertEqual(len(prompts), 1, "應有一份無需前置拼接的完整工作提示詞")
+                prompt = prompts[0]
+                for expected in [f"examples/{skill}", "原始", "requirements.txt", "自行", "scripts/run.py",
+                                 "實際", "產檔", "來源", "待確認", "不捏造"]:
+                    self.assertIn(expected, prompt)
+                if skill != "data-analyst":
+                    self.assertIn("結構資料", prompt)
+                    self.assertIn("不需要我撰寫 JSON", prompt)
+
+    def test_prompts_are_adjustable_with_factual_rules_retained(self):
+        for number in range(2, 12):
+            visible = " ".join(LearnerPage(read(f"chapter-{number:02}.html")).visible)
+            with self.subTest(chapter=number):
+                for expected in ["參考", "工作目標", "語氣", "格式", "資料來源", "不捏造"]:
+                    self.assertIn(expected, visible)
+                self.assertNotIn("僅修改資料路徑", visible)
+
+    def test_special_flows_match_the_existing_script_contracts(self):
+        receipt = read("chapter-06.html")
+        for expected in ["simulated-receipt.png", "transcription-template.json", "--simulation", "不做 OCR"]:
+            self.assertIn(expected, receipt)
+        research = read("chapter-11.html")
+        for expected in ["sources/plan-a.md", "sources/plan-b.md", "../../examples/research-assistant", "逐字"]:
+            self.assertIn(expected, research)
+        analysis = read("chapter-09.html")
+        self.assertIn("--group-by category --value amount --date-column date", analysis)
+
+
+if __name__ == "__main__":
+    unittest.main()

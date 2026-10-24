@@ -1,0 +1,131 @@
+{
+  "source": "原創模擬收據轉錄，2026-10-01 至 2026-10-03；R1 對應 simulated-receipt.png/pdf，其餘為清單練習",
+  "simulation": true,
+  "original": {
+    "input_path": "examples/receipt-organizer/receipts.json",
+    "preserved_path": "examples/receipt-organizer/output/originals/receipts.json",
+    "sha256": "807ac316038ef9786b6e020d9ab28025e502235eb9ed0bd623ee5459e2455aa8"
+  },
+  "extraction_tools": {
+    "pypdf": true,
+    "Pillow": true,
+    "tesseract_path": null,
+    "pdftoppm_path": "pdftoppm.EXE",
+    "note": "有工具不代表已辨識；本腳本不自動執行 OCR。文字型 PDF 使用 pypdf 擷取。"
+  },
+  "ocr_performed": false,
+  "receipts": [
+    {
+      "id": "R1",
+      "date": "2026-10-01",
+      "vendor": "SIMULATED CAFE",
+      "items": "LUNCH",
+      "amount": "120.00",
+      "currency": "TWD",
+      "category": "餐飲",
+      "evidence": "simulated-receipt.png 或 PDF 第1頁，DATE 2026-10-01 / LUNCH / TOTAL TWD 120.00",
+      "missing_fields": [],
+      "invalid_fields": [],
+      "duplicate_of": null,
+      "needs_review": false
+    },
+    {
+      "id": "R2",
+      "date": "2026-10-01",
+      "vendor": "SIMULATED CAFE",
+      "items": "LUNCH",
+      "amount": "120.00",
+      "currency": "TWD",
+      "category": "餐飲",
+      "evidence": "模擬清單第2筆，故意複製 R1 供疑似重複演練，未確認是否同筆交易",
+      "missing_fields": [],
+      "invalid_fields": [],
+      "duplicate_of": "R1",
+      "needs_review": true
+    },
+    {
+      "id": "R3",
+      "date": "2026-10-02",
+      "vendor": "模擬文具店",
+      "items": "影印紙",
+      "amount": "450.00",
+      "currency": "TWD",
+      "category": "辦公用品",
+      "evidence": "模擬清單第3筆：影印紙 TWD 450.00，無對應影像，不得假稱已核對影像",
+      "missing_fields": [],
+      "invalid_fields": [],
+      "duplicate_of": null,
+      "needs_review": false
+    },
+    {
+      "id": "R4",
+      "date": "2026-10-03",
+      "vendor": "模擬交通商店",
+      "items": "車票",
+      "amount": "12.50",
+      "currency": "USD",
+      "category": "交通",
+      "evidence": "模擬清單第4筆：車票 USD 12.50，無對應影像",
+      "missing_fields": [],
+      "invalid_fields": [],
+      "duplicate_of": null,
+      "needs_review": false
+    },
+    {
+      "id": "R5",
+      "date": null,
+      "vendor": null,
+      "items": "字跡不清",
+      "amount": null,
+      "currency": null,
+      "category": "待人工確認",
+      "evidence": "模擬清單第5筆：資料不完整，不猜測金額與幣別",
+      "missing_fields": [
+        "date",
+        "vendor",
+        "amount",
+        "currency",
+        "category"
+      ],
+      "invalid_fields": [],
+      "duplicate_of": null,
+      "needs_review": true
+    }
+  ],
+  "totals": {
+    "TWD": {
+      "all": "690.00",
+      "excluding_suspected_duplicates": "570.00",
+      "count": 3
+    },
+    "USD": {
+      "all": "12.50",
+      "excluding_suspected_duplicates": "12.50",
+      "count": 1
+    }
+  },
+  "category_totals": [
+    {
+      "currency": "TWD",
+      "category": "辦公用品",
+      "total_including_duplicates": "450.00"
+    },
+    {
+      "currency": "TWD",
+      "category": "餐飲",
+      "total_including_duplicates": "240.00"
+    },
+    {
+      "currency": "USD",
+      "category": "交通",
+      "total_including_duplicates": "12.50"
+    }
+  ],
+  "review_count": 2,
+  "limitations": [
+    "分類依輸入值，未提供類別即待人工確認。",
+    "不同幣別不混加、不換匯。",
+    "疑似重複均保留，未當作已確認的重複報帳。",
+    "靜態結果，更新來源後重新執行。"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "as_of": "2026-10-23",
+  "sent": false,
+  "messages": [
+    {
+      "id": 2,
+      "sender": "周示範 <operations@example.invalid>",
+      "subject": "提交教室設備清單",
+      "date": "2026-10-22T15:00:00+08:00",
+      "deadline": "2026-10-23",
+      "priority": "高",
+      "actions": [
+        "需執行"
+      ],
+      "priority_reason": "明確期限已到基準日或之前。",
+      "important": "請提供教室設備清單。期限：2026-10-23。",
+      "source": "source.md 郵件二",
+      "reply_points": [],
+      "missing": [],
+      "classification": "Codex/使用者提供分類"
+    },
+    {
+      "id": 1,
+      "sender": "林範例 <training@example.invalid>",
+      "subject": "年度課程報價確認",
+      "date": "2026-10-23T09:00:00+08:00",
+      "deadline": "2026-10-26",
+      "priority": "中",
+      "actions": [
+        "需回覆"
+      ],
+      "priority_reason": "未提供完整工作影響，暫列中優先，需覆核。",
+      "important": "回覆報價，尚未承諾購買。",
+      "source": "source.md 郵件一",
+      "reply_points": [
+        "名額與費用仍需內部核對。"
+      ],
+      "missing": [],
+      "classification": "Codex/使用者提供分類"
+    },
+    {
+      "id": 3,
+      "sender": "公告小組 <notice@example.invalid>",
+      "subject": "內部月刊",
+      "date": "2026-10-23T10:00:00+08:00",
+      "deadline": "待確認",
+      "priority": "低",
+      "actions": [
+        "僅供參考"
+      ],
+      "priority_reason": "明確標示僅供參考。",
+      "important": "僅供參考。本月內部月刊已發布，沒有要求回覆。",
+      "source": "source.md 郵件三",
+      "reply_points": [],
+      "missing": [
+        "deadline"
+      ],
+      "classification": "Codex/使用者提供分類"
+    }
+  ]
+}

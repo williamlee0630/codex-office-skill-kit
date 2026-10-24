@@ -158,7 +158,11 @@ class PublicationTests(unittest.TestCase):
             self.assertTrue((destination / '.nojekyll').exists())
             self.assertFalse((destination / 'handbook/build.py').exists())
             self.assertFalse((destination / 'tests').exists())
-            self.assertTrue((destination / '.agents/skills/demo-0/SKILL.md').exists())
+            # upload-pages-artifact 會排除點開頭目錄；網站另用公開別名，離線包維持原結構。
+            self.assertTrue((destination / 'skills/demo-0/SKILL.md').exists())
+            self.assertFalse((destination / '.agents').exists())
+            public_html = (destination / 'handbook/index.html').read_text(encoding='utf-8')
+            self.assertIn('href="../skills/demo-0/SKILL.md"', public_html)
             self.assertGreater(checker.check_links(destination), 5)
             archive = root / 'dist/codex-office-skill-kit-1.0.0.zip'
             with ZipFile(archive) as bundle:
@@ -167,6 +171,7 @@ class PublicationTests(unittest.TestCase):
                 self.assertIn('href="../README.md"', html)
                 self.assertIn('codex-office-skill-kit/ACCEPTANCE.md', bundle.namelist())
                 self.assertIn('codex-office-skill-kit/qa/summary.md', bundle.namelist())
+                self.assertIn('href="../.agents/skills/demo-0/SKILL.md"', html)
             with ZipFile(root / 'dist/office-skills-1.0.0.zip') as bundle:
                 self.assertNotIn('tests/test_publication.py', bundle.namelist())
                 self.assertNotIn('tests/test_handbook_learner.py', bundle.namelist())

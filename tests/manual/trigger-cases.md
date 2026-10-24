@@ -19,4 +19,4 @@
 
 每項加做缺漏案例及錯誤格式，確認不補猜與能解釋錯誤。具Gmail／網路工具時另以明確授權資料測讀取，不在本機模擬驗收中宣稱已完成。Word/Excel/PPTX逐頁核對為獨立關卡。
 
-本次已執行的範圍見 docs/ACCEPTANCE.md 與 docs/qa/，尚未填寫的項目保持「未測試」。
+本次已執行的公開範圍見 ACCEPTANCE.md 與 qa/natural-trigger-results.json；原始日誌僅留本機，尚未執行的項目保持「未測試」。

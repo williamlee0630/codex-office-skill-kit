@@ -1,4 +1,4 @@
-"""建立 GitHub Pages artifact：保留講義的相對連結，不執行任何部署。"""
+"""建立 GitHub Pages artifact；技能原文使用非隱藏路徑，不執行部署。"""
 from pathlib import Path
 import shutil
 from publication import ROOT, PACKAGES, public_files, ensure_public, ASSETS
@@ -30,9 +30,20 @@ def build(root=ROOT):
         shutil.rmtree(destination)
     destination.mkdir(parents=True)
     for path in selected:
-        target = destination / path.relative_to(root)
+        relative = path.relative_to(root)
+        # Pages 上傳工具排除隱藏目錄，只有網站改用 skills 公開別名。
+        # 原始碼、提示詞及離線 ZIP 的 .agents/skills 結構不變。
+        if relative.parts[:2] == ('.agents', 'skills'):
+            relative = Path('skills', *relative.parts[2:])
+        target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(path, target)
+        if path.suffix == '.html':
+            text = path.read_text(encoding='utf-8')
+            text = text.replace('href="../.agents/skills/', 'href="../skills/')
+            text = text.replace("href='../.agents/skills/", "href='../skills/")
+            target.write_text(text, encoding='utf-8')
+        else:
+            shutil.copy2(path, target)
     (destination / '.nojekyll').touch()
     count = check_links(destination)
     print(f'Pages artifact：.work/pages-site；已驗證 {count} 個本機相對連結。此步驟尚未部署。')

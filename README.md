@@ -2,7 +2,7 @@
 
 版本 1.0.0｜開課方審閱版｜Windows 與 Codex 本機工作區｜原創模擬資料
 
-Repository：[williamlee0630/codex-office-skill-kit](https://github.com/williamlee0630/codex-office-skill-kit)。GitHub Pages 首次部署與公開檢查進行中，成功前不宣稱網站已上線。
+正式講義：[AI 辦公室實作指南](https://williamlee0630.github.io/codex-office-skill-kit/)。Repository：[williamlee0630/codex-office-skill-kit](https://github.com/williamlee0630/codex-office-skill-kit)。2026-10-24 已實際完成公開網址、頁面及下載檢查；這是開課方審閱版，人工驗收缺口另列於下方報告。
 
 用十個獨立技能，把郵件、會議、工作紀錄、表格與收據整理成可開啟的實際成果。Codex 負責依原文判讀；本機 Python 負責驗證、計算與產檔。講義可離線閱讀，Codex 模型與初次安裝套件仍依帳號及網路環境。
 

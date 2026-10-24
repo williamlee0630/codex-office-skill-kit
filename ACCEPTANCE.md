@@ -5,11 +5,11 @@
 ## 已完成且通過
 
 - 十個既有技能、14頁繁體中文講義、原創模擬資料與三種ZIP持續保留。
-- 本次修改前55項測試通過；修改後完整72項測試通過，0失敗、0錯誤、0略過，耗時58.622秒。[測試結果](qa/test-results.json) 明確標示這是程式測試。
+- 本次修改前55項測試通過；最後程式修正後完整72項測試通過，0失敗、0錯誤、0略過，耗時59.502秒。十份SKILL.md也重新通過官方格式驗證。[測試結果](qa/test-results.json) 明確標示這是程式測試。
 - 獨立審查已完成程式、技能契約、教材與公開隱私風險檢查。發現的兩個重要程式問題已先重現失敗、修正、同步共用副本並通過回歸：擷取輸出拒絕覆寫來源文件，附加EML不再混入主信待辦與期限。
 - 講義已改為「下載解壓 → Codex開專案 → 貼工作需求 → 核對成果」；初學者不必先學會Python或JSON。手動命令保留於可展開的進階說明。新舊10項講義內容測試通過；不以此取代瀏覽器畫面或自然語言觸發。
 - 公開範例、OOXML內部資料及ZIP使用同一套公開白名單與隱私檢查；歷史本機QA、個人設定與暫存不公開。三份下載包的CRC、SHA-256、內部連結與公開檢查見 [發行結果](qa/release-check.json)。
-- 完整包解壓後72項測試通過；技能安裝包解壓後53項適用測試通過。各包測試範圍不同，不互相代替。
+- 完整包解壓後72項測試通過（最後程式修正版本39.788秒）；技能安裝包解壓後53項適用測試通過。各包測試範圍不同，不互相代替。
 
 ## 自動化測試通過，但仍待人工確認
 
@@ -39,6 +39,13 @@
 
 本次已獲授權建立及發布新課程 `williamlee0630/codex-office-skill-kit`。舊課程不在操作範圍內。
 
-目前狀態：公開發布準備中，尚未宣稱部署成功。只有新Repository、Actions及公開URL實際驗證後才更新此節。目標講義網址不當作已成功的證據。
+已完成公開發布與實測：
+
+- [新Repository](https://github.com/williamlee0630/codex-office-skill-kit)；[正式講義](https://williamlee0630.github.io/codex-office-skill-kit/)。根首頁相對導向handbook/index.html。
+- [驗證版本Actions](https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/40105517425) 的build與deploy均success，版本為 `c3b55df4f5424f7281109f7daeee29376f452bf0`。本報告後續文件提交的部署狀態，可從Repository的Actions查核；這裡不填尚未產生的自身Commit。
+- 公開首頁HTTP 200、14頁講義、55個唯一內部資源與149個錨點通過；三份ZIP下載HTTP 200、CRC與公開manifest SHA-256相符。[HTTP實測紀錄](qa/public-site-check.json)。
+- 瀏覽器實際切換十個技能頁，檢查標題、各十節教學、提示詞與導覽；複製後透過原生貼上核對全文、搜尋結果正常，觀察期間沒有JavaScript錯誤。桌面1440、平板768、手機390像素檢查未見頁面橫向溢出，手機選單可展開及換頁後收合。[瀏覽器紀錄](qa/browser-check.json)。這是瀏覽器視窗尺寸測試，未宣稱所有實體裝置通過。
+- 首輪公開檢查發現隱藏的.agents目錄被Pages上傳工具排除。已先使對應測試失敗，再將網站技能原文改用skills/公開別名並重部署；ZIP與本機技能位置維持.agents/skills/。修正後技能原文連結已實際HTTP 200。
+- [部署證據](qa/deployment.json)、[本次公開檔案清單](qa/CHANGED_FILES.md)。實際公開內容不包含歷史原始QA、憑證或個人路徑。
 
 安裝與實作請從 [講義首頁](handbook/index.html) 開始；[README](README.md) 說明三種下載包及環境限制。所有資料皆為模擬。

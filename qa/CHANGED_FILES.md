@@ -205,8 +205,11 @@
 - `handbook/README.md`
 - `index.html`
 - `LICENSE`
+- `qa/browser-check.json`
+- `qa/deployment.json`
 - `qa/final-audit.md`
 - `qa/natural-trigger-results.json`
+- `qa/public-site-check.json`
 - `qa/README.md`
 - `qa/release-check.json`
 - `qa/test-results.json`

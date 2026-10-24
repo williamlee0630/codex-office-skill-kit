@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-24",
+  "repository": "https://github.com/williamlee0630/codex-office-skill-kit",
+  "pages_url": "https://williamlee0630.github.io/codex-office-skill-kit/",
+  "pages_build_type": "workflow",
+  "verified_revision": "c3b55df4f5424f7281109f7daeee29376f452bf0",
+  "verified_actions_run": "https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/40105517425",
+  "build_result": "success",
+  "deploy_result": "success",
+  "public_http_and_download_checks": "qa/public-site-check.json",
+  "browser_checks": "qa/browser-check.json",
+  "scope": "已完成版本的觀察證據；後續文件提交會再次由同一Actions部署，不將尚未執行的工作標示成功。",
+  "prior_course_repository_modified": false,
+  "gh_cli": "本機無gh；使用既有Git Credential Manager登入完成Git及限定新Repository的API操作，憑證未公開。"
+}

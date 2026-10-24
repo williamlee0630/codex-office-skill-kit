@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-24",
+  "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/index.html",
+  "environment": "Codex內建瀏覽器；公開HTTPS網站；非實體手機",
+  "ten_skill_pages_opened_via_navigation": true,
+  "all_ten_titles_and_ten_lesson_sections_present": true,
+  "prompt_copy_test": {
+    "page": "handbook/chapter-03.html",
+    "prompt": "完整工作提示詞：一貼即用",
+    "source_characters": 636,
+    "native_paste_matches_prompt_after_single_line_input_removes_newlines": true,
+    "note": "虛擬剪貼簿讀取無內容，改用瀏覽器原生貼上搜尋欄，實際核對全文相符。"
+  },
+  "full_text_search_shows_results": true,
+  "observed_console_errors_or_warnings": [],
+  "responsive_viewports": [
+    {"width": 1440, "height": 1000, "page_horizontal_overflow": false, "scope": "首頁及十個技能頁，標題與段落檢查"},
+    {"width": 768, "height": 1024, "page_horizontal_overflow": false, "scope": "資料分析教學頁，實際畫面檢查"},
+    {"width": 390, "height": 844, "page_horizontal_overflow": false, "scope": "首頁與資料分析頁；手機選單展開、換頁及自動收合，實際畫面檢查"}
+  ],
+  "limitations": ["不是所有實體手機或瀏覽器的相容性保證", "file協定離線雙擊流程仍待人工確認", "Office逐頁視覺不由網頁驗收代替"]
+}

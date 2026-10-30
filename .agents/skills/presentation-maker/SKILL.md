@@ -5,6 +5,19 @@ description: 根據使用者的文件、工作報告或主題，先由 Codex 依
 
 # AI 簡報製作助理
 
+## 日常工作啟動與接續
+
+先讀目前對話、已提供的來源與補答。只有單獨送出 `$presentation-maker` 且沒有可沿用的工作內容時，簡短引導：
+
+> 請提供要做成簡報的工作素材，並說明要給誰看、希望對方了解或決定什麼；已有草稿也可以直接提供。
+
+使用者可以直接用自己的話回答，不必回覆編號。先讀素材與工作目的，受眾或目的確實會改變內容且無法判定時才問。頁數未指定就依內容安排精簡商務簡報，預設 16:9；資料日期、講者姓名不是阻擋條件。產生可編輯 PPTX；既有複雜樣板保真改版不在此腳本能力內。
+
+已有完整需求與素材時直接執行；正在補答時接續原工作，不重介紹功能、不要求重新選擇或再次確認開始。只問會阻止正確完成或實質改變結果的最少資訊；標題、檔名、輸出位置與一般呈現方式採合理預設。
+
+執行前自行讀取 [內部執行與交付](references/operation.md) 及 [資料契約](references/workflow.md)，由 Codex 完成環境檢查、資料整理、參數選擇、工具執行、實際產檔與檢查。使用者不必指示讀 MD、回報路徑、指定腳本或編輯 JSON。保留自然語言自動選用能力。
+
+
 先依來源決定每頁要說什麼，再產生可編輯的 PowerPoint。腳本負責格式與可驗證結構，Codex 負責原始資料的語意整理。
 
 ## 啟動情境與邊界
@@ -22,34 +35,6 @@ description: 根據使用者的文件、工作報告或主題，先由 Codex 依
 5. 重新核對每頁與原文，檢查講者備註。`layout-check.json` 的結構檢查只驗證字量、物件邊界、頁數與 notes 存在。
 6. 用可用的 PowerPoint 或渲染工具逐頁視覺檢查：字型替代、斷行、重疊與文字溢出。沒有渲染工具時明列「待人工開啟 PowerPoint 檢查」，不可宣稱畫面已驗收。
 
-## JSON 契約與執行
+## 明確要求示範時
 
-```json
-{
-  "simulation": true,
-  "title": "模擬內訓報告",
-  "source": "source.md，第 1 至 3 段",
-  "date": "2026-10-23",
-  "slides": [{
-    "title": "目前進度",
-    "bullets": ["已完成模擬操作演練", "實際上線日期待確認"],
-    "notes": "來源：source.md 第 2 段。請說明演練不等於正式上線。",
-    "source": "source.md，第 2 段"
-  }]
-}
-```
-
-```powershell
-python scripts/run.py --input "C:\資料\deck.json" --output "C:\資料\簡報輸出"
-```
-
-在本技能資料夾執行。需要 Python 和 python-pptx，不依賴其他技能、網路或 API 金鑰。腳本拒絕原始 TXT／MD 直接作為 deck，因為它不進行語意摘要。
-
-## 缺漏與產出
-
-- `title`、`source`、至少一頁 `slides` 必填。每頁 `title` 與 1 至 5 個 `bullets` 必填。`notes`、`date` 未提供時保留待確認，不自行創作講稿事實。
-- 全形字計 2 寬度單位：頁標最多 54、每點最多 84、每頁所有重點合計最多 260。超量明確拒絕，請 Codex 拆頁。封面標題最多 72。
-- `presentation.pptx` 包含封面、內容頁與內嵌 notes；`speaker-notes.md` 可另行閱讀；`layout-check.json` 保留結構檢查與未完成的視覺驗收。
-- `simulation` 僅在確實為模擬資料時設為 true，會在每頁標示。來源及日期寫入講者備註。原始資料保持不變，不發布、不寄送。
-
-詳細流程與驗收見 [references/workflow.md](references/workflow.md)。完整模擬資料在工具包 `examples/presentation-maker/`，先讀 `source.md` 再核對 `deck.json`；`incomplete.json`、`invalid.json`、`too-long.json` 供邊界演練，`expected.md` 列出預期產物。
+只有使用者明確要求示範、練習或指定範例時，才依 [示範與測試](references/demo.md) 讀取模擬素材、實際產檔並標示模擬。一般啟動不主動提供課程模式，不自動讀示範。

@@ -1,0 +1,273 @@
+{
+  "title": "模擬 內部知識分享活動創意",
+  "goal": "讓內部同仁透過既有會議時段分享工作技巧。",
+  "sources": [
+    {
+      "id": "s1",
+      "label": "模擬活動需求 source.md",
+      "date": "2026-10-19"
+    }
+  ],
+  "evidence": [
+    {
+      "source_id": "s1",
+      "quote": "目標：讓內部同仁透過既有會議時段分享工作技巧。"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C1",
+      "text": "優先使用現有工具，不新增付費服務。",
+      "evidence": [
+        {
+          "source_id": "s1",
+          "quote": "限制：優先使用現有工具，不新增付費服務。"
+        }
+      ]
+    }
+  ],
+  "ideas": [
+    {
+      "id": "I1",
+      "title": "短講接力",
+      "description": "每次由不同同仁分享一項工作技巧。",
+      "resources": [
+        "現有會議時段",
+        "分享者"
+      ],
+      "cost": "低",
+      "difficulty": "低",
+      "value": "形成固定交流習慣",
+      "pros": [
+        "準備負擔小"
+      ],
+      "cons": [
+        "需持續邀請分享者"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I2",
+      "title": "問題診所",
+      "description": "收集一個真實工作問題，現場共同拆解。",
+      "resources": [
+        "問題清單",
+        "主持人"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "聚焦可解決的工作痛點",
+      "pros": [
+        "回饋直接"
+      ],
+      "cons": [
+        "需避免揭露機密"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I3",
+      "title": "範本交換所",
+      "description": "每人提供一份已去識別的工作範本。",
+      "resources": [
+        "去識別範本",
+        "共用資料夾"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "累積可再利用的工作材料",
+      "pros": [
+        "後續可重複使用"
+      ],
+      "cons": [
+        "範本需要維護"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I4",
+      "title": "操作示範席",
+      "description": "分享者以模擬資料示範一次完整操作。",
+      "resources": [
+        "模擬資料",
+        "現有螢幕"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "降低同仁開始練習的門檻",
+      "pros": [
+        "流程容易理解"
+      ],
+      "cons": [
+        "需事先測試"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I5",
+      "title": "常見錯誤牆",
+      "description": "匿名收集常見錯誤並分享修正方式。",
+      "resources": [
+        "匿名表單",
+        "整理者"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "減少重複錯誤",
+      "pros": [
+        "便於建立檢查表"
+      ],
+      "cons": [
+        "需維持不責備氛圍"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I6",
+      "title": "雙人互教",
+      "description": "兩位同仁交換各自熟悉的一項技巧。",
+      "resources": [
+        "配對名單",
+        "現有會議時段"
+      ],
+      "cost": "低",
+      "difficulty": "低",
+      "value": "增加跨職務理解",
+      "pros": [
+        "參與負擔分散"
+      ],
+      "cons": [
+        "配對需要協調"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I7",
+      "title": "成果前後對照",
+      "description": "以同一份模擬文件展示修改前後差異。",
+      "resources": [
+        "模擬文件",
+        "分享者"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "讓改進方式具體可見",
+      "pros": [
+        "便於討論品質"
+      ],
+      "cons": [
+        "無法直接代表真實績效"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I8",
+      "title": "知識尋寶題",
+      "description": "以工作情境設計小題，請同仁找既有資源。",
+      "resources": [
+        "情境題",
+        "內部資源索引"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "熟悉既有知識位置",
+      "pros": [
+        "互動性高"
+      ],
+      "cons": [
+        "題目需要設計"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I9",
+      "title": "一句話回顧",
+      "description": "會議結束前每人記下一項可應用的收穫。",
+      "resources": [
+        "共用筆記"
+      ],
+      "cost": "低",
+      "difficulty": "低",
+      "value": "蒐集後續分享需求",
+      "pros": [
+        "幾乎不增加準備成本"
+      ],
+      "cons": [
+        "回饋深度有限"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    },
+    {
+      "id": "I10",
+      "title": "輪值編輯部",
+      "description": "輪值整理當週分享內容為短篇內部筆記。",
+      "resources": [
+        "輪值表",
+        "共用筆記"
+      ],
+      "cost": "低",
+      "difficulty": "中",
+      "value": "讓未參與者也可閱讀",
+      "pros": [
+        "知識可以保存"
+      ],
+      "cons": [
+        "整理者需要時間"
+      ],
+      "rationale": "依既有工具與準備步驟做初步判斷，需經試辦及參與者回饋驗證。",
+      "constraint_ids": [
+        "C1"
+      ]
+    }
+  ],
+  "recommendation": "建議先試辦短講接力，因準備步驟較少；此為規劃建議，須由使用者確認。",
+  "selected_id": "I1",
+  "plan": [
+    {
+      "step": "徵詢分享主題與意願",
+      "deliverable": "候選主題清單",
+      "owner": null,
+      "due": null
+    },
+    {
+      "step": "以現有會議時段進行一次試辦",
+      "deliverable": "試辦紀錄",
+      "owner": null,
+      "due": null
+    },
+    {
+      "step": "收集回饋並決定是否續辦",
+      "deliverable": "回饋摘要與後續決定",
+      "owner": null,
+      "due": null
+    }
+  ],
+  "validation_plan": "收集參與者回饋，確認是否有可應用的技巧；目前未有實際成效數字。"
+}

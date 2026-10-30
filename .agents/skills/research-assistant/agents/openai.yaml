@@ -1,4 +1,4 @@
 interface:
   display_name: "資料研究與調查助理"
   short_description: "依本機參考文件或實際可用的公開來源，核對資料日期與主張並產生可追溯研究報告"
-  default_prompt: "使用 $research-assistant 比較提供的模擬方案資料，附來源與資訊缺口。"
+  default_prompt: "$research-assistant"

@@ -15,29 +15,14 @@
 
 必填 `period_start`、`period_end`（YYYY-MM-DD，起日不得晚於末日）。`records` 每項含 `date`（日期或 null）、`category`（completed/progress/problem/next_plan/support）、`summary`、`evidence`。可選 `star` 物件含 situation/task/action/result，各為文字或 null。除 next_plan 外，有日期紀錄須在期間內；next_plan 日期須晚於末日。缺結果、日期與空類別均保留待確認。
 
-完整輸入見 [example.json](example.json)，原始內容見 [source.md](source.md)。單獨安裝不需先執行其他技能。
+貼上文字可由 Codex 存成來源快照；label 指回實際來源，quote 保留原句。單獨安裝不需先執行其他技能。
 
 ## 執行與產物
 
-Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依工具包安裝說明設定 Python，不需要 API 金鑰。
+Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依本技能 operation.md 與 scripts/requirements.txt 自行檢查環境，不需要課程根目錄或 API 金鑰。
 
-```powershell
-python "<技能資料夾>/scripts/run.py" --input "<技能資料夾>/references/example.json" --output "./practice-out"
-```
+執行方式見 [內部執行](operation.md)，輸入為 Codex 自行整理的工作資料，並非預設示範。
 
 產物：weekly-brief.md、weekly-detailed.md、weekly-brief.docx、weekly-detailed.docx、evidence.json。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。
-
-## 預期成果
-
-完成試用名單但成果數字未提供，STAR R 必須保留待確認，不能寫提升百分比。下週 2026-10-26 調整回饋表不列本週完成。結束日早於起始日拒絕。
-
-## 五項驗收
-
-1. 正常：Codex 先讀 source.md 自建 JSON，再對照完整範例實際產檔。
-2. 缺漏：使用工具包 examples/weekly-report/incomplete.json，確認待確認資訊沒有補造。
-3. 錯誤：使用 examples/weekly-report/invalid.json，確認非零錯誤且不建立新成果。
-4. 實際檔案：開啟 Markdown、DOCX、Excel；不能只看副檔名。Word 不可裁切、缺字或溢出。
-5. 內容及安全：逐項對照來源、語意分類；不寄信、不部署、不上傳。unittest 通過不等於 Codex 自然語言觸發驗收。
-

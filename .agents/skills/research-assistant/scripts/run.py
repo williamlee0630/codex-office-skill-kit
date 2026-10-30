@@ -63,7 +63,7 @@ def run(input_path, output_dir):
     require(isinstance(comparison, list) and all(isinstance(c, str) for c in comparison), 'comparison 必須為文字陣列。')
     report = ['# 資料研究與調查報告', '', f'研究問題：{data["question"]}',
               f'資料基準日：{as_of or "待確認"}', '',
-              '模式：離線來源分析。本程式沒有執行網路搜尋；網址僅為使用者提供的來源資訊。',
+              '產檔程序：離線來源核對。本程式沒有執行網路搜尋；網址記錄來源位置，Codex 另行查讀的範圍須見查讀紀錄。',
               '若來源標示模擬，結論只適用於教學情境；不能當作真實供應商或市場調查。', '',
               '## 調查方向', data.get('plan') or '比較各方案的適用範圍、限制、資料日期與仍需補證的資訊。', '',
               '## 有來源的發現與判斷']
@@ -83,7 +83,7 @@ def run(input_path, output_dir):
                    f'  - 來源品質評估：{source.get("quality") or "待研究者說明作者、原始性與可能利益衝突"}',
                    f'  - SHA-256：{source["sha256"]}']
         if source.get('url'):
-            report += [f'  - 使用者提供網址（本程式未連線）：{source["url"]}']
+            report += [f'  - 來源網址（本程式未連線）：{source["url"]}']
     report += ['', '## 驗證界線', '原文摘錄存在與檔案雜湊可由程式確認；來源真實性、語意支持程度與最新公開資訊仍需研究者核對。']
     output = Path(output_dir)
     write_markdown(output / 'research-report.md', '\n'.join(report))

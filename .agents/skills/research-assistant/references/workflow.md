@@ -1,26 +1,11 @@
-# 來源契約與完整練習
+# 研究內部來源契約
 
-先將以下模擬文字存為 source.md：
+`question` 必填；`as_of` 為 YYYY-MM-DD 或 null。sources、claims、comparison、gaps 可為空陣列；plan 是調查方向文字。
 
-```text
-模擬甲方案，資料日期2026-10-01。
-甲方案提供24個名額，包含一次課後諮詢。
-```
+sources 每項有唯一 id、title、本機 path、published_at（可 null）、kind、quality；可加 url、accessed_at。path 相對於內部輸入 JSON 所在目錄，也可用實際絕對路徑；支援 TXT／MD／DOCX／文字 PDF。由 Codex 自行保存實際讀取的線上摘錄及網址、發布／查閱日期，不能只填 URL 就當已讀。
 
-同目錄儲存 input.json：
+claims 每項有 text、kind（fact／interpretation／recommendation）、source_ids、excerpts（來源 ID 到逐字摘錄）。每個事實主張必須引用已讀來源，摘錄需存在於本機來源且語意支持主張。ID、路徑、摘錄與格式錯誤由 Codex 先修復；不能虛構來源來通過驗證。
 
-```json
-{"question":"甲方案是否適合24人訓練？","as_of":"2026-10-23","sources":[{"id":"S1","title":"模擬甲方案","path":"source.md","published_at":"2026-10-01","kind":"模擬供應方資料","quality":"供應方自述，未經獨立查核"}],"claims":[{"text":"甲方案名額可容納24人。","kind":"fact","source_ids":["S1"],"excerpts":{"S1":"甲方案提供24個名額"}},{"text":"應先取得正式報價。","kind":"recommendation","source_ids":["S1"]}],"comparison":["只有單一方案，尚不能跨方案比較。"],"gaps":["總費用、日期與取消條款未提供。"]}
-```
+腳本只做離線核對與產檔，evidence.json 的 network_used=false 描述的是腳本。若 Codex 另用了搜尋工具，另保存 search-log.md，記錄實際工具、查詢、成功／失敗及查閱日期，並在研究報告清楚說明線上查讀與本機核對的範圍；不改稱腳本已搜尋。沒有來源時只有缺口報告，不能宣稱調查已完成。
 
-```powershell
-python "<本技能路徑>/scripts/run.py" --input "input.json" --output "outputs/research"
-```
-
-預期：research-report.md 標明離線、模擬與資料日期，引用S1並列報價缺口；sources.csv 與 evidence.json 包含來源雜湊。不推論諮詢時數、效果或供應商排名。
-
-sources[].path 相對於輸入JSON；支援TXT/MD/DOCX/文字型PDF。來源需唯一id、實際本機path；日期可null。url只是metadata，不會連線。線上工具實際讀取後可保存摘錄附url/accessed_at，回覆另外說明搜尋過程。
-
-claims[].kind 為fact/interpretation/recommendation。每個fact要有source_ids及每個來源的逐字excerpts；腳本驗證摘錄存在，語意仍需核對。comparison、gaps是文字陣列，plan是調查方向文字。
-
-缺漏：`{"question":"是否適用？","sources":[]}` 只產生資訊缺口。錯誤：只有url沒有path、重複或無效ID、摘錄不在原文都回傳非零，不編造來源。
+產物 research-report.md、sources.csv、evidence.json。未知日期不宣稱最新；資訊衝突並列，不拿教學結論或模擬限制代替工作問題。示範另見 demo.md，只有明確要求才讀。

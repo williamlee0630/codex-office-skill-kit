@@ -1,25 +1,25 @@
 {
-  "version": "1.0.0",
-  "date": "2026-10-24",
+  "version": "1.1.0",
+  "date": "2026-10-30",
   "scope": "complete-release",
   "packages": [
     {
-      "name": "practice-data-1.0.0.zip",
-      "bytes": 379789,
+      "name": "practice-data-1.1.0.zip",
+      "bytes": 379640,
       "file_count": 103,
-      "sha256": "73021ff762849b3c50bd647f70ece5ab5b5319beb027e9815b21f149dfdc8c60"
+      "sha256": "2a53960dbb73300575920b441ff3f266533ac22bb4c5dd4c03a89eb1dfad78fe"
     },
     {
-      "name": "office-skills-1.0.0.zip",
-      "bytes": 561282,
-      "file_count": 194,
-      "sha256": "c8635a35ffe6a59562ac96809d311b9b1ca9a61f83926dbb25bf2ade049fc6cf"
+      "name": "office-skills-1.1.0.zip",
+      "bytes": 632337,
+      "file_count": 237,
+      "sha256": "9133ca1fc7578f95c1765d7e1bf78a26a36485383fbf6aae94d2e6e00938372a"
     },
     {
-      "name": "codex-office-skill-kit-1.0.0.zip",
-      "bytes": 1673613,
-      "file_count": 234,
-      "sha256": "00ec959bd54735e207ddb2f8d88e0533b080cb89ed1974925a6d3daebac6aebc"
+      "name": "codex-office-skill-kit-1.1.0.zip",
+      "bytes": 1808966,
+      "file_count": 293,
+      "sha256": "dfb4a2dabb8acfff2f95429d597c8c24589ff2d579ff779b106113941255d893"
     }
   ]
 }

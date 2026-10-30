@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-10-30",
+    "scope": "解壓包內實際執行全部適用程式測試；非Codex完整流程",
+    "tests_run": 76,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "success": true,
+    "package": "codex-office-skill-kit-1.1.0.zip",
+    "returncode": 0
+  },
+  {
+    "date": "2026-10-30",
+    "scope": "解壓包內實際執行全部適用程式測試；非Codex完整流程",
+    "tests_run": 56,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "success": true,
+    "package": "office-skills-1.1.0.zip",
+    "returncode": 0
+  }
+]

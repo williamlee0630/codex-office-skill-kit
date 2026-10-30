@@ -15,29 +15,14 @@
 
 必填 `goal`、頂層 `evidence`。`target_count` 預設 10，可 1–30。`constraints` 每項含唯一 `id`、`text`、`evidence`。`ideas` 長度須等於 target_count，每項含唯一 `id`、不同 `title`、`description`、`resources`（文字陣列）、`cost`、`difficulty`、`value`、`pros`/`cons`（文字陣列）、`rationale`、`constraint_ids`。`recommendation` 可 null。`selected_id` 可 null 或既有 id；指定時須有 `plan` 步驟，含 step、deliverable、owner（可 null）、due（日期或 null）。`validation_plan` 為建議驗證方式，可 null。
 
-完整輸入見 [example.json](example.json)，原始內容見 [source.md](source.md)。單獨安裝不需先執行其他技能。
+貼上文字可由 Codex 存成來源快照；label 指回實際來源，quote 保留原句。單獨安裝不需先執行其他技能。
 
 ## 執行與產物
 
-Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依工具包安裝說明設定 Python，不需要 API 金鑰。
+Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依本技能 operation.md 與 scripts/requirements.txt 自行檢查環境，不需要課程根目錄或 API 金鑰。
 
-```powershell
-python "<技能資料夾>/scripts/run.py" --input "<技能資料夾>/references/example.json" --output "./practice-out"
-```
+執行方式見 [內部執行](operation.md)，輸入為 Codex 自行整理的工作資料，並非預設示範。
 
 產物：ideas.md、comparison.csv、selected-plan.md、evidence.json。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。
-
-## 預期成果
-
-正常案例剛好十案，評估標主觀且待驗證；I1 已選定，計畫有交付物但不填人名與日期。缺漏案例未選案，計畫待確認。錯誤案例九案不能靜默補成十案。
-
-## 五項驗收
-
-1. 正常：Codex 先讀 source.md 自建 JSON，再對照完整範例實際產檔。
-2. 缺漏：使用工具包 examples/idea-generator/incomplete.json，確認待確認資訊沒有補造。
-3. 錯誤：使用 examples/idea-generator/invalid.json，確認非零錯誤且不建立新成果。
-4. 實際檔案：開啟 Markdown、DOCX、Excel；不能只看副檔名。Word 不可裁切、缺字或溢出。
-5. 內容及安全：逐項對照來源、語意分類；不寄信、不部署、不上傳。unittest 通過不等於 Codex 自然語言觸發驗收。
-

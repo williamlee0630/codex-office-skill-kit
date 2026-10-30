@@ -55,15 +55,17 @@ def build(root=ROOT):
     light = []
     for path in selected:
         name = relative(path)
-        if name.startswith(('.agents/skills/', 'examples/', 'docs/', 'tools/')) or name in {'requirements.txt', 'LICENSE', 'ACCEPTANCE.md'}:
+        if (name.startswith(('.agents/skills/', 'examples/', 'tools/'))
+                or name in {'requirements.txt', 'LICENSE', 'docs/INSTALL.md', 'docs/DEVELOPMENT.md', 'docs/OFFICIAL_SOURCES.md'}):
             light.append((path, name))
-        elif name.startswith('tests/') and not (path.name.startswith('test_handbook') or path.name == 'test_publication.py'):
+        elif name.startswith('tests/') and path.suffix == '.py' and not (path.name.startswith('test_handbook') or path.name == 'test_publication.py'):
             light.append((path, name))
-    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.0.0
+    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.1.0
 
 此包包含十個完整技能、原創模擬資料與程式測試。完整講義請使用完整學員工具包。
-在 Codex 開啟解壓後資料夾，確認 .agents/skills/<技能名稱>/SKILL.md。
-Python 3.10 以上：python -m pip install -r requirements.txt。
+安裝並載入技能 → 送出 $技能名稱 → 依引導說明工作或提供素材 → 必要時補答 → 開啟並核對成果。
+可把完整技能資料夾帶到一般工作區。Codex 自行檢查環境、整理資料與產檔，不要求讀 MD、回報路徑、編輯 JSON 或貼長提示詞。
+模擬資料僅明確要求示範時使用；既有目的、素材與補答沿用，不重問。
 測試：python -m unittest discover -s tests -v（此包不含講義與公開發行測試）。
 所有模擬案例均須核對原始來源；草稿不寄送，未知資訊與待確認事項不補猜。
 tools/install_skills.py 預設預覽，--apply 才複製；同名技能拒絕覆寫。

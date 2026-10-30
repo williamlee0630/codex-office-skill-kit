@@ -1,51 +1,41 @@
-# Windows 安裝與快速開始
+# 安裝與日常使用
 
-本版為 1.0.0，文件查證日 2026-10-23。主要執行環境是 Codex 桌面版本機工作區；不需要其他 AI 平台或 API 金鑰。需有可使用 Codex 的帳號與權限；模型本身仍需依帳號服務連線，只有講義與本機產檔器可離線使用。
+版本 1.1.0｜更新：2026-10-30（台北）
 
-## 建議方法：整包開啟
+## 安裝並載入技能
 
-1. 下載 dist/codex-office-skill-kit-1.0.0.zip，在檔案總管按「全部解壓縮」。不要在 ZIP 預覽裡操作。
-2. 把整個資料夾放在自己的工作目錄，例如 `C:\OfficePractice`。確認裡面有 README.md、handbook 與 `.agents`；隱藏資料夾可能需要開啟顯示。
-3. 在 Codex 開啟這個資料夾作為本機專案／工作區。各桌面版本選單可能不同，重點是聊天的工作目錄必須是這個資料夾。
-4. 輸入：「請使用 `$meeting-assistant`，先回報本次實際讀取的 SKILL.md 絕對路徑，再整理 examples/meeting-assistant/source.md，保留提議與待確認。」
-5. 若技能未出現，重新開啟工作區或重啟 Codex，再確認 `.agents/skills/meeting-assistant/SKILL.md` 存在。遇同名技能時請指定本專案的完整路徑，核對實際載入檔案。
-6. 雙擊 handbook/index.html 開啟講義；不必啟動伺服器。依章節複製提示詞，讓 Codex 代為執行本機命令。
+1. 下載完整工具包或技能安裝包，使用「全部解壓縮」，不要在 ZIP 預覽裡操作。
+2. 在 Codex 開啟解壓後的資料夾，可使用其中 `.agents/skills/` 的技能。要在別的工作區使用，將所需完整技能資料夾複製到該工作區的 `.agents/skills/`；保留 scripts、references、agents，不只複製 SKILL.md。
+3. 重新載入技能或重新開啟 Codex，再送出技能名稱。技能不依賴課程根目錄，也不會自行讀教學資料。
 
-## Python 與格式套件
+```text
+$email-assistant
+```
 
-腳本適用 Python 3.10 以上。可以直接請 Codex 檢查現有 Python；若缺少，從 Python 官方網站安裝，完成後重新開啟終端機。建議在本專案建立虛擬環境，命令均在工具包根目錄的 PowerShell 執行：
+依引導說明工作或提供素材 → 必要時補答 → 開啟並核對成果。可貼文字、附檔或提供可讀檔案，不需固定表單、路徑回報、JSON 或長提示詞。已有完整目的與資料時直接處理，補答後自動接續。自然語言仍能自動選用。
+
+## 環境由 Skill 處理
+
+各技能自行讀取規則，檢查 Python 3.10+ 與 `scripts/requirements.txt` 所列格式套件。已有可用環境就沿用；缺少時在目前工作區準備專用環境，選參數並實際執行產檔。沒有 Python、安裝權限或連線時，才具體說明需要資訊同仁協助的部分。
+
+下載包不包含 Python 或第三方套件。講義可雙擊 handbook/index.html 離線閱讀；Codex 使用與首次套件取得依帳號、網路及組織規範。
+
+## 個人技能安裝（選用）
+
+若希望在不同工作區使用，可依 Codex 的個人技能位置安裝完整技能。請 Codex 協助檢查既有同名版本；工具包不自動覆寫全域技能。安裝工具預設預覽，遇同名資料夾拒絕覆寫。
+
+<details><summary>維護者：環境、安裝工具及同名技能排錯</summary>
+
+在工具包根目錄執行；使用者日常工作不必貼這些命令：
 
 ```powershell
-python --version
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-不需要啟用虛擬環境的 Activate.ps1，也不需修改系統執行原則。初次安裝套件需可連線套件來源；本版 ZIP 不包含 Python 或第三方 wheel。受限網路可請資訊部準備對應平台的離線 wheelhouse：`python -m pip install --no-index --find-links <wheel資料夾> -r requirements.txt`。不具備套件時只能使用不需該套件的格式，不能宣稱 Word/Excel/PPTX 已產生。
-
-若 Codex 桌面已提供工作區內建 Python 與套件，可讓 Codex 使用其實際回報的路徑；不要把開發者電腦上的絕對路徑直接搬到其他電腦。
-
-## 第一個真實產檔練習
-
-```powershell
-.\.venv\Scripts\python.exe .agents/skills/meeting-assistant/scripts/run.py --input examples/meeting-assistant/input.json --output outputs/meeting-assistant
-```
-
-這一步是已整理測資的產檔練習。完整技能練習須讓 Codex 從 source.md 原文重新整理有來源的 JSON，再呼叫腳本並比對原文。不能把兩者當成同一種驗收。
-
-## 選用：單一技能帶到另一工作區
-
-複製某個完整資料夾（含 scripts、references、agents）到目標工作區 `.agents/skills/`，例如 `.agents/skills/data-analyst/`。不可只複製 SKILL.md。各技能帶有自己的執行資源，不需要先啟動其他技能；格式套件仍須安裝。references 內有獨立例檔或完整範例，根目錄 examples 是整套課程的練習。
-
-## 選用：個人全域安裝
-
-官方目前列出個人技能位置為 `$HOME/.agents/skills`。本專案不會自動寫入它。若確實需要全域使用，可先預覽：
-
-```powershell
 .\.venv\Scripts\python.exe tools/install_skills.py --target "$HOME/.agents/skills"
 ```
 
-確認清單後自行加入 `--apply`。工具遇到同名目錄會拒絕整次安裝，沒有覆寫選項；先自行備份與判斷，不要盲目刪除既有技能。也可以將 --target 指向其他已授權工作區，做專案安裝。
+明確授權安裝後加 `--apply` 才複製；先備份及判斷既有同名技能，不盲目刪除。由 Codex 檢查實際載入來源、規則、環境及錯誤；不要求使用者回報內部路徑。
 
-來源：[OpenAI 官方技能文件](https://learn.chatgpt.com/docs/build-skills)。官方頁面可能調整 UI 或產品名稱；本講義以本機檔案、技能路徑與實際回報作為核對依據。
+格式工具可獨立使用各技能 scripts/requirements.txt 安裝；無需課程根目錄的 requirements.txt。參考官方技能位置與歷史查證見 [OFFICIAL_SOURCES](OFFICIAL_SOURCES.md)，桌面介面名稱依版本而定。
+
+</details>

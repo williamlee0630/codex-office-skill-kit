@@ -1,0 +1,8 @@
+{
+  "simulation":true,"as_of":"2026-10-23",
+  "messages":[
+    {"sender":"林範例 <training@example.invalid>","subject":"年度課程報價確認","date":"2026-10-23T09:00:00+08:00","body":"請回覆報價確認。期限：2026-10-26。","important":"回覆報價，尚未承諾購買。","deadline":"2026-10-26","actions":["需回覆"],"priority":"中","source":"source.md 郵件一","reply_points":["名額與費用仍需內部核對。"]},
+    {"sender":"周示範 <operations@example.invalid>","subject":"提交教室設備清單","date":"2026-10-22T15:00:00+08:00","body":"請提供教室設備清單。期限：2026-10-23。","deadline":"2026-10-23","actions":["需執行"],"priority":"高","source":"source.md 郵件二"},
+    {"sender":"公告小組 <notice@example.invalid>","subject":"內部月刊","date":"2026-10-23T10:00:00+08:00","body":"僅供參考。本月內部月刊已發布，沒有要求回覆。","deadline":null,"actions":["僅供參考"],"priority":"低","source":"source.md 郵件三"}
+  ]
+}

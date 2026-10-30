@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-30",
+  "version": "1.1.0",
+  "scope": "代理行為演練與個別實際產檔，非十項 Codex 完整流程",
+  "cases_per_skill": 8,
+  "total_rehearsed_cases": 80,
+  "case_types": [
+    "單獨名稱的實務引導",
+    "初始回覆不提供課程／資料模式",
+    "完整原始需求直接處理",
+    "必要缺漏簡短詢問",
+    "可選未知不阻擋",
+    "補答接續",
+    "一般工作不取用示範",
+    "明確要求示範的處理"
+  ],
+  "skills": {
+    "data-analyst": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-b.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "document-writer": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-b.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "email-assistant": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-a.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "email-only"
+    },
+    "idea-generator": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-b.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "meeting-assistant": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-a.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "presentation-maker": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-b.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "project-tracker": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-a.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "receipt-organizer": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-a.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "research-assistant": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-b.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    },
+    "weekly-report": {
+      "rehearsal_cases": 8,
+      "evidence": "daily-work-behavior-a.md",
+      "real_cli_bare_token": "completed",
+      "real_cli_full_workflow": "未驗證"
+    }
+  },
+  "actual_artifact_tasks": [
+    {
+      "skill": "meeting-assistant",
+      "executor": "independent agent",
+      "scope": "新原始筆記→自行整理內部資料→既有腳本→MD/DOCX/evidence讀回",
+      "checks_passed": 14,
+      "visual_docx": "未驗證：soffice.exe不可用"
+    },
+    {
+      "skill": "data-analyst",
+      "executor": "independent agent",
+      "scope": "新CSV→業務欄位副本及列號對照→腳本→Excel/JSON/MD/PNG讀回",
+      "amount_sum": 11700,
+      "group_sums": {
+        "北區": 3400,
+        "南區": 7600
+      },
+      "missing_group_amount": 700,
+      "raw_unchanged": true,
+      "png_visual": "已檢視",
+      "native_excel_visual": "未驗證"
+    },
+    {
+      "skill": "email-assistant",
+      "executor": "real Codex CLI",
+      "scope": "完整貼上原信及回覆→讀技能/工作流程→檢查Python→自建JSON→執行→改寫草稿→交付；未寄信",
+      "turn_completed": true,
+      "drafts_file_exists": true,
+      "sent": false,
+      "limits": [
+        "本次為單回合合成測試，沒有實測補答；CLI原始回覆使用相對檔案連結，後續規則已改為絕對檔案連結，未重跑此連結行為。"
+      ]
+    }
+  ],
+  "not_verified": [
+    "十項技能在桌面Codex的完整安裝、補答、改寫、開啟檔案流程",
+    "真實公司資料、Gmail、外部網路研究與批次OCR",
+    "新成果的原生Word/Excel/PowerPoint完整畫面",
+    "缺少Python/套件/權限時的自動準備完整流程",
+    "一般瀏覽器file://離線雙擊；本機瀏覽器代理連線127.0.0.1逾時，未以文字結構測試代替"
+  ]
+}

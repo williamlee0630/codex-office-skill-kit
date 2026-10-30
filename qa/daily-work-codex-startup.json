@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-30",
+  "version": "1.1.0",
+  "scope": "真實 Codex CLI，隔離的一般工作區；每項只有單獨 $名稱，read-only，非完整工作流程",
+  "results": [
+    {
+      "skill": "data-analyst",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "我會使用 data-analyst 技能協助分析。請提供要分析的 CSV 或 Excel 表格，也可以貼上表格內容。你最想了解什麼？若還沒有特定問題，我會先檢查資料品質與主要數值。"
+      ],
+      "elapsed_seconds": 4.4,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "document-writer",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "你想撰寫企劃、提案、信函或工作報告，還是修改現有文件？請提供素材或草稿，並說明希望達成的目的。"
+      ],
+      "elapsed_seconds": 5.1,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "email-assistant",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "你要整理郵件待辦、擬回信，還是修改已寫好的回覆？也可以直接貼上郵件內容。"
+      ],
+      "elapsed_seconds": 3.6,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "idea-generator",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "你想解決什麼工作問題，或達成什麼目標？有已知限制也可以一起說，我會使用 idea-generator 提出方案並比較做法。"
+      ],
+      "elapsed_seconds": 4.7,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "meeting-assistant",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "請提供會議筆記或逐字稿，貼上內容或提供檔案都可以。我會整理決議、提議、待辦與待確認事項。"
+      ],
+      "elapsed_seconds": 5.5,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "presentation-maker",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "我會使用 presentation-maker 技能，依你提供的素材製作可編輯的 PPTX，並附上講者備註。",
+        "請提供要做成簡報的工作素材，並說明要給誰看、希望對方了解或決定什麼；已有草稿也可以直接提供。"
+      ],
+      "elapsed_seconds": 7.9,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "project-tracker",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "我會使用 project-tracker 技能，依你提供的紀錄與查核日整理專案進度。",
+        "請提供同一專案的工作更新、會議紀錄或待辦表，並告訴我想查核到哪一天；資料裡已寫明的資訊我會直接沿用。"
+      ],
+      "elapsed_seconds": 6.7,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "receipt-organizer",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "我會使用 receipt-organizer 技能整理收據，保留辨識依據，並標示待確認欄位與疑似重複項目。",
+        "請上傳收據或憑證，也可以提供可讀的 PDF、圖片或報帳明細。我會核對欄位、分幣別合計，整理成 Excel。"
+      ],
+      "elapsed_seconds": 8.6,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "research-assistant",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "你想調查或比較什麼問題？可以直接說明，也可以提供參考文件；若有特定地區、期間或比較對象，一起告訴我即可。"
+      ],
+      "elapsed_seconds": 4.5,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    },
+    {
+      "skill": "weekly-report",
+      "scope": "real Codex CLI bare token only; not full workflow",
+      "status": "completed",
+      "turn_completed": true,
+      "response": [
+        "我會使用 weekly-report 技能整理週報。請提供這週的工作紀錄、進度或待辦，我會整理成果、問題與下週計畫。若紀錄沒有寫明期間，再補充週報起訖日即可。"
+      ],
+      "elapsed_seconds": 9.0,
+      "evaluated_onboarding": "符合實務引導，沒有課程或資料模式選單（人工逐則閱讀）"
+    }
+  ],
+  "limits": [
+    "單獨啟動使用 CLI --ignore-user-config --ephemeral；不是桌面 UI 點選安裝驗證。",
+    "只讀啟動時未需要產檔；未證明環境安裝、補答與完整交付全部通過。",
+    "曾有全域 using-superpowers 讀取被 CLI 執行政策拒絕的診斷；未以繞過政策方式處理，單一啟動回合仍正常結束。"
+  ]
+}

@@ -1,4 +1,4 @@
 interface:
   display_name: "專案進度追蹤助理"
   short_description: "依基準日追蹤專案進度與決策變更，保留來源、缺漏及未確認提議"
-  default_prompt: "請用 $project-tracker 依我指定的基準日整合專案紀錄，產出進度表、風險及 Excel。"
+  default_prompt: "$project-tracker"

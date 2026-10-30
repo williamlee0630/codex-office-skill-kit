@@ -9,7 +9,7 @@ import re
 from zipfile import ZipFile, ZIP_DEFLATED, BadZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 PACKAGES = (f'practice-data-{VERSION}.zip', f'office-skills-{VERSION}.zip', f'codex-office-skill-kit-{VERSION}.zip')
 ROOT_FILES = {'README.md', 'ACCEPTANCE.md', 'AGENTS.md', 'LICENSE', 'requirements.txt', '.gitignore', '.gitattributes', 'index.html', '.nojekyll'}
 PUBLIC_DOCS = {'INSTALL.md', 'DEVELOPMENT.md', 'ACCEPTANCE.md', 'PROGRESS.md', 'CHANGELOG.md', 'OFFICIAL_SOURCES.md', 'DESIGN.md', 'USER_REQUEST.md', 'IMPLEMENTATION_PLAN.md', 'DEPLOYMENT_PLAN.md'}

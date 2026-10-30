@@ -15,29 +15,14 @@
 
 `purpose`、`audience` 可為文字或 null。`facts` 每項含唯一 `id`、`text`、`evidence`。`versions` 必含 `formal`、`concise`；每版至少一段，每段含 `heading`、`text`、`fact_ids`（既有事實 id 陣列）。無事實時可空參照，但只能寫待補資訊。`pending_questions` 為文字陣列。腳本驗證參照存在，不理解改寫語意；執行前由 Codex 核對每段有無新增未有依據的主張。
 
-完整輸入見 [example.json](example.json)，原始內容見 [source.md](source.md)。單獨安裝不需先執行其他技能。
+貼上文字可由 Codex 存成來源快照；label 指回實際來源，quote 保留原句。單獨安裝不需先執行其他技能。
 
 ## 執行與產物
 
-Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依工具包安裝說明設定 Python，不需要 API 金鑰。
+Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依本技能 operation.md 與 scripts/requirements.txt 自行檢查環境，不需要課程根目錄或 API 金鑰。
 
-```powershell
-python "<技能資料夾>/scripts/run.py" --input "<技能資料夾>/references/example.json" --output "./practice-out"
-```
+執行方式見 [內部執行](operation.md)，輸入為 Codex 自行整理的工作資料，並非預設示範。
 
 產物：document-formal.md、document-concise.md、document-formal.docx、document-concise.docx、evidence.json。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。
-
-## 預期成果
-
-兩版保留內部同仁與現有會議時段的事實；預算、日期、負責人保持待確認。沒有數據不新增成本效益。不存在的 fact_ids 拒絕。
-
-## 五項驗收
-
-1. 正常：Codex 先讀 source.md 自建 JSON，再對照完整範例實際產檔。
-2. 缺漏：使用工具包 examples/document-writer/incomplete.json，確認待確認資訊沒有補造。
-3. 錯誤：使用 examples/document-writer/invalid.json，確認非零錯誤且不建立新成果。
-4. 實際檔案：開啟 Markdown、DOCX、Excel；不能只看副檔名。Word 不可裁切、缺字或溢出。
-5. 內容及安全：逐項對照來源、語意分類；不寄信、不部署、不上傳。unittest 通過不等於 Codex 自然語言觸發驗收。
-

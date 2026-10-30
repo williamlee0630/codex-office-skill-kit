@@ -1,4 +1,4 @@
 interface:
   display_name: "AI 創意企劃助理"
   short_description: "預設比較十個具體創意，標明主觀評估並為選定方案建立執行計畫"
-  default_prompt: "請用 $idea-generator 依我的目標與限制提出十個不同方案，比較後為我選定的方案建立計畫。"
+  default_prompt: "$idea-generator"

@@ -1,4 +1,4 @@
 interface:
   display_name: "AI 簡報製作助理"
   short_description: "依來源規劃商務簡報，產出真正 PPTX、內嵌講者備註與版面檢查"
-  default_prompt: "使用 $presentation-maker 依我提供的文件製作實際 PPTX，保留來源、日期與待確認事項，附講者備註，檢查字量與版面。"
+  default_prompt: "$presentation-maker"

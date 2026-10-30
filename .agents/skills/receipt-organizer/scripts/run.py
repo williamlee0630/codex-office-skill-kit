@@ -67,7 +67,7 @@ def prepare_raw(path, out, tools, simulation=False):
     write_json(out / 'transcription-template.json', {'source': path.name, 'simulation': simulation, 'receipts': [
         {'id': 'R1', 'date': None, 'vendor': None, 'items': None, 'amount': None, 'currency': None,
          'category': None, 'evidence': f'待人工確認：{path.name}，請補頁碼／區域與辨識原文'}]})
-    write_markdown(out / 'review-required.md', f'# 收據待人工確認\n\n資料標示：{"模擬教學資料" if simulation else "依使用者提供來源，是否模擬待確認"}\n\n來源：{path.name}\n\n原始檔已保留於 originals，SHA-256 與抽取工具清單見 extraction-evidence.json。\n\n'
+    write_markdown(out / 'review-required.md', f'# 收據待核對\n\n資料標示：{"模擬教學資料" if simulation else "依使用者提供來源整理"}\n\n來源：{path.name}\n\n原始檔已保留於 originals，SHA-256 與抽取工具清單見 extraction-evidence.json。\n\n'
                    + ('已擷取 PDF 文字，但欄位仍需 Codex 根據頁面確認。' if has_extracted_text else '此來源未擷取到文字，請用可用視覺工具或人工轉錄。')
                    + '\n\n本次未執行 OCR，尚未產生報帳 Excel。請填好 transcription-template.json，保留未知欄位，再以該 JSON 為輸入產生報表。\n')
     print('原始檔與擷取證據已保留，欄位待人工確認：' + str(out.resolve()))
@@ -240,7 +240,7 @@ def organize(args):
               'limitations': ['分類依輸入值，未提供類別即待人工確認。', '不同幣別不混加、不換匯。', '疑似重複均保留，未當作已確認的重複報帳。', '靜態結果，更新來源後重新執行。']}
     write_json(out / 'receipts-summary.json', result)
     workbook(out / 'receipts.xlsx', records, totals, categories, data['source'])
-    label = '模擬教學資料' if data.get('simulation') else '依輸入來源整理，是否模擬待使用者確認'
+    label = '模擬教學資料' if data.get('simulation') else '依使用者提供來源整理'
     lines = ['# 收據整理報告', '', f'資料標示：{label}。來源：{data["source"]}',
              f'共 {len(records)} 筆，待人工確認 {result["review_count"]} 筆。未執行 OCR。', '',
              '| 幣別 | 含疑似重複合計 | 暫排除疑似重複合計 |', '| --- | ---: | ---: |']

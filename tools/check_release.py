@@ -106,6 +106,8 @@ def check(root=ROOT, write_report=True):
             if 'practice-data' not in path.name and len(skills) != 10:
                 raise ValueError('技能包必須包含10個 SKILL.md')
             checked_links = 0
+            if path.name == PACKAGES[1]:
+                checked_links = _check_documents({name: archive.read(name) for name in names})
             if path.name == PACKAGES[2]:
                 checked_links = _check_documents({name: archive.read(name) for name in names})
                 for required in ['ACCEPTANCE.md', 'README.md', 'handbook/index.html']:

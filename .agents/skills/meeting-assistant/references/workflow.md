@@ -15,29 +15,14 @@
 
 `meeting_date` 為 YYYY-MM-DD 或 null；`items` 是物件陣列，每項含 `kind`（summary/decision/action/question）、`status`（proposed/discussion/confirmed/pending）、`text`、`evidence`。action 另含 `owner`（字串或 null）、`due`（日期或 null）。缺漏可產檔並標待確認；未知 kind/status、無引文均拒絕。
 
-完整輸入見 [example.json](example.json)，原始內容見 [source.md](source.md)。單獨安裝不需先執行其他技能。
+貼上文字可由 Codex 存成來源快照；label 指回實際來源，quote 保留原句。單獨安裝不需先執行其他技能。
 
 ## 執行與產物
 
-Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依工具包安裝說明設定 Python，不需要 API 金鑰。
+Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依本技能 operation.md 與 scripts/requirements.txt 自行檢查環境，不需要課程根目錄或 API 金鑰。
 
-```powershell
-python "<技能資料夾>/scripts/run.py" --input "<技能資料夾>/references/example.json" --output "./practice-out"
-```
+執行方式見 [內部執行](operation.md)，輸入為 Codex 自行整理的工作資料，並非預設示範。
 
 產物：minutes.md、minutes.docx、evidence.json。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。
-
-## 預期成果
-
-『先進行內部試用』列已確認；『下月全面上線』只能列提議。待辦為模擬小林於 2026-10-22 整理回饋表。缺漏案例不填入此範例的人名與期限。status=approved 必須拒絕。
-
-## 五項驗收
-
-1. 正常：Codex 先讀 source.md 自建 JSON，再對照完整範例實際產檔。
-2. 缺漏：使用工具包 examples/meeting-assistant/incomplete.json，確認待確認資訊沒有補造。
-3. 錯誤：使用 examples/meeting-assistant/invalid.json，確認非零錯誤且不建立新成果。
-4. 實際檔案：開啟 Markdown、DOCX、Excel；不能只看副檔名。Word 不可裁切、缺字或溢出。
-5. 內容及安全：逐項對照來源、語意分類；不寄信、不部署、不上傳。unittest 通過不等於 Codex 自然語言觸發驗收。
-

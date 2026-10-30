@@ -1,4 +1,4 @@
 interface:
   display_name: "發票與收據整理助理"
   short_description: "保留收據辨識證據，標記缺漏與疑似重複，依幣別產生報帳 Excel"
-  default_prompt: "使用 $receipt-organizer 整理我提供的收據，先檢查可用抽取工具，未知欄位待人工確認，不混加不同幣別，產生報帳 Excel。"
+  default_prompt: "$receipt-organizer"

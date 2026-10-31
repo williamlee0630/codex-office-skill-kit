@@ -1,6 +1,6 @@
 # 1.1.0 日常辦公版本驗收
 
-更新：2026-10-30（台北）。本版以真實工作需求引導，課程僅作教學與測試管道。以下分開記錄已執行與未驗證的範圍，不宣稱十項完整流程全面通過。
+更新：2026-10-31（台北）。本版以真實工作需求引導，課程僅作教學與測試管道。以下分開記錄已執行與未驗證的範圍，不宣稱十項完整流程全面通過。
 
 ## 實作範圍
 
@@ -15,7 +15,7 @@
 | 層次 | 結果與證據 | 界線 |
 |---|---|---|
 | 修改前程式基準 | 72 項通過 | 是既有版本，不是本版最終數量 |
-| 本版程式測試 | 76 項通過，0 失敗／錯誤／略過；見 [test-results.json](qa/test-results.json) | 包含運算、來源、格式、獨立技能示範與講義內容契約；文字比對不代表代理驗收 |
+| 本版程式測試 | 77 項通過，0 失敗／錯誤／略過；見 [test-results.json](qa/test-results.json) | 包含運算、來源、格式、獨立技能示範與講義內容契約；文字比對不代表代理驗收 |
 | 獨立代理行為演練 | 每技能八例，共 80 則實際下一回覆；[A](qa/daily-work-behavior-a.md)、[B](qa/daily-work-behavior-b.md) | 多數停在執行前回覆，未宣稱 80 個產檔流程通過；發現後修正另記 |
 | 真實 Codex CLI 單獨啟動 | 十個隔離工作區各只送 $名稱，10/10 回合完成且為實務引導；[逐則回覆](qa/daily-work-codex-startup.json) | 不是桌面 UI 或十項完整流程 |
 | 真實 Codex CLI 郵件產檔 | 完整原信及草稿已提供，直接改寫並執行、自行建立中間資料、交付草稿；未寄送 | 合成單回合測試，補答及最新絕對連結規則未重跑 |
@@ -23,7 +23,7 @@
 | 新表格實際分析 | 金額合計 11,700；北區 3,400、南區 7,600，缺分組 700；數字 ID 不當業績。原件 SHA 不變；XLSX 讀回、PNG 已看 | 原生 Excel UI 未驗證，未推論因果 |
 | 發行與離線連結 | 見 [release-check.json](qa/release-check.json)；三份 ZIP 的 CRC、SHA-256、檔案、相對連結與公開內容檢查 | 不取代 file:// 真實瀏覽器操作 |
 
-[分層驗證與未驗證清單](qa/daily-work-verification.json) 保留每個技能的八例範圍。[解壓包測試](qa/daily-work-extracted-tests.json)：完整包 76 項、技能包 56 項適用測試通過，0 失敗／錯誤／略過。最新公開部署證據另列 qa/。
+[分層驗證與未驗證清單](qa/daily-work-verification.json) 保留每個技能的八例範圍。[解壓包測試](qa/daily-work-extracted-tests.json)：完整包 77 項、技能包 56 項適用測試通過，0 失敗／錯誤／略過。最新公開部署證據另列 qa/。
 
 ## 未驗證
 
@@ -34,7 +34,7 @@
 
 ## 發布狀態
 
-沿用既有 main → GitHub Actions → GitHub Pages。實際推送及部署結果見 [最新部署證據](qa/daily-work-deployment.json)；狀態尚未產生前不宣稱上線。
+沿用既有 main → GitHub Actions → GitHub Pages。實際推送及部署結果見 [最新部署證據](qa/daily-work-deployment.json)；第一輪已實測 build／deploy 成功、14 頁與 64 個內部資源 HTTP 200，三份 ZIP 與公開 manifest 的 CRC／大小／SHA-256 相符；記錄明列核對 SHA，後續提交以 Actions 為準。
 
 [正式講義](https://williamlee0630.github.io/codex-office-skill-kit/handbook/index.html) · [下載與教學說明](README.md#下載與教學) · [技能包](dist/office-skills-1.1.0.zip) · [教學資料包](dist/practice-data-1.1.0.zip)
 

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-30",
+  "version": "1.1.0",
+  "sha": "d0ceec81b2be61d594a6f902af23490bde8240b4",
+  "root_http": 200,
+  "handbook_pages": 14,
+  "unique_internal_resources": 64,
+  "anchors_checked": 148,
+  "all_http_200": true,
+  "packages": [
+    {
+      "name": "practice-data-1.1.0.zip",
+      "http": 200,
+      "sha256": "ee090347855fbc2def65b1055dd80224f5cb134b48ba139a93c53c610810989e",
+      "crc": true,
+      "bytes": 379640
+    },
+    {
+      "name": "office-skills-1.1.0.zip",
+      "http": 200,
+      "sha256": "9d2b20a4f0becdfcaa2c2865de15f66c7243dbbf534a3fecc02c3ee8fb3ddc8f",
+      "crc": true,
+      "bytes": 632337
+    },
+    {
+      "name": "codex-office-skill-kit-1.1.0.zip",
+      "http": 200,
+      "sha256": "91beb46f8fc4e556d64e180d026c24654b12b6dea0754bc550c6a36d710c98d0",
+      "crc": true,
+      "bytes": 1809017
+    }
+  ],
+  "limits": "HTTP/content/CRC/SHA checks; browser UI and file:// are separate."
+}

@@ -1,5 +1,8 @@
 """離線講義的結構、內容契約與資源連結驗證。"""
 import re
+import importlib.util
+import sys
+import tempfile
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
@@ -38,6 +41,27 @@ class Document(HTMLParser):
 
 
 class HandbookTests(unittest.TestCase):
+    def test_runtime_requests_change_when_handbook_version_changes(self):
+        """舊版頁面已快取搜尋索引時，升版應要求不同資源 URL。"""
+        sys.path.insert(0, str(BOOK))
+        try:
+            spec = importlib.util.spec_from_file_location('handbook_build_test', BOOK / 'build.py')
+            builder = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(builder)
+        finally:
+            sys.path.remove(str(BOOK))
+        temporary_root = ROOT / 'tests/.tmp'
+        temporary_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=temporary_root) as temporary:
+            builder.HERE = Path(temporary)
+            builder.VERSION = 'previous'
+            builder.layout('index.html', '首頁', '')
+            before = Document((builder.HERE / 'index.html').read_text(encoding='utf-8')).runtime
+            builder.VERSION = 'current'
+            builder.layout('index.html', '首頁', '')
+            after = Document((builder.HERE / 'index.html').read_text(encoding='utf-8')).runtime
+            self.assertNotEqual(before, after)
+
     def test_all_lessons_are_substantial_and_have_ten_teaching_sections(self):
         self.assertTrue((BOOK / "index.html").exists(), "尚未建立講義首頁")
         for index, skill in enumerate(SKILLS, 2):
@@ -80,7 +104,7 @@ class HandbookTests(unittest.TestCase):
             source = path.read_text(encoding="utf-8")
             for resource in Document(source).runtime:
                 self.assertFalse(resource.startswith(("http:", "https:", "//")), resource)
-                self.assertTrue((path.parent / resource).exists(), resource)
+                self.assertTrue((path.parent / urlsplit(resource).path).exists(), resource)
         script = (BOOK / "assets" / "app.js").read_text(encoding="utf-8")
         css = (BOOK / "assets" / "style.css").read_text(encoding="utf-8")
         self.assertNotRegex(script, r"\bfetch\s*\(|XMLHttpRequest|import\s*\(")

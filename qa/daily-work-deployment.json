@@ -1,6 +1,14 @@
 {
-  "date": "2026-10-30",
+  "date": "2026-10-31",
   "version": "1.1.0",
-  "status": "pending",
-  "scope": "本版尚待提交推送及Actions部署，舊部署不代表本版已上線"
+  "status": "verified-snapshot",
+  "verified_commit": "d0ceec81b2be61d594a6f902af23490bde8240b4",
+  "branch": "main",
+  "workflow_run_id": 41043026958,
+  "workflow_url": "https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41043026958",
+  "build": "success",
+  "deploy": "success",
+  "public_http": "passed",
+  "public_evidence": "daily-work-public-site.json",
+  "note": "本快照核對第一輪程式提交；後續快取修正與證據提交須以其各自 Actions 及最後公開檢查為準，不填尚未產生的自身 SHA。"
 }

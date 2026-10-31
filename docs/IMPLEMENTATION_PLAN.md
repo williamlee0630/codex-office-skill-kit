@@ -13,7 +13,7 @@
 - [x] 講義：handbook/lessons.py、handbook/build.py、tests/test_handbook*.py。九課重排至第 10 章、自訂第 11 章、首頁郵件示例、30 分鐘路線、兩新課的十項教學內容、重建 13 頁與搜尋索引；保留 CSS/JS 及離線設計。
 - [x] 整合：移除指定三技能執行目錄、教材、測試登錄；保留其歷史 QA。更新現有七技能回歸清單、validate/install/publication/build_release/check_release、版本及文件。
 - [x] 驗收：unittest、verify、講義重建、validate、三包實際打包與 check_release、獨立複製執行、來源核對、輸出數字驗算、瀏覽器及代理啟動／完整流程分開記錄。未實測的桌面／Office 不宣稱通過。
-- [ ] 發行：隱私白名單、九技能集合、ZIP 解壓與 checksum；更新 ACCEPTANCE、PROGRESS、CHANGELOG；commit/push；檢查既有 Actions 與公開網站及下載。
+- [x] 發行：隱私白名單、九技能集合、ZIP 解壓與 checksum；更新 ACCEPTANCE、PROGRESS、CHANGELOG；commit/push；檢查既有 Actions 與公開網站及下載。
 
 ## 驗收焦點
 

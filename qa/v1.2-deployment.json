@@ -1,8 +1,29 @@
 {
-  "version": "1.2.0",
   "date": "2026-10-31",
-  "status": "pending_push",
+  "version": "1.2.0",
+  "status": "deployed_and_public_verified",
+  "verified_implementation_commit": "322952f84e47d8bab7b9b1d7b86aa43b690ffe14",
   "repository": "https://github.com/williamlee0630/codex-office-skill-kit",
+  "actions": {
+    "run_id": 41186582014,
+    "url": "https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41186582014",
+    "build": "success",
+    "deploy": "success",
+    "tests_run": 103,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "test_seconds": 17.878
+  },
   "site": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/index.html",
-  "note": "本機實作與程式驗收已完成，尚未以此紀錄宣稱部署完成。"
+  "public_http_pages": 13,
+  "search_entries": 111,
+  "download_zip_crc_and_sha256_against_public_manifest": true,
+  "browser_interaction": "搜尋、兩個指令複製、章節導覽、390px手機選單及兩新章無水平溢出通過",
+  "scope_note": "本紀錄核對上述功能提交；後續驗收紀錄提交不改動程式。最終main SHA以Git及最終交付報告為準。",
+  "limits": [
+    "真實Codex CLI讀SKILL被環境政策拒絕，兩項啟動未通過。",
+    "桌面Codex完整互動與file://離線雙擊未驗證。",
+    "Word／Excel原生抽查不等於全頁全表視覺驗收。"
+  ]
 }

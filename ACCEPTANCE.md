@@ -22,7 +22,13 @@
 | 真實Codex CLI啟動 | **兩項未通過**：內部讀SKILL.md遭環境執行政策拒絕 | [真實失敗紀錄](qa/v1.2-startup.json)。回合結束非成功；未繞過政策。 |
 | DOCX／XLSX內容 | 函式庫重開與來源、數字、修訂文字核對通過 | 原生Word首頁／末頁、Excel對帳前列抽查可讀；[原生抽查](qa/v1.2-office-smoke.json)。不是全頁全表視覺保證。 |
 | 模擬PDF畫面 | 兩份合約使用內嵌字型，Poppler單頁圖像檢視可讀 | PDF文字擷取及引用測試通過；掃描頁明確回報OCR限制。 |
-| 講義與ZIP | 13頁重建、九入口、搜尋／章序靜態測試、三ZIP之CRC、SHA256及完整包本機連結通過 | [最新ZIP檢查](qa/release-check.json)；完整包實際解壓103/103、技能包74/74適用測試通過，見 [解壓測試](qa/v1.2-extracted-tests.json)。公開部署結果另列。 |
+| 講義與ZIP | 13頁重建、九入口、搜尋／章序靜態測試、三ZIP之CRC、SHA256及完整包本機連結通過 | [最新ZIP檢查](qa/release-check.json)；完整包實際解壓103/103、技能包74/74適用測試通過，見 [解壓測試](qa/v1.2-extracted-tests.json)。公開部署及13頁HTTP、三ZIP實際下載均已通過；[公開結果](qa/v1.2-public-site.json)。 |
+
+## GitHub與公開瀏覽器
+
+功能提交 `322952f84e47d8bab7b9b1d7b86aa43b690ffe14` 已推送原main。既有Actions build及deploy均成功，雲端日誌實際103項測試通過（17.878秒）。[部署紀錄](qa/v1.2-deployment.json) · [Actions](https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41186582014)。
+
+公開13頁HTTP均200、版本1.2.0；九技能入口、111筆搜尋索引及章節目標有效；三ZIP實際下載之CRC與SHA-256均符合正式站台manifest。瀏覽器實際法務搜尋、兩個啟動指令複製至剪貼簿、法務下一章到財務、手機選單展開及換頁收合通過。1280px桌面與390px兩新章無水平溢出；[瀏覽器紀錄](qa/v1.2-browser.json)。這些不替代以下未驗證項目。
 
 ## 未驗證與限制
 

@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-31",
+  "version": "1.2.0",
+  "verified_implementation_commit": "322952f84e47d8bab7b9b1d7b86aa43b690ffe14",
+  "environment": "Codex in-app browser, live HTTPS website, not physical mobile device",
+  "homepage_nine_skill_links_visible": true,
+  "new_pages_opened": [
+    "handbook/chapter-09.html",
+    "handbook/chapter-10.html"
+  ],
+  "search": {
+    "query": "法務",
+    "results_from_new_chapter": true,
+    "clicked_result_opens_chapter_09_lesson_1": true
+  },
+  "copy": {
+    "legal-reviewer": "$legal-reviewer",
+    "finance-assistant": "$finance-assistant",
+    "verified_by": "actual button click then browser clipboard read"
+  },
+  "navigation": {
+    "legal_next_to_finance": true,
+    "finance_previous_href": "chapter-09.html",
+    "mobile_menu_expands_then_closes_on_legal_navigation": true
+  },
+  "responsive": [
+    {
+      "width": 1280,
+      "page": "chapter-10.html",
+      "scroll_width": 1265,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "pages": [
+        "chapter-09.html",
+        "chapter-10.html"
+      ],
+      "scroll_width": 375,
+      "horizontal_overflow": false,
+      "mobile_legal_screenshot_inspected": true
+    }
+  ],
+  "viewport_reset": true,
+  "console_warnings_errors_observed": [],
+  "limitations": [
+    "file:// URL denied by browser policy; not bypassed; offline double click not verified.",
+    "This does not test actual physical phones or every browser.",
+    "Only new chapters and homepage were interactively exercised; all13 pages checked separately via HTTP."
+  ]
+}

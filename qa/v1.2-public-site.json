@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-31",
+  "version": "1.2.0",
+  "requested_commit": "322952f84e47d8bab7b9b1d7b86aa43b690ffe14",
+  "site": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/index.html",
+  "packages": [
+    {
+      "name": "practice-data-1.2.0.zip",
+      "sha256": "9929dc105f0cba5ac96b3a5aa70e35dda61d423314c04d7be18c5464016a14de",
+      "bytes": 923054,
+      "file_count": 116,
+      "crc": true,
+      "skills": 0,
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/practice-data-1.2.0.zip"
+    },
+    {
+      "name": "office-skills-1.2.0.zip",
+      "sha256": "1dd335cffb12d01c0147bf08b54ed6d5d502593528d944650842e5c1fb91a9e9",
+      "bytes": 1562945,
+      "file_count": 251,
+      "crc": true,
+      "skills": 9,
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/office-skills-1.2.0.zip"
+    },
+    {
+      "name": "codex-office-skill-kit-1.2.0.zip",
+      "sha256": "1ad26915efecdc058f744b98f0ca5e05c799de8e958067a6d5969abf3987106f",
+      "bytes": 4264572,
+      "file_count": 320,
+      "crc": true,
+      "skills": 9,
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/codex-office-skill-kit-1.2.0.zip"
+    }
+  ],
+  "pages": {
+    "index.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-01.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-02.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-03.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-04.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-05.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-06.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-07.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-08.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-09.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-10.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "chapter-11.html": {
+      "http": 200,
+      "version": "1.2.0"
+    },
+    "appendix.html": {
+      "http": 200,
+      "version": "1.2.0"
+    }
+  },
+  "search_entries": 111,
+  "search_index_and_chapter_targets_valid": true,
+  "scope": "實際HTTP讀取13頁、搜尋索引與下載ZIP；互動另由瀏覽器驗證",
+  "status": "passed"
+}

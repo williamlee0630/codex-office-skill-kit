@@ -15,9 +15,9 @@
   },
   {
     "package": "codex-office-skill-kit-1.2.0.zip",
-    "files": 320,
+    "files": 322,
     "skills": 9,
-    "checked_local_links": 569,
+    "checked_local_links": 572,
     "crc_sha256_paths_privacy_valid": true
   }
 ]

@@ -1,0 +1,6 @@
+{
+  "mode": "reconcile",
+  "source": "reconciliation/internal.csv",
+  "other": "reconciliation/bank.csv",
+  "simulation": true
+}

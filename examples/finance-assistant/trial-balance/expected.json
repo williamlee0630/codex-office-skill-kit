@@ -1,0 +1,15 @@
+{
+  "simulation": true,
+  "checked_by": "verify_expected.py 獨立加總借貸、各分類及會計恆等式",
+  "group": {
+    "debit_total": "450000.00",
+    "credit_total": "450000.00",
+    "profit": "100000.00",
+    "assets": "350000.00",
+    "liabilities": "50000.00",
+    "equity": "300000.00",
+    "balance_difference": "0.00",
+    "debit_credit_balanced": true,
+    "cash_flow_available": false
+  }
+}

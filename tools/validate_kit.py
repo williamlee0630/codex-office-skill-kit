@@ -4,16 +4,15 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = {'email-assistant', 'meeting-assistant', 'project-tracker', 'weekly-report',
-            'receipt-organizer', 'presentation-maker', 'document-writer', 'data-analyst',
-            'idea-generator', 'research-assistant'}
+from publication import SKILLS
+EXPECTED = set(SKILLS)
 
 
 def validate():
     errors = []
     paths = sorted((ROOT / '.agents/skills').glob('*/SKILL.md'))
-    if {p.parent.name for p in paths} != EXPECTED:
-        errors.append('技能資料夾清單與10項指定名稱不一致。')
+    if {p.parent.name for p in paths} != EXPECTED or {p.name for p in (ROOT / '.agents/skills').iterdir() if p.is_dir()} != EXPECTED:
+        errors.append('技能資料夾清單與9項指定名稱不一致。')
     descriptions = set()
     common = (ROOT / 'tools/office_common.py').read_bytes()
     for path in paths:
@@ -56,4 +55,4 @@ if __name__ == '__main__':
     if problems:
         print('\n'.join('錯誤：' + p for p in problems))
         raise SystemExit(1)
-    print('10個技能結構、相對連結、共用資源與模擬資料檢查通過。此結果不代表Codex觸發驗收。')
+    print('9個技能結構、相對連結、共用資源與模擬資料檢查通過。此結果不代表Codex觸發驗收。')

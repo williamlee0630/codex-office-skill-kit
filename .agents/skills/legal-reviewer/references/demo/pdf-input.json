@@ -1,0 +1,422 @@
+{
+  "document_name": "教學模擬資料｜星芽數位服務合作合約（原創虛構案例，非法律範本）",
+  "document_type": "系統建置服務合作合約",
+  "perspective": "甲方",
+  "jurisdiction": null,
+  "source": {
+    "path": "風險服務合約.pdf"
+  },
+  "checked_locations": [
+    "PAGE1/L1",
+    "PAGE1/L2",
+    "PAGE1/L3",
+    "PAGE1/L4",
+    "PAGE1/L5",
+    "PAGE1/L6",
+    "PAGE1/L7",
+    "PAGE1/L8",
+    "PAGE1/L9",
+    "PAGE1/L10",
+    "PAGE1/L11",
+    "PAGE1/L12",
+    "PAGE1/L13",
+    "PAGE1/L14",
+    "PAGE1/L15",
+    "PAGE1/L16",
+    "PAGE1/L17",
+    "PAGE1/L18",
+    "PAGE1/L19",
+    "PAGE1/L20",
+    "PAGE1/L21"
+  ],
+  "review_topics": [
+    {
+      "topic": "parties_purpose",
+      "status": "present",
+      "analysis": "雙方名稱與系統建置目的存在，但交付依賴未提供的附件一，無法驗證功能、時程與驗收標準。",
+      "citations": [
+        {
+          "location": "PAGE1/L2",
+          "quote": "第一條 當事人與目的：甲方為青禾企劃股份有限公司，乙方為星芽數位有限公司，均為虛構公司。"
+        },
+        {
+          "location": "PAGE1/L3",
+          "quote": "乙方為甲方建置內部客戶管理系統，交付項目由雙方簽署的附件一列明；本次未附附件一。"
+        }
+      ]
+    },
+    {
+      "topic": "term_renewal",
+      "status": "present",
+      "analysis": "一年合約透過一百八十日前拒絕要求自動續三年，且續價乙方單方決定，甲方存在長期不可控承諾。",
+      "citations": [
+        {
+          "location": "PAGE1/L4",
+          "quote": "第二條 期限：合約期間為一年，期滿自動續約三年。甲方應於期滿前一百八十日以書面拒絕續約，"
+        },
+        {
+          "location": "PAGE1/L5",
+          "quote": "逾期視為同意；續約價格由乙方單方決定。"
+        }
+      ]
+    },
+    {
+      "topic": "payment",
+      "status": "present",
+      "analysis": "全額預付與交付驗收脫鉤，且一律不退，付款後甲方缺少交付槓桿與退出回收保障。",
+      "citations": [
+        {
+          "location": "PAGE1/L6",
+          "quote": "第三條 付款：總價新臺幣三十萬元，甲方於簽署後七日內支付全額。系統是否驗收、交付或上線，"
+        },
+        {
+          "location": "PAGE1/L7",
+          "quote": "不影響付款義務；已付款項均不退還。"
+        }
+      ]
+    },
+    {
+      "topic": "liability",
+      "status": "present",
+      "analysis": "每日總價百分之三違約金無上限，甲方含間接與預期利益無限責任，但乙方上限僅一千元，責任配置嚴重不對稱。",
+      "citations": [
+        {
+          "location": "PAGE1/L8",
+          "quote": "第四條 違約與賠償：甲方遲延付款每日按總價百分之三支付違約金，沒有累計上限。甲方因本案造"
+        },
+        {
+          "location": "PAGE1/L9",
+          "quote": "成乙方任何損失，包括間接損失及預期利益，均負無限賠償責任；乙方對甲方之賠償以新臺幣一千"
+        },
+        {
+          "location": "PAGE1/L10",
+          "quote": "元為上限。"
+        }
+      ]
+    },
+    {
+      "topic": "confidentiality_privacy",
+      "status": "present",
+      "analysis": "第五條有相互保密與例外、三年期間；但第六條將員工客戶資料擴張行銷、任意轉交且永久留存，與履約最小範圍衝突。實際合法依據須確定法域後查證。",
+      "citations": [
+        {
+          "location": "PAGE1/L11",
+          "quote": "第五條 保密：雙方對標示機密之技術及價格資料負保密義務，僅供履約使用；依法令要求揭露時應"
+        },
+        {
+          "location": "PAGE1/L12",
+          "quote": "於可行範圍事先通知。保密義務於合約終止後三年內有效。"
+        },
+        {
+          "location": "PAGE1/L13",
+          "quote": "第六條 個人資料：甲方得提供員工與客戶聯絡資料供系統測試。乙方得將該資料提供任何合作廠商"
+        },
+        {
+          "location": "PAGE1/L14",
+          "quote": "作行銷使用，無須另行告知甲方或資料當事人，且可永久保存。"
+        }
+      ]
+    },
+    {
+      "topic": "ip",
+      "status": "present",
+      "analysis": "既有工具保留合理，但專案成果授權與歸屬留待未來；即使支付開發價款，也可能受持續付費限制。",
+      "citations": [
+        {
+          "location": "PAGE1/L15",
+          "quote": "第七條 智慧財產：乙方保有既有工具之權利；雙方應另行議定專為甲方開發成果之歸屬及使用授權"
+        },
+        {
+          "location": "PAGE1/L16",
+          "quote": "，未議定前甲方僅得於乙方持續收取服務費期間使用。"
+        }
+      ]
+    },
+    {
+      "topic": "termination",
+      "status": "present",
+      "analysis": "乙方可即時無理由終止保留款項；甲方不能終止、匯出或交接，營運中斷及鎖定風險高。",
+      "citations": [
+        {
+          "location": "PAGE1/L17",
+          "quote": "第八條 終止：乙方得隨時不附理由立即終止並保留全部已收款。甲方不得提前終止，亦不得要求資"
+        },
+        {
+          "location": "PAGE1/L18",
+          "quote": "料匯出、刪除或交接。"
+        }
+      ]
+    },
+    {
+      "topic": "law_disputes",
+      "status": "missing",
+      "analysis": "全文未實質選定法域、法院或仲裁；不能假定新臺幣計價就必然適用台灣法律。需查履約地與當事人設立地。",
+      "citations": []
+    },
+    {
+      "topic": "special",
+      "status": "present",
+      "analysis": "網站公告當日單方修改，甲方繼續使用視同接受，無審查與無成本退出機會，可能使原交付承諾不穩定。",
+      "citations": [
+        {
+          "location": "PAGE1/L19",
+          "quote": "第九條 其他：乙方得以網站公告修改服務內容及本合約，公告當日生效；甲方繼續使用視為接受。"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "topic": "parties_purpose",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L2",
+          "quote": "第一條 當事人與目的：甲方為青禾企劃股份有限公司，乙方為星芽數位有限公司，均為虛構公司。"
+        },
+        {
+          "location": "PAGE1/L3",
+          "quote": "乙方為甲方建置內部客戶管理系統，交付項目由雙方簽署的附件一列明；本次未附附件一。"
+        }
+      ],
+      "issue": "交付附件缺失",
+      "impact": "可能對完成範圍、時程與驗收認定發生爭執。",
+      "level": "中",
+      "reason": "核心功能範圍未能核對，但可在簽署前補正。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "附件一應列明功能清單、交付里程碑、驗收測試及完成期限，經雙方簽署後始生效；未確認項目以書面變更程序議定，不視為甲方已接受。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "請補附件一及驗收測試。"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R2",
+      "topic": "term_renewal",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L4",
+          "quote": "第二條 期限：合約期間為一年，期滿自動續約三年。甲方應於期滿前一百八十日以書面拒絕續約，"
+        },
+        {
+          "location": "PAGE1/L5",
+          "quote": "逾期視為同意；續約價格由乙方單方決定。"
+        }
+      ],
+      "issue": "長期自動續約與單方續價",
+      "impact": "遺漏提前拒絕時點即承擔三年未知價格服務費。",
+      "level": "高",
+      "reason": "承諾期間超出原約且價格不可控。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "本合約期滿即終止；續約應於期滿前由雙方另以書面確認期間、服務內容及價格，未達成書面合意者不自動續約。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "確認是否確實需要自動續約。"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R3",
+      "topic": "payment",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L6",
+          "quote": "第三條 付款：總價新臺幣三十萬元，甲方於簽署後七日內支付全額。系統是否驗收、交付或上線，"
+        },
+        {
+          "location": "PAGE1/L7",
+          "quote": "不影響付款義務；已付款項均不退還。"
+        }
+      ],
+      "issue": "預付全額且與驗收無關、一律不退",
+      "impact": "交付失敗或未履行時資金回收與談判成本增加。",
+      "level": "高",
+      "reason": "甲方主要款項在取得成果前全數曝險。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "總價新臺幣三十萬元分期支付，各期比例與里程碑為【待雙方確認】；甲方於對應里程碑驗收合格並收受發票後三十日內付款。乙方重大違約經書面催告十五日未改善者，甲方得終止並請求返還未履行部分價款。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "確認分期比例與各里程碑。"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R4",
+      "topic": "liability",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L8",
+          "quote": "第四條 違約與賠償：甲方遲延付款每日按總價百分之三支付違約金，沒有累計上限。甲方因本案造"
+        },
+        {
+          "location": "PAGE1/L9",
+          "quote": "成乙方任何損失，包括間接損失及預期利益，均負無限賠償責任；乙方對甲方之賠償以新臺幣一千"
+        },
+        {
+          "location": "PAGE1/L10",
+          "quote": "元為上限。"
+        }
+      ],
+      "issue": "無上限日計違約金及責任極不對稱",
+      "impact": "甲方小額遲付可能累積超過契約價款，乙方實質責任難以涵蓋系統損害。",
+      "level": "高",
+      "reason": "無限曝險與一千元上限不對稱，具重大資金影響；不直接判違法。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "遲延付款之違約金計算基礎、日率與累計上限由雙方於簽署前書面約定【待確認】，以逾期未付且無爭議款項為計算基礎。雙方對可證明且具因果關係之直接損失負責，累計責任上限為【待協商金額】；故意、重大過失及依法不得限制者不受上限拘束。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "責任上限是否涵蓋可能資料外洩損害？"
+      ],
+      "legal_basis_status": "unverified",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R5",
+      "topic": "confidentiality_privacy",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L13",
+          "quote": "第六條 個人資料：甲方得提供員工與客戶聯絡資料供系統測試。乙方得將該資料提供任何合作廠商"
+        },
+        {
+          "location": "PAGE1/L14",
+          "quote": "作行銷使用，無須另行告知甲方或資料當事人，且可永久保存。"
+        }
+      ],
+      "issue": "個資擴張行銷、任意轉交與永久保存",
+      "impact": "資料當事人權益、資安與合規義務不明，可能造成客訴、事件處理與法遵成本。",
+      "level": "高",
+      "reason": "用途及接收人範圍皆未受控制，涉及大量員工客戶資料；法律依據未查證。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "乙方僅得依甲方書面指示及合法履約目的處理個人資料，不得自行行銷或提供第三人；分包應經甲方事前書面同意並受同等義務拘束。乙方應採適當安全措施，事故立即通知並協助處理，終止後三十日返還或刪除，依法須保存者另列明依據及期限。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "確認個資類別、當事人告知及合法處理依據。"
+      ],
+      "legal_basis_status": "unverified",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R6",
+      "topic": "ip",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L15",
+          "quote": "第七條 智慧財產：乙方保有既有工具之權利；雙方應另行議定專為甲方開發成果之歸屬及使用授權"
+        },
+        {
+          "location": "PAGE1/L16",
+          "quote": "，未議定前甲方僅得於乙方持續收取服務費期間使用。"
+        }
+      ],
+      "issue": "成果使用權留待後議且繫於持續繳費",
+      "impact": "甲方付費後仍可能無法永久使用專案成果或更換服務商。",
+      "level": "中",
+      "reason": "核心成果權利未確定，能於簽署前具體協商。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "乙方保有既有工具權利；就專為本案開發且甲方已付清對應款項之成果，授權甲方永久、不可任意撤回於內部使用及委託第三人維護。必要原始碼、介面文件、第三方授權與移轉範圍應於附件一逐項列明【待確認】。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "是否需要所有權移轉、原始碼及第三方維護權？"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R7",
+      "topic": "termination",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L17",
+          "quote": "第八條 終止：乙方得隨時不附理由立即終止並保留全部已收款。甲方不得提前終止，亦不得要求資"
+        },
+        {
+          "location": "PAGE1/L18",
+          "quote": "料匯出、刪除或交接。"
+        }
+      ],
+      "issue": "單方立即終止且封鎖資料退出",
+      "impact": "甲方可能突然失去系統及客戶資料，另付遷移成本，預付款仍無法返還。",
+      "level": "高",
+      "reason": "營運持續與資料取回缺乏保障。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "任一方得提前三十日書面通知終止；重大違約經書面催告十五日未改善者，他方得終止。乙方應於終止後十五日提供可讀取資料匯出及必要交接，已履行且驗收部分依比例結算，未履行預收款應返還；資料返還或刪除依個資條款辦理。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "確認資料格式、交接工時與備援安排。"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R8",
+      "topic": "law_disputes",
+      "missing_clause": true,
+      "citations": [],
+      "issue": "缺少準據法及爭議解決安排",
+      "impact": "爭議時可能先爭執法院、法律及程序，增加時間與費用。",
+      "level": "中",
+      "reason": "缺少跨境背景，尚不能確定適當法域或違法。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "本契約適用【待雙方確認法域】法律；爭議應先由雙方協商三十日，未能解決時提交【待確認法院或仲裁機構及地點】處理，依法不得排除之強制規定從其規定。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "確認設立地、履約地、資產所在地與管轄選擇。"
+      ],
+      "legal_basis_status": "unverified",
+      "legal_source_ids": []
+    },
+    {
+      "id": "R9",
+      "topic": "special",
+      "missing_clause": false,
+      "citations": [
+        {
+          "location": "PAGE1/L19",
+          "quote": "第九條 其他：乙方得以網站公告修改服務內容及本合約，公告當日生效；甲方繼續使用視為接受。"
+        }
+      ],
+      "issue": "公告立即生效之單方修改",
+      "impact": "原定價值及服務範圍可能在無明確合意下變動，甲方難以掌握費用與功能。",
+      "level": "中",
+      "reason": "權利受單方變更影響，但可藉書面合意及退出條款控制。",
+      "action": "簽署前協商具體修訂，確認未決條件並取得書面同意。",
+      "professional_confirmation": true,
+      "draft_terms": "涉及價格、服務範圍或雙方權利義務之修改，應經雙方授權代表書面同意後生效；一般技術調整應提前三十日通知，且不得實質減損已約定功能或安全性，甲方對重大不利調整得終止並按比例退還未履行價款。",
+      "revision_reason": "回應原條款的具體曝險，補足可執行的權利義務、程序與範圍。",
+      "questions": [
+        "網站公告哪些類型需視為重要變更？"
+      ],
+      "legal_basis_status": "commercial_only",
+      "legal_source_ids": []
+    }
+  ],
+  "legal_check": {
+    "status": "unverified",
+    "reason": "此離線教學案例沒有保存官方法律來源；未完成最新法規查證，不據此認定條款違法。"
+  },
+  "legal_sources": [],
+  "questions": [
+    "確認公司登記、簽署權限、實際履約地與完整附件。"
+  ],
+  "simulation": true
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "法務文件審查助理"
+  short_description: "逐項審查合約與公司法律文件，交付可回查原件的風險及修訂報告"
+  default_prompt: "使用 $legal-reviewer 審閱我提供的文件，指出風險並提出具體修訂文字。"

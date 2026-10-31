@@ -1,0 +1,4 @@
+interface:
+  display_name: "財務報表與對帳助理"
+  short_description: "實際計算會計報表、銀行對帳與財務差異，交付可回查來源的 Excel 成果"
+  default_prompt: "$finance-assistant"

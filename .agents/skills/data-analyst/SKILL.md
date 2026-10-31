@@ -1,6 +1,6 @@
 ---
 name: data-analyst
-description: 分析使用者提供的 CSV 或 XLSX 工作資料，以 Python 真實計算缺漏、型態、描述統計、IQR 異常、分組與日期趨勢，產生 Excel、Markdown 與圖表。適用於表格資料分析與檢核，不適用於純文件摘要、因果推論、預測或即時操控 Excel。
+description: 一般 Excel 資料整理、描述統計與視覺化；會計報表、財務對帳與預算差異請使用 finance-assistant。分析使用者提供的 CSV 或 XLSX 工作資料，以 Python 真實計算缺漏、型態、描述統計、IQR 異常、分組與日期趨勢，產生 Excel、Markdown 與圖表。適用於表格資料分析與檢核，不適用於純文件摘要、因果推論、預測或即時操控 Excel。
 ---
 
 # Excel 資料分析助理

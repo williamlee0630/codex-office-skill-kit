@@ -9,11 +9,12 @@ import re
 from zipfile import ZipFile, ZIP_DEFLATED, BadZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '1.1.0'
+VERSION = '1.2.0'
+SKILLS = ('email-assistant', 'receipt-organizer', 'presentation-maker', 'document-writer', 'data-analyst', 'idea-generator', 'research-assistant', 'legal-reviewer', 'finance-assistant')
 PACKAGES = (f'practice-data-{VERSION}.zip', f'office-skills-{VERSION}.zip', f'codex-office-skill-kit-{VERSION}.zip')
 ROOT_FILES = {'README.md', 'ACCEPTANCE.md', 'AGENTS.md', 'LICENSE', 'requirements.txt', '.gitignore', '.gitattributes', 'index.html', '.nojekyll'}
-PUBLIC_DOCS = {'INSTALL.md', 'DEVELOPMENT.md', 'ACCEPTANCE.md', 'PROGRESS.md', 'CHANGELOG.md', 'OFFICIAL_SOURCES.md', 'DESIGN.md', 'USER_REQUEST.md', 'IMPLEMENTATION_PLAN.md', 'DEPLOYMENT_PLAN.md'}
-EXCLUDED = {'__pycache__', '.tmp', '.work', '.git', '.venv', 'venv', 'node_modules', '.codex', '.aws', '.cache', 'office-render'}
+PUBLIC_DOCS = {'INSTALL.md', 'DEVELOPMENT.md', 'ACCEPTANCE.md', 'PROGRESS.md', 'CHANGELOG.md', 'OFFICIAL_SOURCES.md', 'DESIGN.md', 'USER_REQUEST.md', 'IMPLEMENTATION_PLAN.md', 'DEPLOYMENT_PLAN.md', 'USER_REQUEST_V1.2.0.md', 'RECORDING.md'}
+EXCLUDED = {'__pycache__', '.tmp', '.work', '.git', '.venv', 'venv', 'node_modules', '.codex', '.aws', '.cache', 'office-render', 'work'}
 TEXT = {'.md', '.txt', '.json', '.csv', '.tsv', '.py', '.ps1', '.yaml', '.yml', '.html', '.css', '.js', '.xml', '.rels', '.eml', '.svg', '.toml'}
 ASSETS = {'.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.woff', '.woff2'}
 EXAMPLE_TYPES = TEXT | {'.xlsx', '.docx', '.pptx', '.pdf', '.png', '.jpg', '.jpeg'}
@@ -83,6 +84,56 @@ def _scan_text(text, label):
     return issues
 
 
+
+def _scan_pdf(data, label, depth):
+    """掃描解析後的文字與中繼資料，避免將壓縮字型位元組誤判為郵件。"""
+    from pypdf import PdfReader
+    from pypdf.generic import IndirectObject, StreamObject
+    issues = []
+    if depth >= 8 or len(data) > 256 * 1024 * 1024:
+        return [label + '：PDF 大小或巢狀深度超過檢查上限']
+    try:
+        reader = PdfReader(BytesIO(data))
+        if reader.is_encrypted:
+            return [label + '：加密 PDF 無法完整檢查']
+        for page in reader.pages:
+            issues.extend(_scan_text(page.extract_text() or '', label + '：PDF 文字'))
+        seen = set()
+        visited = 0
+        def visit(value):
+            nonlocal visited
+            if isinstance(value, IndirectObject):
+                identity = (value.idnum, value.generation)
+                if identity in seen:
+                    return
+                seen.add(identity)
+                value = value.get_object()
+            visited += 1
+            if visited > 20000:
+                raise ValueError('PDF object limit')
+            if isinstance(value, str):
+                issues.extend(_scan_text(value, label + '：PDF 屬性'))
+            elif isinstance(value, dict):
+                if isinstance(value, StreamObject):
+                    kind = str(value.get('/Type', ''))
+                    if kind == '/EmbeddedFile':
+                        issues.extend(scan(value.get_data(), label + '：PDF 附件', depth + 1))
+                    elif kind == '/Metadata':
+                        raw = value.get_data()
+                        encoding = 'utf-16' if raw.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8'
+                        issues.extend(_scan_text(raw.decode(encoding, errors='ignore'), label + '：PDF 中繼資料'))
+                for item in value.values():
+                    visit(item)
+            elif isinstance(value, (list, tuple)):
+                for item in value:
+                    visit(item)
+        # 包含 Info、表單值、註解、文件屬性及嵌入檔案；不執行 PDF 動作。
+        visit(reader.trailer)
+    except Exception as error:
+        issues.append(label + '：PDF 無法完整檢查（' + type(error).__name__ + '）')
+    return list(dict.fromkeys(issues))
+
+
 def scan(path_or_data, label=None, _depth=0):
     """回傳不含私密值的問題清單；掃描檔案或 bytes，遞迴 ZIP／OOXML。"""
     if isinstance(path_or_data, (str, Path)):
@@ -94,6 +145,8 @@ def scan(path_or_data, label=None, _depth=0):
         label = label or '資料'
     if _scan_text(label, '檔名'):
         label = '[隱私檔名]'
+    if data.lstrip().startswith(b'%PDF-'):
+        return _scan_pdf(data, label, _depth)
     encoding = 'utf-16' if data.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8'
     is_archive = data.startswith((b'PK\x03\x04', b'PK\x05\x06', b'PK\x07\x08'))
     # 壓縮資料不是文字；掃描展開內容與中繼資料，避免隨機位元組被誤認成信箱。

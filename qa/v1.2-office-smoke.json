@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-31",
+  "method": "Windows CUA 原生應用程式",
+  "word": {
+    "opened": true,
+    "sample": "work/legal-visual-check/合約審查報告.docx",
+    "observed_pages": 11,
+    "visually_inspected": "首頁及末頁來源索引可讀；未逐頁完整檢查",
+    "source_not_modified": true
+  },
+  "excel": {
+    "opened": true,
+    "sample": "work/finance-behavior/reconciliation/銀行對帳結果.xlsx",
+    "inspected": "分析結果前五列；欄名、100/100/0、200/210/-10、疑似及重複分類可讀；五張工作表入口存在",
+    "closed_without_saving": true
+  },
+  "limitations": [
+    "僅原生畫面抽查，不代表每頁、每張表或完整桌面Codex流程驗收。",
+    "bundled DOCX renderer缺少soffice.exe，未完成全頁PNG渲染。",
+    "本機file://講義被瀏覽器URL政策阻擋，未繞過。"
+  ]
+}

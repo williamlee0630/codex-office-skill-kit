@@ -1,0 +1,5 @@
+{
+  "mode": "variance",
+  "source": "budget-actual.xlsx",
+  "simulation": true
+}

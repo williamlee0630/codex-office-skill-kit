@@ -38,15 +38,15 @@ def fixture(root):
                  '.gitignore', 'docs/INSTALL.md', 'docs/ACCEPTANCE.md', 'qa/summary.md']:
         put(root, name)
     put(root, 'index.html', '<meta http-equiv="refresh" content="0; url=handbook/index.html"><a href="handbook/index.html">講義</a>')
-    put(root, 'handbook/index.html', '<a href="../dist/codex-office-skill-kit-1.1.0.zip">完整學員工具包</a>'
-        '<a href="../dist/office-skills-1.1.0.zip">技能</a><a href="../dist/practice-data-1.1.0.zip">資料</a>'
-        '<a href="../examples/demo/source.md">來源</a><a href="../.agents/skills/demo-0/SKILL.md">技能原文</a>'
+    put(root, 'handbook/index.html', '<a href="../dist/codex-office-skill-kit-1.2.0.zip">完整學員工具包</a>'
+        '<a href="../dist/office-skills-1.2.0.zip">技能</a><a href="../dist/practice-data-1.2.0.zip">資料</a>'
+        '<a href="../examples/demo/source.md">來源</a><a href="../.agents/skills/email-assistant/SKILL.md">技能原文</a>'
         '<script src="assets/app.js"></script>')
     put(root, 'handbook/assets/app.js', '"use strict";')
     put(root, 'handbook/build.py', 'raise RuntimeError("不應出現在 Pages")')
     put(root, 'examples/demo/source.md')
-    for i in range(10):
-        put(root, f'.agents/skills/demo-{i}/SKILL.md')
+    for skill in ['email-assistant', 'receipt-organizer', 'presentation-maker', 'document-writer', 'data-analyst', 'idea-generator', 'research-assistant', 'legal-reviewer', 'finance-assistant']:
+        put(root, f'.agents/skills/{skill}/SKILL.md')
     put(root, 'tools/office_common.py', 'pass\n')
     put(root, 'tests/test_common.py', 'import unittest\n')
     put(root, 'tests/test_publication.py', 'raise RuntimeError("精簡包不應載入")')
@@ -55,6 +55,55 @@ def fixture(root):
 
 
 class PublicationTests(unittest.TestCase):
+    def pdf_bytes(self, kind, value):
+        from pypdf import PdfWriter
+        from pypdf.generic import (ArrayObject, DecodedStreamObject, DictionaryObject,
+                                  NameObject, NumberObject, TextStringObject)
+        writer = PdfWriter(); page = writer.add_blank_page(width=300, height=300)
+        if kind == 'font':
+            stream = DecodedStreamObject(); stream.set_data(value.encode())
+            font = DictionaryObject({NameObject('/Type'): NameObject('/FontDescriptor'),
+                                     NameObject('/FontFile2'): writer._add_object(stream)})
+            page[NameObject('/Resources')] = DictionaryObject({NameObject('/Font'): writer._add_object(font)})
+        elif kind == 'metadata': writer.add_metadata({'/Author': value})
+        elif kind == 'attachment': writer.add_attachment('sample.txt', value.encode())
+        elif kind == 'annotation':
+            annotation = DictionaryObject({NameObject('/Type'): NameObject('/Annot'),
+                NameObject('/Subtype'): NameObject('/Text'), NameObject('/Contents'): TextStringObject(value),
+                NameObject('/Rect'): ArrayObject([NumberObject(0)] * 4)})
+            page[NameObject('/Annots')] = ArrayObject([writer._add_object(annotation)])
+        elif kind == 'form':
+            field = DictionaryObject({NameObject('/FT'): NameObject('/Tx'), NameObject('/T'): TextStringObject('contact'),
+                                      NameObject('/V'): TextStringObject(value)})
+            writer._root_object[NameObject('/AcroForm')] = DictionaryObject({NameObject('/Fields'): ArrayObject([writer._add_object(field)])})
+        elif kind == 'xmp':
+            stream = DecodedStreamObject(); stream.set_data(('<metadata>' + value + '</metadata>').encode())
+            stream[NameObject('/Type')] = NameObject('/Metadata')
+            writer._root_object[NameObject('/Metadata')] = writer._add_object(stream)
+        elif kind == 'text':
+            from reportlab.pdfgen import canvas
+            buffer = io.BytesIO(); document = canvas.Canvas(buffer, pageCompression=1)
+            document.drawString(20, 200, value); document.save(); return buffer.getvalue()
+        buffer = io.BytesIO(); writer.write(buffer); return buffer.getvalue()
+
+    def test_pdf_scans_readable_content_not_embedded_font_binary(self):
+        publication = load_module('publication')
+        private = 'person' + '@' + 'private-company.test'
+        # These bytes represent binary font data, not PDF text or metadata.
+        self.assertEqual(publication.scan(self.pdf_bytes('font', private), label='font.pdf'), [])
+        for name in ['正常服務合約.pdf', '風險服務合約.pdf']:
+            self.assertEqual(publication.scan(ROOT / 'examples/legal-reviewer' / name), [])
+
+    def test_pdf_private_text_metadata_annotations_forms_and_attachments_are_blocked(self):
+        publication = load_module('publication')
+        private = 'person' + '@' + 'private-company.test'
+        for kind in ['text', 'metadata', 'annotation', 'form', 'xmp', 'attachment']:
+            with self.subTest(kind=kind):
+                issues = publication.scan(self.pdf_bytes(kind, private), label='sample.pdf')
+                self.assertTrue(issues)
+                self.assertFalse(any(private in issue for issue in issues))
+        self.assertTrue(publication.scan(b'%PDF-1.7\nmalformed', label='broken.pdf'))
+
     def test_skills_package_has_no_links_to_missing_full_handbook_or_qa(self):
         release = load_module('build_release')
         checker = load_module('check_release')
@@ -66,7 +115,7 @@ class PublicationTests(unittest.TestCase):
             put(root, 'docs/PROGRESS.md', '[講義](../handbook/index.html)')
             put(root, 'tests/manual/trigger-cases.md', '[驗收](../../ACCEPTANCE.md)')
             release.build(root)
-            with ZipFile(root / 'dist/office-skills-1.1.0.zip') as bundle:
+            with ZipFile(root / 'dist/office-skills-1.2.0.zip') as bundle:
                 files = {name: bundle.read(name) for name in bundle.namelist()}
             self.assertGreater(checker._check_documents(files), 0)
             self.assertIn('docs/INSTALL.md', files)
@@ -84,7 +133,7 @@ class PublicationTests(unittest.TestCase):
                 put(root, name, '私人資料')
             selected = {p.relative_to(root).as_posix() for p in publication.public_files(root)}
             self.assertIn('qa/summary.md', selected)
-            self.assertIn('.agents/skills/demo-0/SKILL.md', selected)
+            self.assertIn('.agents/skills/email-assistant/SKILL.md', selected)
             self.assertIn('handbook/build.py', selected)  # 原始碼可公開；Pages 另有精簡白名單。
             self.assertFalse(any('docs/qa/' in p or '/.tmp/' in p or '.env' in p or
                                  'local-settings' in p or 'raw-events' in p or 'old.zip' in p or '~$' in p for p in selected))
@@ -176,20 +225,20 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse((destination / 'handbook/build.py').exists())
             self.assertFalse((destination / 'tests').exists())
             # upload-pages-artifact 會排除點開頭目錄；網站另用公開別名，離線包維持原結構。
-            self.assertTrue((destination / 'skills/demo-0/SKILL.md').exists())
+            self.assertTrue((destination / 'skills/email-assistant/SKILL.md').exists())
             self.assertFalse((destination / '.agents').exists())
             public_html = (destination / 'handbook/index.html').read_text(encoding='utf-8')
-            self.assertIn('href="../skills/demo-0/SKILL.md"', public_html)
+            self.assertIn('href="../skills/email-assistant/SKILL.md"', public_html)
             self.assertGreater(checker.check_links(destination), 5)
-            archive = root / 'dist/codex-office-skill-kit-1.1.0.zip'
+            archive = root / 'dist/codex-office-skill-kit-1.2.0.zip'
             with ZipFile(archive) as bundle:
                 html = bundle.read('codex-office-skill-kit/handbook/index.html').decode()
-                self.assertNotIn('href="../dist/codex-office-skill-kit-1.1.0.zip"', html)
+                self.assertNotIn('href="../dist/codex-office-skill-kit-1.2.0.zip"', html)
                 self.assertIn('href="../README.md"', html)
                 self.assertIn('codex-office-skill-kit/ACCEPTANCE.md', bundle.namelist())
                 self.assertIn('codex-office-skill-kit/qa/summary.md', bundle.namelist())
-                self.assertIn('href="../.agents/skills/demo-0/SKILL.md"', html)
-            with ZipFile(root / 'dist/office-skills-1.1.0.zip') as bundle:
+                self.assertIn('href="../.agents/skills/email-assistant/SKILL.md"', html)
+            with ZipFile(root / 'dist/office-skills-1.2.0.zip') as bundle:
                 self.assertNotIn('tests/test_publication.py', bundle.namelist())
                 self.assertNotIn('tests/test_handbook_learner.py', bundle.namelist())
 
@@ -206,16 +255,16 @@ class PublicationTests(unittest.TestCase):
                 release.build(root)
             selected.write_text('模擬驗收摘要', encoding='utf-8')
             release.build(root)
-            (root / 'dist/practice-data-1.1.0.zip').unlink()
+            (root / 'dist/practice-data-1.2.0.zip').unlink()
             with self.assertRaises((ValueError, FileNotFoundError)):
                 site.build(root)
             release.build(root)
-            with (root / 'dist/practice-data-1.1.0.zip').open('ab') as handle:
+            with (root / 'dist/practice-data-1.2.0.zip').open('ab') as handle:
                 handle.write(b'tampered')
             with self.assertRaises(ValueError):
                 checker.check(root, write_report=False)
             release.build(root)
-            (root / 'dist/codex-office-skill-kit-1.1.0.zip').unlink()
+            (root / 'dist/codex-office-skill-kit-1.2.0.zip').unlink()
             manifest_path = root / 'dist/manifest.json'
             manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
             manifest['packages'] = manifest['packages'][:2]

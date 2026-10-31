@@ -1,0 +1,63 @@
+{
+  "groups": [
+    {
+      "currency": "TWD",
+      "period": "2026-10",
+      "debit_total": "450000.00",
+      "credit_total": "450000.00",
+      "debit_credit_balanced": true,
+      "profit": "100000.00",
+      "assets": "350000.00",
+      "liabilities": "50000.00",
+      "equity": "300000.00",
+      "balance_difference": "0.00",
+      "cash_flow_available": false,
+      "balance_difference_exact": "0",
+      "balance_sheet_balanced": true,
+      "exact_values": {
+        "asset": "350000",
+        "liability": "50000",
+        "equity": "200000",
+        "revenue": "200000",
+        "expense": "100000",
+        "debits": "450000",
+        "credits": "450000"
+      }
+    }
+  ],
+  "complete": true,
+  "review": [
+    "教學模擬資料，非真實公司帳務。",
+    "TWD／2026-10 缺少足夠現金流量交易分類及核對資料，未編製現金流量表。",
+    "會計準則及報表用途：教學模擬工作底稿，未指定正式會計準則"
+  ],
+  "mode": "statements",
+  "simulation": true,
+  "source_row_count": 7,
+  "sources": [
+    {
+      "path": "examples/finance-assistant/trial-balance/trial-balance.xlsx",
+      "sha256": "b60627bc65cbbf6f0bea5db7735a58bc7417fd738b2b1d91df5af4bf5a0ca22e",
+      "headers": [
+        "科目",
+        "分類",
+        "借方",
+        "貸方",
+        "幣別",
+        "期間",
+        "備註（教學模擬資料）"
+      ],
+      "mapping": {
+        "currency": "幣別",
+        "period": "期間",
+        "account": "科目",
+        "class": "分類",
+        "debit": "借方",
+        "credit": "貸方"
+      },
+      "sheet": "教學模擬試算表",
+      "metadata": []
+    }
+  ],
+  "formal_audit_completed": false
+}

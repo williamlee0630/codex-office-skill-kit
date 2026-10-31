@@ -1,6 +1,6 @@
 # 安裝與日常使用
 
-版本 1.1.0｜更新：2026-10-30（台北）
+版本 1.2.0｜更新：2026-10-31（台北）
 
 ## 安裝並載入技能
 
@@ -39,3 +39,7 @@ python -m venv .venv
 格式工具可獨立使用各技能 scripts/requirements.txt 安裝；無需課程根目錄的 requirements.txt。參考官方技能位置與歷史查證見 [OFFICIAL_SOURCES](OFFICIAL_SOURCES.md)，桌面介面名稱依版本而定。
 
 </details>
+
+## v1.2.0 升級
+
+本版保留九個技能，新增 legal-reviewer 與 finance-assistant。若舊工作區已安裝 v1.1.0，先備份並確認使用者修改，再由 Codex 協助移除淘汰的 meeting-assistant、project-tracker、weekly-report 與安裝新版；本專案不會自動刪除其他工作區或全域安裝。

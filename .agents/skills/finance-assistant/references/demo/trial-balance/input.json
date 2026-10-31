@@ -1,0 +1,6 @@
+{
+  "mode": "statements",
+  "source": "trial-balance.xlsx",
+  "simulation": true,
+  "accounting_standard": "教學模擬工作底稿，未指定正式會計準則"
+}

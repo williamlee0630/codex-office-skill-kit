@@ -1,4 +1,0 @@
-interface:
-  display_name: "會議紀錄整理助理"
-  short_description: "整理逐字稿、決議與待辦，清楚保留提議、來源及未知負責人與期限"
-  default_prompt: "$meeting-assistant"

@@ -4,7 +4,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 import hashlib
 import json
 import re
-from publication import ROOT, VERSION, PACKAGES, public_files, ensure_public, scan, taipei_date
+from publication import ROOT, VERSION, PACKAGES, SKILLS, public_files, ensure_public, scan, taipei_date
 
 
 def create_zip(path, files, extras=None):
@@ -46,6 +46,9 @@ def build(root=ROOT):
     if not any((root / 'qa').glob('*.md')) and not any((root / 'qa').glob('*.json')):
         raise ValueError('發行缺少 qa/ 可公開驗收摘要')
     selected = [path for path in public_files(root) if path.relative_to(root).parts[0] != 'dist']
+    actual = {p.parent.name for p in selected if p.name == 'SKILL.md' and p.parent.parent == root / '.agents/skills'}
+    if actual != set(SKILLS):
+        raise ValueError('發行必須恰好包含指定9個技能')
     ensure_public(selected, root)
     dist = root / 'dist'
     dist.mkdir(exist_ok=True)
@@ -58,11 +61,11 @@ def build(root=ROOT):
         if (name.startswith(('.agents/skills/', 'examples/', 'tools/'))
                 or name in {'requirements.txt', 'LICENSE', 'docs/INSTALL.md', 'docs/DEVELOPMENT.md', 'docs/OFFICIAL_SOURCES.md'}):
             light.append((path, name))
-        elif name.startswith('tests/') and path.suffix == '.py' and not (path.name.startswith('test_handbook') or path.name == 'test_publication.py'):
+        elif name.startswith('tests/') and path.suffix == '.py' and not (path.name.startswith('test_handbook') or path.name in {'test_publication.py', 'test_v12_release.py'}):
             light.append((path, name))
-    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.1.0
+    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.2.0
 
-此包包含十個完整技能、原創模擬資料與程式測試。完整講義請使用完整學員工具包。
+此包包含九個完整技能、原創模擬資料與程式測試。完整講義請使用完整學員工具包。
 安裝並載入技能 → 送出 $技能名稱 → 依引導說明工作或提供素材 → 必要時補答 → 開啟並核對成果。
 可把完整技能資料夾帶到一般工作區。Codex 自行檢查環境、整理資料與產檔，不要求讀 MD、回報路徑、編輯 JSON 或貼長提示詞。
 模擬資料僅明確要求示範時使用；既有目的、素材與補答沿用，不重問。

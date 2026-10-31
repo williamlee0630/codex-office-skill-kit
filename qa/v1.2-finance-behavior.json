@@ -1,0 +1,163 @@
+{
+  "test_type": "platform_subagent_behavioral_and_real_local_script_workflow",
+  "tested_utc": "2026-10-31T08:41:13.399470+00:00",
+  "starter_input": "$finance-assistant",
+  "starter_exact_response": "目前想編製財務報表、核對兩份帳務，還是分析預算／實際差異？請提供相關資料。",
+  "behavior": {
+    "natural_request": "幫我把這個月公司帳與銀行明細對一下，這是教學模擬資料，請產生可核對的 Excel 與報告；期間2026年10月、TWD，不修改原帳。",
+    "followups": [
+      "請用 budget-actual.xlsx 分析預算實際差異。",
+      "請用 trial-balance.xlsx 編財務報表，交付工作底稿。"
+    ],
+    "repeated_selection_asked": false,
+    "user_required_to_prepare_json_or_run_commands": false,
+    "adapter_prepared_by_agent": true,
+    "preserve_all_original_periods_and_currencies": true
+  },
+  "isolation": "work/finance-behavior",
+  "verification_script": "work/finance-behavior/verify_independent.py",
+  "execution_driver": "work/finance-behavior/run_workflows.py",
+  "originals_unchanged": true,
+  "original_hashes": {
+    "examples/finance-assistant/reconciliation/internal.csv": "85aef82d02f3e201bfc5229fad8ebb66e913033b97b2ebd6ad273e08cba867f2",
+    "examples/finance-assistant/reconciliation/bank.csv": "5a8edb78d9a1d075034f539a4a47a5e92c511dd0419170d648b4394177e02b50",
+    "examples/finance-assistant/budget/budget-actual.xlsx": "e1a7bcb9b9ed766e5f6c76b556a13f28dbdc67f8e86637855adc9bc411775ec5",
+    "examples/finance-assistant/trial-balance/trial-balance.xlsx": "b60627bc65cbbf6f0bea5db7735a58bc7417fd738b2b1d91df5af4bf5a0ca22e"
+  },
+  "copied_skill_files_sha256": {
+    "requirements.txt": "0f710723d36e82dbf8adbb5b34bae9dded81b17fef7abc823fc3a9bbbd4aaa4c",
+    "SKILL.md": "5dbf7e8849c5812a8658622b0b6d259e9ebb66cc2bd7ee8bfe722b0e4651c835",
+    "agents/openai.yaml": "0aabc6532e4b9539a6a919c47f591bf65f430514d840456e3aa859d016f7355a",
+    "references/workflow.md": "73b6f74f3cacacc1df58116ac2d3290d54ac40fde316eaf116371076ce6b7920",
+    "scripts/requirements.txt": "0f710723d36e82dbf8adbb5b34bae9dded81b17fef7abc823fc3a9bbbd4aaa4c",
+    "scripts/run.py": "97ad188b038bca3ebbd0779721e55e7aa4cb99d5d19f794681465d278a4a417d",
+    "scripts/_office.py": "4f4128b3ab562768f2eff01dc91442c919cee4c8ae257aae9e2b324506bb8043",
+    "references/demo/bank.csv": "5a8edb78d9a1d075034f539a4a47a5e92c511dd0419170d648b4394177e02b50",
+    "references/demo/expected.json": "990f2be64d7c0c0da2e4c48feec61976830ed46e334c7b242b7e349b4bfdcdec",
+    "references/demo/input.json": "8f0ec5764bd7660ba743ad5c16621a479da945dec6ceae0ec649523f08369074",
+    "references/demo/internal.csv": "85aef82d02f3e201bfc5229fad8ebb66e913033b97b2ebd6ad273e08cba867f2",
+    "references/demo/verify_expected.py": "cd416af784d1522604ca61095ce06ee3b0de1cb17472c162e6b468d405c6cfd8",
+    "references/demo/budget/budget-actual.xlsx": "e1a7bcb9b9ed766e5f6c76b556a13f28dbdc67f8e86637855adc9bc411775ec5",
+    "references/demo/budget/expected.json": "feb2a88faedb270338018e81934be1b94dd28ff880516e240c8179636dc9888d",
+    "references/demo/budget/input.json": "b02860c59b404f8c16115f6292a0406182945038bf35d403f4181c97cd9a89fe",
+    "references/demo/trial-balance/expected.json": "4f129f84054a5edb87e2b666f6c7204bfbc468a81aa1e64c2a0e5156be900a26",
+    "references/demo/trial-balance/input.json": "bd74f6f58e4c0cb2c1fc942d940d2d525aa210324b49990e1311e0b6dda3c73a",
+    "references/demo/trial-balance/trial-balance.xlsx": "b60627bc65cbbf6f0bea5db7735a58bc7417fd738b2b1d91df5af4bf5a0ca22e"
+  },
+  "copied_skill_equals_current_live": true,
+  "copied_run_py_timestamp_utc": "2026-10-31T08:38:40.492169+00:00",
+  "assertions_passed": 339,
+  "all_original_cells_verified": 229,
+  "reconciliation": {
+    "source_rows": 22,
+    "output_results": 15,
+    "counts": {
+      "已確認匹配": 4,
+      "疑似匹配，待人工確認": 2,
+      "金額不符": 1,
+      "內部帳務缺漏": 3,
+      "銀行或另一來源缺漏": 3,
+      "疑似重複紀錄": 2
+    },
+    "totals": [
+      {
+        "source": "內部",
+        "currency": "TWD",
+        "period": "2026-10",
+        "amount": "1755"
+      },
+      {
+        "source": "內部",
+        "currency": "USD",
+        "period": "2026-10",
+        "amount": "20"
+      },
+      {
+        "source": "另一來源",
+        "currency": "TWD",
+        "period": "2026-10",
+        "amount": "1365"
+      },
+      {
+        "source": "另一來源",
+        "currency": "USD",
+        "period": "2026-10",
+        "amount": "20"
+      },
+      {
+        "source": "另一來源",
+        "currency": "TWD",
+        "period": "2026-09",
+        "amount": "500"
+      }
+    ],
+    "complete": false
+  },
+  "budget": {
+    "source_rows": 8,
+    "totals": [
+      {
+        "currency": "TWD",
+        "base_period": "2026-10",
+        "actual_period": "2026-10",
+        "base": "169100.10",
+        "actual": "206800.21",
+        "difference": "37700.11",
+        "rows": 6
+      },
+      {
+        "currency": "USD",
+        "base_period": "2026-10",
+        "actual_period": "2026-10",
+        "base": "200.00",
+        "actual": "180.00",
+        "difference": "-20.00",
+        "rows": 1
+      }
+    ],
+    "complete": false,
+    "literal_None_in_docx": false
+  },
+  "statements": {
+    "source_rows": 7,
+    "computed": {
+      "debit_total": "450000.00",
+      "credit_total": "450000.00",
+      "profit": "100000.00",
+      "assets": "350000.00",
+      "liabilities": "50000.00",
+      "equity": "300000.00",
+      "balance_difference": "0.00"
+    },
+    "complete_input_checks": true,
+    "cash_flow_available": false
+  },
+  "artifacts": {
+    "reconciliation": [
+      "work/finance-behavior/reconciliation/finance-result.json",
+      "work/finance-behavior/reconciliation/財務分析報告.docx",
+      "work/finance-behavior/reconciliation/銀行對帳結果.xlsx"
+    ],
+    "budget": [
+      "work/finance-behavior/budget/finance-result.json",
+      "work/finance-behavior/budget/財務分析報告.docx",
+      "work/finance-behavior/budget/財務差異分析.xlsx"
+    ],
+    "statements": [
+      "work/finance-behavior/statements/finance-result.json",
+      "work/finance-behavior/statements/財務分析報告.docx",
+      "work/finance-behavior/statements/財務報表.xlsx"
+    ]
+  },
+  "advisories": [
+    "Final root replay uses the updated script; date-derived source periods remain factual, explicit period mismatch is separately flagged by regression test.",
+    "Source currency and period defaults do not filter; each currency and actual period remains separately preserved."
+  ],
+  "limitations": [
+    "Starter and natural conversation behavior evaluated in platform subagent, not an independently launched Codex CLI session or desktop UI.",
+    "No nested CLI used; no policy workaround attempted.",
+    "XLSX/DOCX package content, every source cell, references, Decimal math and reporting text checked programmatically; rendered visual layout not verified.",
+    "No original JSON configs, expected files or fixture scripts were read; complete skill directory copied as an inert resource, only SKILL.md, workflow.md, requirements and run.py inspected."
+  ],
+  "status": "passed_final_root_replay_of_independent_verifier"
+}

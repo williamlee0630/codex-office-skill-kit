@@ -1,4 +1,4 @@
-"""執行十組已整理測資，產生可檢查的真實成果；不代表語意觸發。"""
+"""執行九組已整理測資，產生可檢查的真實成果；不代表語意觸發。"""
 from pathlib import Path
 import subprocess
 import sys

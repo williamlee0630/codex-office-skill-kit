@@ -14,7 +14,7 @@ TEMP.mkdir(parents=True, exist_ok=True)
 
 
 class ReleaseToolTests(unittest.TestCase):
-    def test_all_ten_skills_run_outside_original_workspace(self):
+    def test_all_nine_skills_run_outside_original_workspace(self):
         inputs = {'data-analyst': 'sales.csv', 'presentation-maker': 'deck.json', 'receipt-organizer': 'receipts.json'}
         with tempfile.TemporaryDirectory(dir=TEMP) as temp:
             folder = Path(temp)
@@ -41,14 +41,14 @@ class ReleaseToolTests(unittest.TestCase):
             self.assertFalse(target.exists())
             result = subprocess.run(command + ['--apply'], capture_output=True, text=True, encoding='utf-8')
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertEqual(len(list(target.glob('*/SKILL.md'))), 10)
-            sentinel = target / 'meeting-assistant/SKILL.md'
+            self.assertEqual(len(list(target.glob('*/SKILL.md'))), 9)
+            sentinel = target / 'email-assistant/SKILL.md'
             sentinel.write_text('保留既有內容', encoding='utf-8')
             result = subprocess.run(command + ['--apply'], capture_output=True, text=True, encoding='utf-8')
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(sentinel.read_text(encoding='utf-8'), '保留既有內容')
 
-    def test_manifest_has_ten_discriminating_skills(self):
+    def test_manifest_has_nine_discriminating_skills(self):
         script = ROOT / 'tools/validate_kit.py'
         self.assertTrue(script.exists(), '尚未實作結構驗證工具')
         result = subprocess.run([sys.executable, '-X', 'utf8', str(script)], capture_output=True, text=True, encoding='utf-8')

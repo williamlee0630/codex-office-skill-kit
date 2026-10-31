@@ -1,9 +1,13 @@
 # 設計與範圍
 
-建立 Windows / Codex 優先、無金鑰依賴的十個獨立技能。使用者的完整規格保存在 docs/USER_REQUEST.md。
+建立 Windows / Codex 優先、無金鑰依賴的九個獨立技能。使用者的完整規格保存在 docs/USER_REQUEST.md。
 
 技能採「原始資料 → Codex 語意整理與來源紀錄 → 已驗證結構資料 → Python 實際產檔 → 人工核對」流程。資料分析直接計算 CSV / XLSX。收據圖片與掃描 PDF 使用可用的視覺工具或人工轉錄；未辨識值保持空白。腳本不冒稱理解任意語意或具有 OCR。
 
 每個技能包含自己的輸入契約、CLI 與資源，不需要先啟動其他技能。共用讀檔及產檔模組由維護工具複製進各技能。格式依賴採 python-docx、python-pptx、openpyxl、pypdf、Pillow；測試採標準函式庫 unittest。教學網站為無外部相依的靜態 HTML / CSS / JavaScript，可直接雙擊開啟。
 
 驗收分四層：結構與連結檢查、正常與例外資料自動測試、實際產檔與畫面檢查、獨立 Codex 語意與觸發驗收。最後一層未實際執行的項目必須明列待驗收。
+
+## v1.2.0
+
+法務由 Codex 分析全文、原件定位及法律查核，產檔器核對引用並輸出三種成果；沒有可靠法律資料時明示未完成法律查證。財務直接以 Python 讀 CSV/XLSX/文字帳務，Decimal 計算、一對一匹配、幣別分組及資料完整性檢查。維持來源不覆寫及獨立執行資源。歷史規格見 USER_REQUEST.md，本版規格見 USER_REQUEST_V1.2.0.md。

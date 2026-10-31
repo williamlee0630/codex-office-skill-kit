@@ -1,3 +1,5 @@
+> 歷史：以下為 v1.0.0 初版規格；最新版九技能以 USER_REQUEST_V1.2.0.md 與 README 為準。
+
 # Codex 開發任務：繁體中文 AI 辦公室 Skill 工具包
 
 ## 一、專案目標

@@ -1,0 +1,255 @@
+{
+  "results": [
+    {
+      "status": "已確認匹配",
+      "internal_row": 2,
+      "other_row": 2,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "100.00",
+      "other_amount": "100.00",
+      "difference": "0.00",
+      "reason": "唯一交易識別碼、金額、幣別、期間相符，日期在容許範圍；一對一配對。",
+      "reference": "A"
+    },
+    {
+      "status": "金額不符",
+      "internal_row": 3,
+      "other_row": 3,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "200.00",
+      "other_amount": "210.00",
+      "difference": "-10.00",
+      "reason": "同一交易識別碼、幣別與期間，金額不同；差額＝內部−另一來源。",
+      "reference": "B"
+    },
+    {
+      "status": "疑似匹配，待人工確認",
+      "internal_row": 4,
+      "other_row": 4,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "300.00",
+      "other_amount": "300.00",
+      "difference": "0.00",
+      "reason": "日期、對象與金額相符但缺少一致交易識別碼；僅疑似。",
+      "reference": ""
+    },
+    {
+      "status": "銀行或另一來源缺漏",
+      "internal_row": 5,
+      "other_row": null,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "400.00",
+      "other_amount": null,
+      "difference": null,
+      "reason": "另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": "ONLY-I"
+    },
+    {
+      "status": "疑似重複紀錄",
+      "internal_row": 6,
+      "other_row": null,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "50.00",
+      "other_amount": null,
+      "difference": null,
+      "reason": "同來源交易識別碼或完整列重複；全部保留並排除自動配對。",
+      "reference": "DUP"
+    },
+    {
+      "status": "疑似重複紀錄",
+      "internal_row": 7,
+      "other_row": null,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "50.00",
+      "other_amount": null,
+      "difference": null,
+      "reason": "同來源交易識別碼或完整列重複；全部保留並排除自動配對。",
+      "reference": "DUP"
+    },
+    {
+      "status": "已確認匹配",
+      "internal_row": 8,
+      "other_row": 6,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "-25.00",
+      "other_amount": "-25.00",
+      "difference": "0.00",
+      "reason": "唯一交易識別碼、金額、幣別、期間相符，日期在容許範圍；一對一配對。",
+      "reference": "REV"
+    },
+    {
+      "status": "已確認匹配",
+      "internal_row": 9,
+      "other_row": 7,
+      "currency": "USD",
+      "period": "2026-10",
+      "internal_amount": "20.00",
+      "other_amount": "20.00",
+      "difference": "0.00",
+      "reason": "唯一交易識別碼、金額、幣別、期間相符，日期在容許範圍；一對一配對。",
+      "reference": "FX"
+    },
+    {
+      "status": "已確認匹配",
+      "internal_row": 10,
+      "other_row": 8,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "0.00",
+      "other_amount": "0.00",
+      "difference": "0.00",
+      "reason": "唯一交易識別碼、金額、幣別、期間相符，日期在容許範圍；一對一配對。",
+      "reference": "ZERO"
+    },
+    {
+      "status": "銀行或另一來源缺漏",
+      "internal_row": 11,
+      "other_row": null,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "100.00",
+      "other_amount": null,
+      "difference": null,
+      "reason": "另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": ""
+    },
+    {
+      "status": "銀行或另一來源缺漏",
+      "internal_row": 12,
+      "other_row": null,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "500.00",
+      "other_amount": null,
+      "difference": null,
+      "reason": "另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": "PERIOD"
+    },
+    {
+      "status": "疑似匹配，待人工確認",
+      "internal_row": 13,
+      "other_row": 11,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": "80.00",
+      "other_amount": "80.00",
+      "difference": "0.00",
+      "reason": "識別碼金額相符，但日期差異或交易對象衝突，需人工確認。",
+      "reference": "DATE"
+    },
+    {
+      "status": "內部帳務缺漏",
+      "internal_row": null,
+      "other_row": 5,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": null,
+      "other_amount": "600.00",
+      "difference": null,
+      "reason": "內部未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": "ONLY-B"
+    },
+    {
+      "status": "內部帳務缺漏",
+      "internal_row": null,
+      "other_row": 9,
+      "currency": "TWD",
+      "period": "2026-10",
+      "internal_amount": null,
+      "other_amount": "100.00",
+      "difference": null,
+      "reason": "內部未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": ""
+    },
+    {
+      "status": "內部帳務缺漏",
+      "internal_row": null,
+      "other_row": 10,
+      "currency": "TWD",
+      "period": "2026-09",
+      "internal_amount": null,
+      "other_amount": "500.00",
+      "difference": null,
+      "reason": "內部未找到可安全一對一配對交易；缺漏資料須先確認。",
+      "reference": "PERIOD"
+    }
+  ],
+  "counts": {
+    "已確認匹配": 4,
+    "疑似匹配，待人工確認": 2,
+    "金額不符": 1,
+    "內部帳務缺漏": 3,
+    "銀行或另一來源缺漏": 3,
+    "疑似重複紀錄": 2
+  },
+  "review": [
+    "教學模擬資料，非真實公司帳務。",
+    "疑似重複紀錄：內部第 6 列／另一來源第 — 列；同來源交易識別碼或完整列重複；全部保留並排除自動配對。",
+    "疑似重複紀錄：內部第 7 列／另一來源第 — 列；同來源交易識別碼或完整列重複；全部保留並排除自動配對。",
+    "金額不符：內部第 3 列／另一來源第 3 列；同一交易識別碼、幣別與期間，金額不同；差額＝內部−另一來源。",
+    "疑似匹配，待人工確認：內部第 13 列／另一來源第 11 列；識別碼金額相符，但日期差異或交易對象衝突，需人工確認。",
+    "疑似匹配，待人工確認：內部第 4 列／另一來源第 4 列；日期、對象與金額相符但缺少一致交易識別碼；僅疑似。",
+    "銀行或另一來源缺漏：內部第 5 列／另一來源第 — 列；另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+    "銀行或另一來源缺漏：內部第 11 列／另一來源第 — 列；另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+    "銀行或另一來源缺漏：內部第 12 列／另一來源第 — 列；另一來源未找到可安全一對一配對交易；缺漏資料須先確認。",
+    "內部帳務缺漏：內部第 — 列／另一來源第 5 列；內部未找到可安全一對一配對交易；缺漏資料須先確認。",
+    "內部帳務缺漏：內部第 — 列／另一來源第 9 列；內部未找到可安全一對一配對交易；缺漏資料須先確認。",
+    "內部帳務缺漏：內部第 — 列／另一來源第 10 列；內部未找到可安全一對一配對交易；缺漏資料須先確認。"
+  ],
+  "complete": false,
+  "mode": "reconcile",
+  "simulation": true,
+  "source_row_count": 22,
+  "sources": [
+    {
+      "path": "examples/finance-assistant/reconciliation/internal.csv",
+      "sha256": "85aef82d02f3e201bfc5229fad8ebb66e913033b97b2ebd6ad273e08cba867f2",
+      "headers": [
+        "date",
+        "reference",
+        "amount",
+        "currency",
+        "counterparty",
+        "備註（教學模擬資料）"
+      ],
+      "mapping": {
+        "date": "date",
+        "reference": "reference",
+        "amount": "amount",
+        "currency": "currency",
+        "counterparty": "counterparty"
+      },
+      "sheet": "",
+      "metadata": []
+    },
+    {
+      "path": "examples/finance-assistant/reconciliation/bank.csv",
+      "sha256": "5a8edb78d9a1d075034f539a4a47a5e92c511dd0419170d648b4394177e02b50",
+      "headers": [
+        "date",
+        "reference",
+        "amount",
+        "currency",
+        "counterparty",
+        "備註（教學模擬資料）"
+      ],
+      "mapping": {
+        "date": "date",
+        "reference": "reference",
+        "amount": "amount",
+        "currency": "currency",
+        "counterparty": "counterparty"
+      },
+      "sheet": "",
+      "metadata": []
+    }
+  ],
+  "formal_audit_completed": false
+}

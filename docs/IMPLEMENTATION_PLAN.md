@@ -1,3 +1,26 @@
+# v1.2.0 改版實作計畫（2026-10-31）
+
+使用者已指定完整規格並授權直接實作、測試、commit、推送原遠端與既有 GitHub Pages 部署，不逐步詢問。原始要求為本次附件；下方保留歷史計畫。
+
+**目標**：九個可獨立執行的辦公 Skill；新法務提供可回查審查文件，新財務實算並核對數字。
+**架構**：沿用 Python CLI、tools/office_common.py 與 sync_runtime.py；語意判讀由 Codex 執行，程式驗證來源並產檔。講義維持 lessons.py / build.py 來源與既有 CSS/JS。法務與財務各有獨立 scripts、references、agents、requirements 及明確選用的模擬素材。
+**範圍**：只改此儲存庫，不覆寫全域 Skill 或其他課程。工作樹初始乾淨；main 與 origin 指向指定專案。
+
+## 工作與檔案責任
+
+- [x] 法務：.agents/skills/legal-reviewer/**、examples/legal-reviewer/**、tests/test_legal.py。先寫失敗測試，再做 TXT/MD/DOCX/文字 PDF 讀取、位置與引用核對、三種產檔、缺漏及來源未查證限制。保留原件，掃描 PDF 明確拒絕假讀。
+- [x] 財務：.agents/skills/finance-assistant/**、examples/finance-assistant/**、tests/test_finance.py。先寫失敗測試，再做 Decimal 計算、CSV/XLSX/文字明細、對帳六類與一對一匹配、差異百分比、借貸與資產負債平衡檢查、三組獨立預期結果。
+- [x] 講義：handbook/lessons.py、handbook/build.py、tests/test_handbook*.py。九課重排至第 10 章、自訂第 11 章、首頁郵件示例、30 分鐘路線、兩新課的十項教學內容、重建 13 頁與搜尋索引；保留 CSS/JS 及離線設計。
+- [x] 整合：移除指定三技能執行目錄、教材、測試登錄；保留其歷史 QA。更新現有七技能回歸清單、validate/install/publication/build_release/check_release、版本及文件。
+- [x] 驗收：unittest、verify、講義重建、validate、三包實際打包與 check_release、獨立複製執行、來源核對、輸出數字驗算、瀏覽器及代理啟動／完整流程分開記錄。未實測的桌面／Office 不宣稱通過。
+- [ ] 發行：隱私白名單、九技能集合、ZIP 解壓與 checksum；更新 ACCEPTANCE、PROGRESS、CHANGELOG；commit/push；檢查既有 Actions 與公開網站及下載。
+
+## 驗收焦點
+
+同額異筆與重複引用不能重配；未知幣別／期間不能混算；零分母不能填假百分比；借貸不平不能補造交易；法務結論必須可回到原文、未知法域與未核實法律不能假裝確定。完整附件不重問，只有名稱時簡短引導，模擬來源不默默套入真實工作。
+
+---
+
 # 1.1.0 日常工作更新計畫（2026-10-30）
 
 本次依使用者八項要求直接修改、驗證、提交並推送 main；保留既有來源、測試與原始模擬教材。使用者已明確授權本儲存庫推送及既有 Pages 發布。

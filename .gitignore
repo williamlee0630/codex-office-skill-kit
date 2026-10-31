@@ -29,6 +29,8 @@ qa/*events*
 qa/environment*
 qa/run-logs*
 dist/*.zip
-!dist/practice-data-1.1.0.zip
-!dist/office-skills-1.1.0.zip
-!dist/codex-office-skill-kit-1.1.0.zip
+!dist/practice-data-1.2.0.zip
+!dist/office-skills-1.2.0.zip
+!dist/codex-office-skill-kit-1.2.0.zip
+
+work/

@@ -1,5 +1,6 @@
 """離線講義的結構、內容契約與資源連結驗證。"""
 import re
+import json
 import importlib.util
 import sys
 import tempfile
@@ -11,9 +12,8 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 BOOK = ROOT / "handbook"
-SKILLS = ["email-assistant", "meeting-assistant", "project-tracker", "weekly-report",
-          "receipt-organizer", "presentation-maker", "document-writer", "data-analyst",
-          "idea-generator", "research-assistant"]
+SKILLS = ["email-assistant", "receipt-organizer", "presentation-maker", "document-writer",
+          "data-analyst", "idea-generator", "research-assistant", "legal-reviewer", "finance-assistant"]
 
 
 class Document(HTMLParser):
@@ -77,12 +77,12 @@ class HandbookTests(unittest.TestCase):
                 self.assertIn("模擬", source)
                 self.assertIn("待確認", source)
                 self.assertIn("data-copy", source)
-        for name in ["chapter-01.html", "chapter-12.html", "appendix.html"]:
+        for name in ["chapter-01.html", "chapter-11.html", "appendix.html"]:
             self.assertTrue((BOOK / name).exists())
 
     def test_navigation_links_and_local_anchors_resolve(self):
         paths = list(BOOK.glob("*.html"))
-        self.assertEqual(len(paths), 14)
+        self.assertEqual(len(paths), 13)
         parsed = {p.resolve(): Document(p.read_text(encoding="utf-8")) for p in paths}
         for path, doc in parsed.items():
             self.assertIn("main", doc.ids)
@@ -98,6 +98,22 @@ class HandbookTests(unittest.TestCase):
                 self.assertTrue(target.exists(), f"{path.name} 的失效連結：{href}")
                 if url.fragment and target in parsed:
                     self.assertIn(unquote(url.fragment), parsed[target].ids, href)
+
+    def test_search_results_follow_current_chapters_and_pagination(self):
+        script = (BOOK / "assets/search-index.js").read_text(encoding="utf-8")
+        index = json.loads(script.removeprefix("window.HANDBOOK_SEARCH = ").strip().removesuffix(";"))
+        for number, skill in enumerate(SKILLS, 2):
+            filename = f"chapter-{number:02}.html"
+            results = [item for item in index if item["url"].startswith(filename + "#")]
+            self.assertEqual(len(results), 10, filename)
+            self.assertTrue(all(skill in item["text"] for item in results))
+            source = (BOOK / filename).read_text(encoding="utf-8")
+            pagination = re.search(r'<nav class="lesson-nav".*?</nav>', source).group(0)
+            self.assertIn(f'chapter-{number-1:02}.html', pagination)
+            self.assertIn(f'chapter-{number+1:02}.html', pagination)
+        for retired in ["meeting-assistant", "project-tracker", "weekly-report", "chapter-12.html"]:
+            self.assertNotIn(retired, script)
+        self.assertTrue(any(item["url"].startswith("chapter-11.html#") for item in index))
 
     def test_no_remote_runtime_or_local_fetch(self):
         for path in BOOK.glob("*.html"):
@@ -115,8 +131,8 @@ class HandbookTests(unittest.TestCase):
 
     def test_downloads_and_boundary_are_explained(self):
         source = (BOOK / "index.html").read_text(encoding="utf-8")
-        self.assertIn("../dist/office-skills-1.1.0.zip", source)
-        self.assertIn("../dist/practice-data-1.1.0.zip", source)
+        self.assertIn("../dist/office-skills-1.2.0.zip", source)
+        self.assertIn("../dist/practice-data-1.2.0.zip", source)
         basics = (BOOK / "chapter-01.html").read_text(encoding="utf-8")
         self.assertIn("SKILL.md", basics)
         self.assertIn(".agents/skills", basics)

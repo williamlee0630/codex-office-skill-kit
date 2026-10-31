@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-31",
+  "results": [
+    {
+      "package": "codex-office-skill-kit-1.2.0.zip",
+      "tests_run": 103,
+      "seconds": 85.031,
+      "returncode": 0,
+      "success": true,
+      "scope": "實際解壓後獨立適用程式測試；不是桌面UI"
+    },
+    {
+      "package": "office-skills-1.2.0.zip",
+      "tests_run": 74,
+      "seconds": 78.21,
+      "returncode": 0,
+      "success": true,
+      "scope": "實際解壓後獨立適用程式測試；不是桌面UI"
+    }
+  ]
+}

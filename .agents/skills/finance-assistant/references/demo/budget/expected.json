@@ -1,0 +1,36 @@
+{
+  "simulation": true,
+  "checked_by": "verify_expected.py 直接讀取 XLSX 以獨立 Decimal 公式驗算",
+  "differences": [
+    "20000.00",
+    "5000.00",
+    "10000.00",
+    "200.00",
+    "2500.00",
+    "0.11",
+    "-20.00",
+    null
+  ],
+  "percentages": [
+    "20.00",
+    "10.00",
+    "50.00",
+    "-20.00",
+    null,
+    "0.10",
+    "-10.00",
+    null
+  ],
+  "totals": {
+    "TWD": {
+      "base": "169100.10",
+      "actual": "206800.21",
+      "difference": "37700.11"
+    },
+    "USD": {
+      "base": "200.00",
+      "actual": "180.00",
+      "difference": "-20.00"
+    }
+  }
+}

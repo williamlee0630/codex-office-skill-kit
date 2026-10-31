@@ -1,4 +1,4 @@
-"""驗證實際 ZIP 的 CRC、SHA-256、隱私、十技能與完整本機連結。"""
+"""驗證實際 ZIP 的 CRC、SHA-256、隱私、九技能與完整本機連結。"""
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
@@ -7,7 +7,7 @@ import hashlib
 import json
 import posixpath
 import re
-from publication import ROOT, VERSION, PACKAGES, scan
+from publication import ROOT, VERSION, PACKAGES, SKILLS, scan
 
 
 class Links(HTMLParser):
@@ -103,8 +103,8 @@ def check(root=ROOT, write_report=True):
             if len(names) != package['file_count']:
                 raise ValueError('ZIP 檔案數量不符：' + path.name)
             skills = [name for name in names if '/skills/' in name and name.endswith('/SKILL.md')]
-            if 'practice-data' not in path.name and len(skills) != 10:
-                raise ValueError('技能包必須包含10個 SKILL.md')
+            if 'practice-data' not in path.name and (len(skills) != len(SKILLS) or {Path(name).parent.name for name in skills} != set(SKILLS)):
+                raise ValueError('技能包必須恰好包含指定9個 SKILL.md')
             checked_links = 0
             if path.name == PACKAGES[1]:
                 checked_links = _check_documents({name: archive.read(name) for name in names})

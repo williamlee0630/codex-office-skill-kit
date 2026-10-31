@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 import shutil
 import sys
+from publication import SKILLS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -10,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def install(target, apply=False):
     source = ROOT / '.agents/skills'
     folders = sorted(p.parent for p in source.glob('*/SKILL.md'))
-    if len(folders) != 10:
-        raise ValueError('來源技能數量不是10，請使用完整發行包。')
+    if {p.name for p in folders} != set(SKILLS):
+        raise ValueError('來源技能清單不是指定9項，請使用完整發行包。')
     target = Path(target).expanduser().resolve()
     conflicts = [target / p.name for p in folders if (target / p.name).exists()]
     if conflicts:

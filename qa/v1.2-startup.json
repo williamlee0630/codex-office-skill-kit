@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-31",
+  "results": [
+    {
+      "skill": "legal-reviewer",
+      "scope": "真實 Codex CLI；隔離工作區；單獨名稱啟動；非桌面UI",
+      "returncode": 0,
+      "turn_completed": true,
+      "responses": [
+        "我會先讀取 legal-reviewer 技能的審閱流程與所需資料。",
+        "你已指定使用 **legal-reviewer**，但目前環境政策阻擋讀取技能檔案，因此尚未開始審閱。\n\n請提供：\n- 合約檔案或要審閱的條款。\n- 你代表哪一方、適用地區，以及最關切的問題。\n- 工作區內 `.agents/skills/legal-reviewer/SKILL.md` 的內容，以便依指定技能執行。"
+      ],
+      "elapsed_seconds": 14.3,
+      "passed": false,
+      "blocker": "隔離 Codex CLI 內部 exec_command 讀取 SKILL.md 被環境執行政策拒絕；回合結束不代表啟動測試通過。未繞過政策。"
+    },
+    {
+      "skill": "finance-assistant",
+      "scope": "真實 Codex CLI；隔離工作區；單獨名稱啟動；非桌面UI",
+      "returncode": 0,
+      "turn_completed": true,
+      "responses": [
+        "我會先讀取 finance-assistant 技能指引，確認支援的工作與所需資料。",
+        "目前環境政策阻擋讀取 [finance-assistant 技能指引](.agents/skills/finance-assistant/SKILL.md)，因此尚未完成載入。請貼上該檔內容，讓我依指引操作。\n\n也請告訴我這次要處理的工作：會計報表、銀行對帳，或預算差異分析，並提供資料與分析期間。"
+      ],
+      "elapsed_seconds": 11.9,
+      "passed": false,
+      "blocker": "隔離 Codex CLI 內部 exec_command 讀取 SKILL.md 被環境執行政策拒絕；回合結束不代表啟動測試通過。未繞過政策。"
+    }
+  ],
+  "limitations": [
+    "未驗證桌面版載入與端到端互動；代理演練另列，不取代真實CLI啟動失敗。"
+  ]
+}

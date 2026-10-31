@@ -28,12 +28,16 @@ python tools/build_release.py
 
 ## 官方 skill-creator
 
-本版已實際使用環境提供的 skill-creator/scripts/init_skill.py 初始化十個技能，再完成內容與程式。用 scripts/quick_validate.py 檢查 name、description、frontmatter 與骨架。工具本身需要 PyYAML；本環境使用具有 PyYAML 的系統 Python 執行官方 validator，格式產檔使用 Codex 內建 Python。這兩種執行環境須分別記錄。
+v1.0.0 歷史版本曾以 skill-creator 初始化十個技能；v1.2.0 保留七個並新增兩個，最終九個完整技能。用 scripts/quick_validate.py 檢查 name、description、frontmatter 與骨架。工具本身需要 PyYAML；本環境使用具有 PyYAML 的系統 Python 執行官方 validator，格式產檔使用 Codex 內建 Python。這兩種執行環境須分別記錄。
 
 ## 修改規則
 
-先寫能暴露目標問題的行為測試，再修改運算／產檔。程式只驗證能觀察到的條件，不把「引用存在」寫成「主張已查證」。共用工具變更後執行 sync_runtime.py，避免十份副本漂移。發行前重跑範例，檢查 ZIP 雜湊及解壓後相對連結。
+先寫能暴露目標問題的行為測試，再修改運算／產檔。程式只驗證能觀察到的條件，不把「引用存在」寫成「主張已查證」。共用工具變更後執行 sync_runtime.py，避免九份副本漂移。發行前重跑範例，檢查 ZIP 雜湊及解壓後相對連結。
 
 ## 第三方套件與資料
 
 ZIP 不內含第三方套件二進位。requirements.txt 限定主要相容範圍；reportlab供自動測試產生PDF測資，並非OCR引擎。環境實測版本記錄在 docs/qa/environment.json。範例皆為原創模擬資料，不包含真實個資或公司文件。源碼與教學的使用條款見 LICENSE。
+
+## 新技能維護
+
+法務內部 JSON 由 Codex 判讀原件後建立，腳本重新讀原件驗證定位與引用，不能以預填風險資料冒充語意測試。財務直接讀來源檔，用 Decimal 計算；預期答案需獨立驗算，不呼叫正式計算器產生自己的預期值。使用 UTF-8 執行 Windows 測試（PYTHONUTF8=1、PYTHONIOENCODING=utf-8），tools/verify.py 會設定子程序環境。

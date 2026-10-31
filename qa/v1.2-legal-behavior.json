@@ -1,0 +1,240 @@
+{
+  "test_name": "v1.2 legal-reviewer independent semantic behavior and workflow",
+  "platform": "Codex spawned subagent using direct filesystem/shell tools",
+  "scope_statement": "This is an independent semantic workflow performed by this subagent. It is not a real nested Codex CLI run, a desktop UI test, or a serializer test using prefilled example analysis. Startup and direct-clause cases are explicit response simulations in this subagent, not fresh product conversations.",
+  "isolation": {
+    "directory": "work/legal-behavior",
+    "starting_material": [
+      "full copied .agents/skills/legal-reviewer",
+      "raw examples/legal-reviewer/風險服務合約.docx"
+    ],
+    "did_not_read": [
+      "examples/legal-reviewer input fixtures",
+      "normal-input fixtures",
+      "expected result fixtures",
+      "references/demo.md"
+    ],
+    "implementation_changed": false,
+    "original_changed": false,
+    "external_uploads": false
+  },
+  "startup_only": {
+    "user_message": "$legal-reviewer",
+    "prior_material": null,
+    "exact_next_response": "你要提供合約或其他公司文件進行審查嗎？可以附上檔案或直接貼上內容；若已知，請一併說明你代表哪一方及適用法域。",
+    "result": "Uses the concise explicit SKILL startup; does not demand paths, JSON or Python execution from the user."
+  },
+  "full_request": {
+    "user_message": "幫我看一下這份服務合約有沒有不合理的地方，代表委託方；適用法域台灣。這是教學模擬資料。請直接完成審查報告、風險清單與修訂建議。若無法查證最新法律，明確註記，先完成商業風險審查。",
+    "source": "work/legal-behavior/風險服務合約.docx",
+    "user_followup_questions_asked": [],
+    "unnecessary_repeat_questions": false,
+    "semantic_analysis_origin": "Subagent actually read all extracted P1-P11 and authored analysis.json/build_analysis.py from raw contract. No example input/expected analysis was read. Script only rechecked and serialized this independent analysis.",
+    "jurisdiction": "台灣",
+    "perspective": "甲方（委託方）",
+    "findings_count": 11,
+    "risk_counts": {
+      "高": 8,
+      "中": 3,
+      "低": 0
+    },
+    "topics_count": 9,
+    "findings": [
+      {
+        "id": "LR01",
+        "topic": "parties_purpose",
+        "level": "高",
+        "issue": "必要附件一未提供，交付、驗收、時程與維護無法確定。"
+      },
+      {
+        "id": "LR02",
+        "topic": "term_renewal",
+        "level": "高",
+        "issue": "自動續約三年、180日前拒絕與乙方單方訂價形成綁定。"
+      },
+      {
+        "id": "LR03",
+        "topic": "payment",
+        "level": "高",
+        "issue": "全額預付、無條件付款且所有已付款不退。"
+      },
+      {
+        "id": "LR04",
+        "topic": "liability",
+        "level": "高",
+        "issue": "甲方每日9,000元違約金無上限、無限損害賠償與乙方1,000元責任上限不對等。"
+      },
+      {
+        "id": "LR05",
+        "topic": "confidentiality_privacy",
+        "level": "中",
+        "issue": "保密資訊限於標示機密的技術及價格，未涵蓋未標示客戶與營運資訊，保護及事件程序不足。"
+      },
+      {
+        "id": "LR06",
+        "topic": "confidentiality_privacy",
+        "level": "高",
+        "issue": "乙方得向任何合作商提供員工、客戶資料作行銷並永久保存，與履約用途限制衝突。"
+      },
+      {
+        "id": "LR07",
+        "topic": "ip",
+        "level": "高",
+        "issue": "客製成果權利留待另議，付清開發價款仍須持續付服務費才能使用。"
+      },
+      {
+        "id": "LR08",
+        "topic": "termination",
+        "level": "高",
+        "issue": "乙方任意立即終止留全款，甲方不得終止、匯出、刪除或交接。"
+      },
+      {
+        "id": "LR09",
+        "topic": "special",
+        "level": "高",
+        "issue": "網站公告可當日單方修改服務及整份契約。"
+      },
+      {
+        "id": "LR10",
+        "topic": "law_disputes",
+        "level": "中",
+        "issue": "完整正文未約定準據法、爭議處理與管轄。"
+      },
+      {
+        "id": "LR11",
+        "topic": "parties_purpose",
+        "level": "中",
+        "issue": "簽署日、簽署人職權與附件尚待確認。"
+      }
+    ],
+    "laws": "Unverified. External legal research was deliberately not performed in this test scope; availability of legal verification tools was not disproven. Deliverables state this reason, avoid definitive legal invalidity claims and contain no verified laws or invented citations.",
+    "outputs": [
+      "work/legal-behavior/deliverables/合約審查報告.docx",
+      "work/legal-behavior/deliverables/合約風險清單.xlsx",
+      "work/legal-behavior/deliverables/條款修訂建議.md",
+      "work/legal-behavior/deliverables/audit.json"
+    ]
+  },
+  "direct_clause_without_jurisdiction": {
+    "method": "Separate response simulation, no generation run required.",
+    "user_message": "合約寫遲延付款每天按合約總價3%算違約金，而且沒有上限，合理嗎？",
+    "exact_next_response": "請先確認這份合約適用哪個國家或地區的法律、你代表付款方還是收款方，以及這是企業間交易還是消費契約。這些背景會影響違約金效力與調整空間；法域確認前，先將「按總價逐日累加且無上限」列為需要協商的商業風險。",
+    "result": "Asks jurisdiction and necessary background; does not presume Taiwan or claim a legal result."
+  },
+  "actions_and_commands": [
+    {
+      "action": "Read skill and data contract",
+      "paths": [
+        ".agents/skills/legal-reviewer/SKILL.md",
+        ".agents/skills/legal-reviewer/references/workflow.md"
+      ]
+    },
+    {
+      "action": "Create isolated copy",
+      "commands": [
+        "New-Item -ItemType Directory -Path 'work/legal-behavior' -Force",
+        "Copy-Item -LiteralPath '.agents/skills/legal-reviewer' -Destination 'work/legal-behavior/legal-reviewer' -Recurse",
+        "Copy-Item -LiteralPath 'examples/legal-reviewer/風險服務合約.docx' -Destination 'work/legal-behavior/風險服務合約.docx'"
+      ]
+    },
+    {
+      "action": "Environment for all Python commands",
+      "commands": [
+        "$env:PYTHONUTF8='1'",
+        "$env:PYTHONIOENCODING='utf-8'"
+      ]
+    },
+    {
+      "action": "Extract and read entire index",
+      "command": "& '.venv/Scripts/python.exe' 'work/legal-behavior/legal-reviewer/scripts/run.py' --extract 'work/legal-behavior/風險服務合約.docx' --output 'work/legal-behavior/extracted'",
+      "read": "work/legal-behavior/extracted/source-index.json",
+      "exit_code": 0
+    },
+    {
+      "action": "Read local generator contract implementation only",
+      "read": "work/legal-behavior/legal-reviewer/scripts/run.py"
+    },
+    {
+      "action": "Author independent semantic analysis and all drafts",
+      "script": "work/legal-behavior/build_analysis.py",
+      "command": "& '.venv/Scripts/python.exe' 'work/legal-behavior/build_analysis.py'",
+      "output": "work/legal-behavior/analysis.json",
+      "exit_code": 0
+    },
+    {
+      "action": "Execute actual copied skill generator",
+      "command": "& '.venv/Scripts/python.exe' 'work/legal-behavior/legal-reviewer/scripts/run.py' --input 'work/legal-behavior/analysis.json' --output 'work/legal-behavior/deliverables'",
+      "exit_code": 0
+    },
+    {
+      "action": "Reopen generated DOCX/XLSX/MD and verify all content/references, original SHA, XML objects and audit",
+      "command": "& '.venv/Scripts/python.exe' 'work/legal-behavior/verify_outputs.py'",
+      "details": "work/legal-behavior/verification.json",
+      "exit_code": 0
+    }
+  ],
+  "verification": {
+    "source_unchanged": true,
+    "source_sha256": "20fd21f78881df7ce4f3cc037563b562046252a8acb4c187aa2a670c13954dfb",
+    "source_blocks": 11,
+    "checked_locations": 11,
+    "verified_citations": 33,
+    "docx": {
+      "opened_with": "python-docx",
+      "paragraphs": 198,
+      "all_topics_findings_drafts_and_source_text_present": true
+    },
+    "xlsx": {
+      "opened_with": "openpyxl",
+      "sheets": [
+        "審查摘要",
+        "風險清單",
+        "條款檢查",
+        "來源對照",
+        "法律來源與限制",
+        "待人工確認"
+      ],
+      "risk_rows": 11,
+      "topic_rows": 9,
+      "source_rows": 11,
+      "formula_cells": 0,
+      "all_risk_ids_levels_drafts_and_basis_match_analysis": true
+    },
+    "markdown": {
+      "risk_sections": 11,
+      "all_issues_and_drafts_match_analysis": true
+    },
+    "legal": {
+      "status": "unverified",
+      "source_count": 0,
+      "reason_discloses_deliberate_test_scope": true,
+      "no_verified_legal_conclusion": true
+    },
+    "raw_docx_special_objects": {
+      "drawing": 0,
+      "pict": 0,
+      "txbxContent": 0,
+      "ins": 0,
+      "del": 0,
+      "commentRangeStart": 0,
+      "altChunk": 0,
+      "tbl": 0,
+      "media_parts": 0,
+      "embedded_parts": 0,
+      "comment_parts": 0
+    },
+    "rendered_visual_qa": false,
+    "limitations": [
+      "DOCX/XLSX已由函式庫重新開啟及核對文字，未在Word/Excel GUI開啟或渲染版面。",
+      "附件一未提供，僅能確認正文指出的缺漏；未查驗其內容。"
+    ]
+  },
+  "actual_blockers": [],
+  "coverage_limits": [
+    "No real Codex CLI or desktop UI session was exercised; do not infer product-level invocation success.",
+    "Parent reports nested Codex CLI read policy rejection; this subagent did not retry or bypass that boundary. Direct subagent tools are a separate platform test.",
+    "No visual DOCX rendering or Word/Excel GUI was exercised. Content/package reopening checks passed.",
+    "Current Taiwan laws were not browsed in this scoped test."
+  ],
+  "overall_result": "Independent source-to-analysis-to-artifacts semantic workflow completed; no repeated user questions; content/reference checks pass, subject to declared platform, visual and legal-verification limits."
+}

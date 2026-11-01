@@ -5,9 +5,11 @@ from pathlib import Path
 import re
 
 from lessons import LESSONS
+from experiences import EXPERIENCES
 
 HERE = Path(__file__).resolve().parent
 VERSION = "1.2.0"
+ASSET_REVISION = "20261101-quickstart"
 SEARCH = []
 COPY_ID = 0
 
@@ -32,12 +34,12 @@ def table(headers, rows):
     return '<div class="table-wrap"><table><thead><tr>' + "".join(f"<th scope=\"col\">{e(item)}</th>" for item in headers) + "</tr></thead><tbody>" + "".join("<tr>" + "".join(f"<td>{item}</td>" for item in row) + "</tr>" for row in rows) + "</tbody></table></div>"
 
 
-def code(text, label="可以直接複製"):
+def code(text, label="可以直接複製", learner=False):
     global COPY_ID
     COPY_ID += 1
     identifier = f"copy-{COPY_ID}"
     block = f'<div class="code-block"><div class="code-label"><span>{e(label)}</span><button class="copy-button" type="button" data-copy="{identifier}" aria-label="複製{e(label)}">複製</button></div><pre id="{identifier}"><code>{e(text)}</code></pre></div>'
-    if not re.fullmatch(r"\$[a-z0-9-]+", text.strip()):
+    if not learner and not re.fullmatch(r"\$[a-z0-9-]+", text.strip()):
         return maintainer(block, label)
     return block
 
@@ -49,6 +51,34 @@ def maintainer(body, topic="手動操作與格式細節"):
 
 def work_prompt(lesson):
     return "$" + lesson["skill"]
+
+
+def experience(skill):
+    item = EXPERIENCES[skill]
+    body = p(e(item['task']))
+    if item['attachments']:
+        body += '<h3>先下載附件</h3><div class="actions attachment-actions">'
+        for filename, label in item['attachments']:
+            body += f'<a class="button" href="../examples/quickstart/{e(filename)}" download="{e(filename)}">{e(label)} ↓</a>'
+        body += '</div>' + p('每份檔案分別下載即可，不必打開 ZIP 尋找。把下載的附件拖曳進 Codex；看見附件已加入後，再貼上下方提示詞。')
+        if skill == 'receipt-organizer':
+            body += '<a href="../examples/quickstart/模擬文具收據.png" target="_blank" rel="noopener">先開啟收據照片預覽 ↗</a>'
+    else:
+        body += p('不需要下載附件。提示詞已包含這次工作的完整素材，直接複製即可。')
+    body += code(item['prompt'], '完整工作提示詞', learner=True)
+    body += '<h3>照這個順序操作</h3>' + steps([
+        ('介紹工作情境', item['task']),
+        ('下載附件（如需要）', '本章下載檔就是工作輸入，不是安裝檔；可用自己的資料取代。' if item['attachments'] else '本章不需附件，素材已寫在提示詞中。'),
+        ('複製提示詞', '按「複製」，在已載入技能的 Codex 新對話中貼上完整內容。安裝是一次性準備，每次使用不必重新安裝。'),
+        ('Codex 執行', '送出後讓 Codex 讀來源、整理並實際產檔，只補充真正必要的問題。'),
+        ('開啟成果', '點選 Codex 回覆中的實際檔案連結，開啟檢查；若只有計畫或沒有檔案，請要求接續產檔。'),
+    ])
+    body += '<h3>會拿到哪些檔案</h3>' + bullets(item['outputs'])
+    body += '<h3>打開後這樣檢查</h3>' + checklist(item['checks'])
+    body += note('教學用途', '全部情境與附件均為原創模擬資料，沒有真實個人資料。換成自己的資料時，請同步修改提示詞中的模擬說明、工作背景與日期，以實際來源為準。')
+    if skill == 'finance-assistant':
+        body += maintainer(p('主示範只做兩份 CSV 對帳。預算差異分析與財務報表編製仍保留，請展開本章進階模擬練習資料區，選用預算／實際或試算表資料，另開一次任務。不要把三種任務混在同一次示範。'), '預算差異分析與財務報表編製')
+    return '<div class="experience-card">' + body + '</div>'
 
 
 def note(title, text, warning=False):
@@ -94,10 +124,14 @@ def layout(url, title, inner, home=False):
 <div class="search-wrap"><span class="search-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5"/></svg></span><input class="search" id="chapter-search" type="search" placeholder="搜尋章節、技能或問題" aria-label="搜尋講義全文" aria-controls="search-results" autocomplete="off"></div><div class="search-help">Ctrl / ⌘ K 快速搜尋</div><ul class="search-results" id="search-results" aria-label="搜尋結果" aria-live="polite" hidden></ul>
 <nav class="chapters" aria-label="章節導覽">{nav(url)}</nav><div class="sidebar-foot">日常工作，隨時可用。<br>保留來源，讓未知保持可見。<br><a href="appendix.html#downloads">下載教材與工具包 ↗</a></div></aside>
 <div class="page"><div class="topbar"><span>{e(breadcrumb)}</span><span class="updated"><i class="status-dot" aria-hidden="true"></i>可離線閱讀 · 2026.10</span></div><main class="content" id="main" tabindex="-1">{inner}</main><footer class="footer"><span>AI 辦公室實作指南 · v{VERSION} · 原創繁體中文教材</span><span>練習資料全為模擬 · 無外部網站依賴</span></footer></div><div class="toast" id="toast" role="status" aria-live="polite"></div></body></html>'''
+    html = html.replace(f'?v={VERSION}', f'?v={VERSION}-{ASSET_REVISION}')
+    html = html.replace('2026.10</span>', '2026.11</span>')
     (HERE / url).write_text(html, encoding="utf-8")
 
 
 def lesson_shell(url, number, title, deck, sections, skill=None, minutes=20):
+    if skill in EXPERIENCES:
+        sections = [('try-now', '立即體驗｜複製提示詞，交付工作', experience(skill)), *sections]
     eyebrow = f"CHAPTER {number:02} / 實作課程" if number else "APPENDIX / 隨手查閱"
     meta = f"<span>延伸自學約 {minutes} 分鐘</span><span>Windows / Codex</span><span>日常工作工具</span>"
     if skill:
@@ -121,19 +155,19 @@ def home():
     cards = ''
     for number, lesson in enumerate(LESSONS, 2):
         cards += f'<a class="skill-card" href="chapter-{number:02}.html"><div class="card-top"><span class="card-number">CHAPTER {number:02}</span><span class="card-category">{e(lesson["category"])}</span></div><h3>{e(lesson["title"])}</h3><p>{e(lesson["card"])}</p><div class="card-bottom"><span>{e(lesson["skill"])} · 自學約 {lesson["minutes"]} 分鐘</span><span class="card-arrow" aria-hidden="true">↗</span></div></a>'
-    hero = '''<section class="hero"><div><div class="eyebrow">日常辦公工具 · 給沒有程式基礎的辦公室夥伴</div><h1>把日常工作，<br><span>整理成可靠成果。</span></h1><p class="intro">安裝並載入技能，送出 $技能名稱，再依引導說明工作或提供素材。Codex 會自行讀取規則、檢查環境、整理資料並產檔；你負責核對成果。</p><div class="actions"><a class="button primary" href="chapter-01.html">開始使用 <span aria-hidden="true">→</span></a><a class="button" href="../dist/codex-office-skill-kit-1.2.0.zip" download>下載完整學員工具包 ↓</a></div><div class="quiet">不需程式背景 · 自備 Codex · 練習資料全為模擬</div></div><div class="flow-card" aria-label="日常工作操作"><div class="flow-label">安裝後，每次都能直接開始</div><div class="flow-row"><div class="flow-icon">01</div><div><strong>安裝並載入技能</strong><small>可帶到一般工作區使用</small></div></div><div class="flow-arrow"></div><div class="flow-row"><div class="flow-icon">02</div><div><strong>送出 $技能名稱</strong><small>只需技能名稱即可啟動</small></div></div><div class="flow-arrow"></div><div class="flow-row"><div class="flow-icon">03</div><div><strong>依引導提供素材</strong><small>有必要時補答，Codex 接續處理</small></div></div><div class="flow-last"><span>04　開啟並核對成果</span><span>✓</span></div></div></section>'''
+    hero = '''<section class="hero"><div><div class="eyebrow">日常辦公工具 · 給沒有程式基礎的辦公室夥伴</div><h1>把日常工作，<br><span>整理成可靠成果。</span></h1><p class="intro">技能安裝一次即可。選擇工作情境，下載附件（如需要），複製完整提示詞交給 Codex。Codex 會自行讀取規則、檢查環境、整理資料並產檔；你負責核對成果。</p><div class="actions"><a class="button primary" href="chapter-01.html">開始使用 <span aria-hidden="true">→</span></a><a class="button" href="../dist/codex-office-skill-kit-1.2.0.zip" download>下載完整學員工具包 ↓</a></div><div class="quiet">不需程式背景 · 自備 Codex · 練習資料全為模擬</div></div><div class="flow-card" aria-label="日常工作操作"><div class="flow-label">安裝後，每次都能直接開始</div><div class="flow-row"><div class="flow-icon">01</div><div><strong>介紹工作情境</strong><small>技能已安裝後，直接選擇章節</small></div></div><div class="flow-arrow"></div><div class="flow-row"><div class="flow-icon">02</div><div><strong>下載附件（如需要）</strong><small>各章直接下載，拖曳進 Codex</small></div></div><div class="flow-arrow"></div><div class="flow-row"><div class="flow-icon">03</div><div><strong>複製提示詞，Codex 執行</strong><small>完整工作需求已備妥</small></div></div><div class="flow-last"><span>04　開啟並核對成果</span><span>✓</span></div></div></section>'''
     review = section("course-review", "日常使用與教學安排", table(["審閱重點", "課程安排"], [
         ["課程目標", "讓沒有程式基礎的學員，能用自然語言交代工作，取得實際檔案，並依來源核對事實、數字與待確認事項。"],
         ["九個技能用途", "郵件、收據、簡報、商務文件、資料分析、創意企劃、來源研究、法務審查、財務對帳；下方各卡片可直接進入對應實作。"],
-        ["操作方式", "安裝並載入技能 → 送出 $技能名稱 → 依引導說明工作或提供素材 → 必要時補答 → 開啟並核對成果。已有完整需求時直接處理。"],
+        ["操作方式", "安裝是一次性準備。每次使用：介紹工作情境 → 下載附件（如需要）→ 複製提示詞 → Codex 執行 → 開啟成果。"],
         ["可帶走的教材", "完整 ZIP 內有 13 頁離線講義、九個技能、模擬來源與範例成果、安裝及維護文件。另提供技能包及練習資料包。"],
         ["環境與人工確認限制", "產檔確實需要 Python 與格式套件，由 Codex 或資訊同仁準備；Codex 使用依帳號及連線。學員不需先學語法。Office 版面、收據模糊欄位、未知資料與正式使用前的內容仍需人工確認。"],
         ["審閱狀態", '歷史開課方審閱版已更新為日常工作入口，未宣稱全面驗收。程式測試、Codex 觸發與語意、瀏覽器操作、Office 畫面各有邊界；請讀 <a href="../ACCEPTANCE.md">實際驗收報告</a>。'],
     ]))
-    overview = '<div class="overview-strip"><div><strong>9 個獨立技能</strong><span>依工作選擇，無須依序啟動</span></div><div><strong>11 章完整教學</strong><span>從第一次操作到調整自己的技能</span></div><div><strong>1 套模擬教材</strong><span>僅在明確要求練習時使用</span></div></div>'
-    learning = '<section class="two-col"><div><h2>Skill 是什麼？</h2><p>把 Skill 想成 Codex 隨時可讀的工作說明書：它約定這類工作怎麼處理、要保留什麼，以及交出哪些成果。你不需先理解程式架構，就能開始使用。</p><p>只輸入技能名稱也能開始；技能會依實際用途請你提供必要素材。每次仍要檢查來源、未知欄位與實際檔案。</p></div><div><h2>怎麼安排學習？</h2><ol><li>讀第一章，安裝並載入要用的技能。</li><li>挑熟悉的工作，送出 $技能名稱。</li><li>讓 Codex 準備環境並產檔，再開啟成果回查原文。</li><li>需要改流程時，再讀第十一章；進階內容可稍後展開。</li></ol></div></section>'
+    overview = '<div class="overview-strip"><div><strong>9 個獨立技能</strong><span>依工作選擇，無須依序啟動</span></div><div><strong>11 章完整教學</strong><span>從第一次操作到調整自己的技能</span></div><div><strong>7 份獨立附件</strong><span>章內直接下載，全部為教學模擬</span></div></div>'
+    learning = '<section class="two-col"><div><h2>Skill 是什麼？</h2><p>把 Skill 想成 Codex 隨時可讀的工作說明書：它約定這類工作怎麼處理、要保留什麼，以及交出哪些成果。你不需先理解程式架構，就能開始使用。</p><p>各章「立即體驗」已準備完整提示詞；郵件、簡報、文件、創意不需附件，其餘五章先下載工作素材。只輸入技能名稱也能開始，由技能詢問必要素材。每次仍要檢查來源、未知欄位與實際檔案。</p></div><div><h2>怎麼安排學習？</h2><ol><li>讀第一章，安裝並載入要用的技能。</li><li>挑熟悉的工作，下載附件（如需要），複製章首完整提示詞。</li><li>讓 Codex 準備環境並產檔，再開啟成果回查原文。</li><li>需要改流程時，再讀第十一章；進階內容可稍後展開。</li></ol></div></section>'
     downloads = section("downloads", "教材帶著走，離線也能讀。", p("初次使用建議下載完整學員工具包，講義、技能與模擬資料一次備齊。ZIP 不包含 Python 與第三方套件；首次準備套件與 Codex 使用仍依帳號、權限及連線環境。") + '<div class="actions"><a class="button primary" href="../dist/codex-office-skill-kit-1.2.0.zip" download>完整學員工具包 v1.2.0 ↓</a><a class="button" href="../dist/office-skills-1.2.0.zip" download>只下載技能工具包 ↓</a><a class="button" href="../dist/practice-data-1.2.0.zip" download>只下載模擬練習資料 ↓</a><a class="button" href="appendix.html">安裝入口與常見問題 →</a></div>')
-    route = section("course-route", "30 分鐘錄製課程路線", p("這是影片的成果展示安排；每張技能卡及各章標示的時間是延伸自學練習時間，兩者分開計算。錄影可先備妥模擬檔案與成果，觀眾只需看啟動、提供素材及核對結果。") + table(["影片時間", "內容與觀看重點"], [
+    route = section("course-route", "30 分鐘錄製課程路線", p("這是影片的成果展示安排；每張技能卡及各章標示的時間是延伸自學練習時間，兩者分開計算。各段統一錄製：介紹工作情境 → 下載附件（如需要）→ 複製提示詞 → Codex 執行 → 開啟成果。先安裝一次，示範時不必重新安裝。") + table(["影片時間", "內容與觀看重點"], [
         ["3 分鐘", '<a href="chapter-01.html">Skill 概念與安裝</a>：認識啟動、提供素材、核對成果。'],
         ["14 分鐘", "七個既有 Skill 的成果展示：郵件、收據、簡報、商務文件、資料分析、創意企劃、資料研究。"],
         ["4 分鐘", '<a href="chapter-09.html">法務助理成果展示</a>：由原始條款回查風險及修訂建議。'],
@@ -141,7 +175,7 @@ def home():
         ["4 分鐘", '<a href="chapter-11.html">修改自己的 Skill</a>：用工作語言指定一項可驗收的變更。'],
         ["1 分鐘", "總結：保留來源、開啟成果，將未知與待人工確認事項留在結果中。"],
     ]))
-    inner = hero + overview + review + route + '<section aria-labelledby="skills-title"><div class="section-head"><h2 id="skills-title">今天，先解決哪件工作？</h2><span>選一個熟悉情境，開始動手</span></div>' + cards + '</section><div class="start-card"><div><div class="eyebrow" style="margin-bottom:8px">第一次接觸 SKILL？</div><h2>從眼前的一件工作開始。</h2><p>例如提供郵件，整理待辦與回覆草稿。想練習時，再明確請 Codex 使用模擬資料。</p></div><a class="button" href="chapter-02.html">前往郵件技能 →</a></div>' + learning + downloads
+    inner = hero + overview + review + route + '<section aria-labelledby="skills-title"><div class="section-head"><h2 id="skills-title">今天，先解決哪件工作？</h2><span>選一個熟悉情境，開始動手</span></div>' + cards + '</section><div class="start-card"><div><div class="eyebrow" style="margin-bottom:8px">第一次接觸 SKILL？</div><h2>從眼前的一件工作開始。</h2><p>例如提供郵件，整理待辦與回覆草稿。直接複製該章完整郵件情境，不必尋找工具包裡的練習檔。</p></div><a class="button" href="chapter-02.html">前往郵件技能 →</a></div>' + learning + downloads
     layout("index.html", "課程首頁", inner, True)
     SEARCH.append({"title": "課程首頁與下載", "chapter": "開始學習", "url": "index.html", "text": "開課方審閱版 課程目標 Skill Prompt 下載 工具包 學習順序 模擬 教材"})
 
@@ -150,21 +184,21 @@ def basics():
     sections = [
         ("understand", "五步開始，日常工作直接用", p("這九個 Skill 是可長期使用的日常辦公工具。課程是介紹與教學管道，技能執行時依你的實際工作處理。不需要先學 Python 或 JSON 語法，也不需要教 AI 讀取規則；環境、格式套件與產檔都由 Codex 接手，遇到具體權限限制才請資訊同仁協助。") + steps([
             ("安裝並載入技能", "下載工具包並完整解壓縮；依安裝說明放到 Codex 可發現的技能位置，載入後可在一般工作區使用。"),
-            ("送出 $技能名稱", "例如只送出下方的 $email-assistant。每支技能會依實際用途引導，不必先貼長提示詞。"),
-            ("依引導說明工作或提供素材", "可以直接貼文字、附檔或提供可讀檔案；已有需求與素材就直接執行，不重新選功能。"),
-            ("必要時補答", "只補會影響正確結果的資訊。Codex 會沿用前文接續，不要求重新貼完整需求或再確認開始。"),
+            ("選擇工作情境，下載附件（如需要）", "各章立即體驗已準備工作素材；不需要找工具包內部檔案，附件可換成自己的資料。"),
+            ("複製完整提示詞", "按該章的複製按鈕，提示詞已包含 $技能名稱 與工作需求；有附件先拖曳進 Codex，再貼上送出。"),
+            ("Codex 執行，必要時補答", "讀來源、準備環境與產檔交給 Codex；只補會影響結果的關鍵資訊，已有素材時直接執行。"),
             ("開啟並核對成果", "檢查可開啟的檔案連結、來源、數字與待確認事項；直接用日常語言要求修改。"),
         ])),
         ("files", "你的工作資料就是起點", p("原始來源可以是郵件、會議筆記、工作紀錄、收據、報告或表格。無須固定檔名、表單或提示格式；Codex 會檢查可讀檔案、工作表與欄位。一般工作不會自動讀取工具包模擬資料來替代你的內容。") + p("技能內含自身規則、參考文件及執行資源，安裝時保留完整資料夾。工作成果預設另存到目前工作區 outputs 下的新資料夾，避免覆寫原檔及舊成果；最後依實際連結開啟。")),
-        ("install", "安裝一次，之後直接使用", p('完整解壓下載包，在 Codex 開啟解壓資料夾即可使用其中的專案技能。要帶到其他工作區，可複製完整技能資料夾到該工作區的 .agents/skills/，或依 <a href="../docs/INSTALL.md">安裝說明</a>選用個人技能安裝。重新載入後送出技能名稱。') + p("Python 及格式套件由技能自行檢查；可用就沿用，缺少時在目前工作區準備。ZIP 沒有包入 Python。首次安裝可能需要網路或組織權限；限制會具體回報。講義可離線閱讀，Codex 使用仍依帳號與連線。") + maintainer(p("每支技能含 SKILL.md、scripts/run.py、scripts/requirements.txt、references/operation.md 與 workflow.md。不要只複製 SKILL.md。同名技能疑難由 Codex 自行檢查已載入來源，不要求使用者回報路徑，也不自動覆寫全域技能。"), "安裝結構、環境與同名版本排錯")),
-        ("activate", "先送出技能名稱", code("$email-assistant", "啟動郵件技能") + table(["對話角色", "日常工作示意"], [["Codex", "請提供要整理或回覆的郵件，貼上內文或提供檔案都可以。我會整理待辦、回覆草稿與待確認事項，不直接寄送。"], ["使用者", "請整理附件郵件並擬回覆；沒有寫明期限的地方先留待確認。"], ["Codex", "讀取原信並實際產生每日摘要與多種語氣的回覆草稿，交付檔案連結及待確認事項。"]]) + p("也可以自然地說『幫我整理這批郵件』，技能仍可自動選用。已提供完整資料時不必先單獨啟動，也不會要求再選功能。")),
+        ("install", "安裝一次，之後直接使用", p("安裝工具包是一次性準備工作；每次使用 Skill 不需要重新安裝。各章下載的照片、CSV 與 Word 是本次工作的輸入，不是安裝檔，可用自己的資料取代。ZIP 直接拖曳安裝尚未逐環境驗證，不能保證所有環境成功；以下完整解壓與手動安裝為備案。") + p('完整解壓下載包，在 Codex 開啟解壓資料夾即可使用其中的專案技能。要帶到其他工作區，可複製完整技能資料夾到該工作區的 .agents/skills/，或依 <a href="../docs/INSTALL.md">安裝說明</a>選用個人技能安裝。重新載入後送出技能名稱。') + p("Python 及格式套件由技能自行檢查；可用就沿用，缺少時在目前工作區準備。ZIP 沒有包入 Python。首次安裝可能需要網路或組織權限；限制會具體回報。講義可離線閱讀，Codex 使用仍依帳號與連線。") + maintainer(p("每支技能含 SKILL.md、scripts/run.py、scripts/requirements.txt、references/operation.md 與 workflow.md。不要只複製 SKILL.md。同名技能疑難由 Codex 自行檢查已載入來源，不要求使用者回報路徑，也不自動覆寫全域技能。"), "安裝結構、環境與同名版本排錯")),
+        ("activate", "複製完整需求即可開始", p('第一次練習請開啟 <a href="chapter-02.html#try-now">郵件章「立即體驗」</a>，複製包含三封完整郵件的提示詞。九章都有自己的工作情境；有附件的章節先下載並拖曳附件，再貼提示詞。下方保留只用技能名稱啟動的另一種用法，適合有自己資料時使用。') + code("$email-assistant", "啟動郵件技能") + table(["對話角色", "日常工作示意"], [["Codex", "請提供要整理或回覆的郵件，貼上內文或提供檔案都可以。我會整理待辦、回覆草稿與待確認事項，不直接寄送。"], ["使用者", "請整理附件郵件並擬回覆；沒有寫明期限的地方先留待確認。"], ["Codex", "讀取原信並實際產生每日摘要與多種語氣的回覆草稿，交付檔案連結及待確認事項。"]]) + p("也可以自然地說『幫我整理這批郵件』，技能仍可自動選用。已提供完整資料時不必先單獨啟動，也不會要求再選功能。")),
         ("workflow", "只問必要資訊", table(["情況", "處理方式"], [["沒有原始素材", "簡短請你提供需要的內容，不先讀示範答案。"], ["財務會計期間或合約適用法域有歧義", "先從需求與來源判斷，仍不明確才問關鍵背景。"], ["沒有標題、檔名或一般版式", "採合理預設，不為此停止。"], ["人名、期限、成效數字未提供", "保留待確認，完成其餘可用成果。"], ["補充或修正資訊", "沿用前文與來源更新，保留舊成果，不要求重貼。"]])),
         ("first-run", "開啟成果，再用日常語言修正", p("Codex 會自行讀取技能規則與必要參考、確認來源、檢查環境、整理有來源依據的內部資料並實際執行工具。它必須檢查檔案存在、內容可追查，交付可開啟連結；計畫、建議、中間資料或待補空殼不代表完成。") + p("你可以接著說『這項還在提議，請改回未定案』或『精簡成給主管看的版本』。同次修正應更新相關成果，保留原始資料。無法產出指定格式時須說明具體工具或權限限制。")),
         ("acceptance", "區分三種驗證", table(["層次", "可證明與不能代替的事"], [["程式測試", "欄位、運算、格式、來源保護與打包；不證明代理真的遵循對話。"], ["代理行為演練", "讀規則後對具體案例的回應與處理；不等於正式安裝環境完整流程。"], ["真實 Codex 完整流程", "實際安裝載入、引導、補答、來源判讀、執行產檔與開啟核對。未做就標未驗證。"]]) + p('另須分開記錄原生 Word／Excel／PowerPoint 畫面驗收。詳見 <a href="../ACCEPTANCE.md">本版驗收報告</a>；程式成功不能取代全部觸發驗收。')),
         ("safety", "保留事實與授權邊界", bullets(["提議不能當決議；未知數字、人名與期限保留待確認。", "郵件預設只產草稿；寄送、上傳、發布與提交報帳依既有授權要求。", "清楚收據由 Codex 讀取核對；只問不清楚欄位。不同幣別不混加，疑似重複不直接刪。", "資料分析實際計算並使用業務欄位；創意評估保留主觀及待驗證；研究只引用實際讀過的來源。", "真實工作資料不會因使用工具包就變成模擬。只有明確要求示範時才使用並標示模擬資料。"])),
-        ("ready", "開始一項工作", checklist(["技能已安裝並載入；不必回報內部路徑。", "送出技能名稱後，可以直接用自己的話回答。", "已有完整素材就直接執行，可選未知不阻擋全部工作。", "補答與修改沿用前文，最後開啟成果核對。"])),
+        ("ready", "開始一項工作", checklist(["技能已安裝並載入；每次使用不必重裝。", "已從該章下載附件（如需要），並複製完整提示詞。", "已有完整素材就直接執行，可選未知不阻擋全部工作。", "補答與修改沿用前文，最後開啟成果核對。"])),
     ]
-    layout("chapter-01.html", "第 1 章：Skill 基礎入門", lesson_shell("chapter-01.html", 1, "Skill 基礎入門", "安裝並載入技能，送出名稱，提供工作素材，再開啟成果。", sections, minutes=20))
+    layout("chapter-01.html", "第 1 章：Skill 基礎入門", lesson_shell("chapter-01.html", 1, "Skill 基礎入門", "安裝一次，選工作情境、下載附件、複製提示詞，讓 Codex 執行後開啟成果。", sections, minutes=20))
 
 def specialist_lesson(number, lesson):
     """法務與財務的員工教學；不假設兩者共用舊 JSON/CLI 契約。"""
@@ -180,16 +214,25 @@ def specialist_lesson(number, lesson):
         checks = ''.join(f'<li><a href="../examples/{skill}/{e(filename)}" download>{e(label)}</a></li>' for filename, label in lesson["verification_downloads"])
         download_body += maintainer(p("三組預期結果由程式獨立驗算，供維護者比對；學員可直接在 Excel 中抽查來源與差額，不需編輯內部資料格式。") + '<ul>' + checks + '</ul>', "獨立驗算結果")
     download_body += p("一般工作只用你提供的來源。只有明確提出練習或示範時，Codex 才使用這些教學模擬資料，並把模擬標記留在成果裡。")
+    outputs = lesson['outputs']
+    verification = lesson['verification']
+    advanced_outputs = ''
+    advanced_verification = ''
+    if skill == 'finance-assistant':
+        outputs = [item for item in outputs if item[0] in {'銀行對帳結果.xlsx', '財務分析報告.docx'}]
+        advanced_outputs = maintainer(table(['進階成果檔案', '適用任務'], [[f'<code>{e(name)}</code>', e(description)] for name, description in lesson['outputs'] if (name, description) not in outputs]), '預算差異與財務報表的成果')
+        verification = [lesson['verification'][0], lesson['verification'][3]]
+        advanced_verification = maintainer(checklist(lesson['verification'][1:3]), '預算差異與財務報表的核對')
     sections = [
         ("lesson-1", "這個 Skill 能幫員工做什麼", paragraphs(lesson["problem"])),
         ("lesson-2", "適合哪些工作情境", bullets(lesson["audience"])),
-        ("lesson-3", "啟動方式：只送出技能名稱", code(work_prompt(lesson), "可複製的啟動內容") + p("也可以自然地說「" + e(lesson["natural"]) + "」。已有完整工作需求與附件時直接開始，補答後沿用前文接續處理，不重問已知內容。") + conversation),
+        ("lesson-3", "日常使用的另一種啟動方式", code(work_prompt(lesson), "可複製的啟動內容") + p("也可以自然地說「" + e(lesson["natural"]) + "」。已有完整工作需求與附件時直接開始，補答後沿用前文接續處理，不重問已知內容。") + conversation),
         ("lesson-4", "需要提供什麼資料", paragraphs(lesson["materials"])),
-        ("lesson-5", "學員操作步驟", steps(lesson["steps"]) + p("讀規則、準備環境、整理內部資料與執行產檔都由 Codex 完成。你只需提供工作來源、補必要背景、開啟成果核對；計畫、說明或中間模板不代表已經交付。")),
-        ("lesson-6", "實際產出的成果", table(["成果檔案", "你能查看的內容"], [[f"<code>{e(name)}</code>", e(description)] for name, description in lesson["outputs"]]) + p("產物另存新資料夾，交付實際可開啟的檔案連結，保留來源與舊成果。指定格式無法完成時，應具體說明未完成部分與原因，不能只說已產生卻沒有檔案。")),
-        ("lesson-7", "如何核對成果正確性", checklist(lesson["verification"]) + p("程式檢查、Codex 啟動與完整工作流程、原生 Word／Excel 畫面驗收分開記錄。程式可讀取檔案不代表所有環境的版面都已驗證；未執行的檢查應保留未驗證。")),
+        ("lesson-5", "學員操作步驟", steps([('介紹工作情境', EXPERIENCES[skill]['task']), ('下載附件並複製提示詞', '使用章首下載按鈕，將附件拖曳進 Codex，再貼上完整提示詞。'), ('Codex 執行', '已有完整需求與來源時直接處理；只補真正必要的問題。'), ('開啟成果', '從實際檔案連結開啟，回查來源、數字與待確認項目。')]) + p("讀規則、準備環境、整理內部資料與執行產檔都由 Codex 完成。你只需提供工作來源、補必要背景、開啟成果核對；計畫、說明或中間模板不代表已經交付。") + maintainer(steps(lesson['steps']), '其他工作類型的原有操作說明')),
+        ("lesson-6", "實際產出的成果", table(["成果檔案", "你能查看的內容"], [[f"<code>{e(name)}</code>", e(description)] for name, description in outputs]) + advanced_outputs + p("產物另存新資料夾，交付實際可開啟的檔案連結，保留來源與舊成果。指定格式無法完成時，應具體說明未完成部分與原因，不能只說已產生卻沒有檔案。")),
+        ("lesson-7", "如何核對成果正確性", checklist(verification) + advanced_verification + p("程式檢查、Codex 啟動與完整工作流程、原生 Word／Excel 畫面驗收分開記錄。程式可讀取檔案不代表所有環境的版面都已驗證；未執行的檢查應保留未驗證。")),
         ("lesson-8", "常見問題與使用限制", table(["常見問題", "處理方式與限制"], [[e(question), e(answer)] for question, answer in lesson["errors"]])),
-        ("lesson-9", "模擬練習資料下載", download_body),
+        ("lesson-9", "進階：模擬練習資料下載", maintainer(download_body, "原有案例、進階練習與預期結果")),
         ("lesson-10", "想進一步修改 Skill，可以調整哪些規則", paragraphs(lesson["extension"]) + p('<a href="chapter-11.html">第 11 章：建立與修改自己的 Skill</a> 提供專案內複本、成果核對與進階維護入口。') + maintainer(p(f'<a href="../.agents/skills/{skill}/SKILL.md">完整技能規則</a> · <a href="../.agents/skills/{skill}/references/workflow.md">維護工作流程</a>；新增行為先建立失敗測試，再實作並驗證來源與產物。'), "技能規則與維護入口")),
     ]
     url = f"chapter-{number:02}.html"
@@ -222,14 +265,14 @@ def skill_lesson(number, lesson):
         technical += p('教學原文：<a href="../examples/research-assistant/sources/plan-a.md">sources/plan-a.md</a>、<a href="../examples/research-assistant/sources/plan-b.md">sources/plan-b.md</a>。摘錄須逐字存在。若內部 JSON 位於 outputs/research-assistant，可用 ../../examples/research-assistant/sources/plan-a.md；相對路徑由 Codex 處理。')
     elif skill == "data-analyst":
         technical += p("僅此教學 sales.csv 的測試參數為 --group-by category --value amount --date-column date；實際工作依真實欄位選擇，禁止套用示範欄名。")
-    demo = p("本節教學採原創模擬資料，僅在你明確要求示範或練習時使用。一般啟動不會提供課程模式，也不會讀這些檔案。想練習可在啟動後用自己的話說『請用這章模擬資料示範一次』；Codex 會標示模擬，與工作成果分開保存。") + maintainer(technical, "模擬來源、保留的手動命令與測試細節")
+    demo = p('初次操作請使用章首「立即體驗」的完整提示詞與下載附件。下方保留舊有技術測試，供需要維護時展開。') + maintainer(technical, "模擬來源、保留的手動命令與測試細節")
     expected = p("這裡保留教學範例的預期成果，供明確練習時核對；不能當作一般工作的預填答案。實際成果仍依你的來源。") + maintainer(bullets(lesson["expected"]) + code(lesson["expected_sample"], "模擬預期摘錄"), "模擬範例預期內容")
     expected += table(["本技能實際產物", "核對方式"], [[f"<code>{e(item)}</code>", "開啟檔案，抽查來源、日期、數字及待確認欄位"] for item in lesson["outputs"]])
     sections = [
         ("lesson-1", "這個 Skill 解決什麼工作", paragraphs(lesson["problem"])),
         ("lesson-2", "哪些工作適合使用", bullets(lesson["audience"]) + p("這是日常工作工具，可反覆用於真實工作。自然語言也能選用，不需要依序啟動其他技能；已有完整目的與素材時直接執行。")),
         ("lesson-3", "提供必要素材即可", p("直接貼文字、附檔或提供可讀檔案，無須固定檔名、表單或長提示詞。Codex 會先讀目前對話與來源，自行查看能取得的檔案、欄位、工作表與環境；只問會阻止正確完成或實質改變結果的缺漏。") + p("標題、檔名、輸出位置與一般呈現方式採合理預設。未知人名、期限與成效數字保留待確認；有依據的內容先完成，不拿範例資料填空。")),
-        ("lesson-4", "只送出技能名稱", code(work_prompt(lesson), "可複製的啟動內容") + p("只有名稱時會依工作用途引導；已有素材或正在補答時沿用前文，不重新介紹功能或要求選擇。")),
+        ("lesson-4", "日常使用的另一種啟動方式", code(work_prompt(lesson), "可複製的啟動內容") + p("只有名稱時會依工作用途引導；已有素材或正在補答時沿用前文，不重新介紹功能或要求選擇。")),
         ("lesson-5", "實務工作對話示意", p("以下是對話方式示意，不是技能自動載入的來源，也不代表已在你的電腦產檔。你可用自己的話回答，不必回覆編號。") + table(["角色", "內容"], [["使用者", f"<code>${skill}</code>"], ["Codex", e(greeting)], ["使用者", e(work[0])], ["Codex", e(work[1])]])),
         ("lesson-6", "補答與修改會接續完成", steps([("提供資料", "直接貼素材或附檔；若來源可讀且目的清楚，Codex 直接整理並執行。"), ("只補關鍵缺漏", "需要日期、範圍或不清欄位時，回答那一個問題即可；不用重新貼完整需求。"), ("開啟成果並修改", "使用實際檔案連結核對，再用日常語言說要改哪裡；Codex 沿用來源更新相關成果並保留舊版本。")]) + p("Codex 會自行讀內部規則、檢查環境、整理有來源的資料、選參數、執行並確認檔案存在。你不需要指示它讀 MD、回報技能路徑、編輯 JSON 或指定腳本。")),
         ("lesson-7", "另外選用的模擬教學", demo),

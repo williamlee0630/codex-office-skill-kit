@@ -1,0 +1,298 @@
+{
+  "date": "2026-11-01",
+  "scope": "fresh Codex CLI conversations; not desktop UI",
+  "summary": {
+    "passed": 6,
+    "incomplete": 3
+  },
+  "results": [
+    {
+      "skill": "email-assistant",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 302.6,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "e4e781c7245d38c992d79142a1a70f0c2641a33335b8562e72d8ac02218a7c1f",
+      "attachment_count": 0,
+      "produced_files": [
+        {
+          "file": "daily-summary.md",
+          "bytes": 6799,
+          "sha256": "80caf1254dba52dd411fa9f70ea2edcfddc396ac3d9cce26ff45b14aa128fa62",
+          "container_readable": true
+        },
+        {
+          "file": "drafts.md",
+          "bytes": 3930,
+          "sha256": "ab574c84237c2b2429e830c0dd1682528bab3dde0a8654be31a99e5e7e1f6291",
+          "container_readable": true
+        },
+        {
+          "file": "source.md",
+          "bytes": 2056,
+          "sha256": "90b36f93a6448ac77ce325a249c17d28b1b9cf6c58029be13074fc795d307aaa",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "receipt-organizer",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 407.4,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "71a41e1cc34e638fe0cc32b526567655f10ff58bbaeb66b207ed3e70dcf9c0e6",
+      "attachment_count": 1,
+      "produced_files": [
+        {
+          "file": "receipts.xlsx",
+          "bytes": 2388337,
+          "sha256": "722776b855c6e1a3e8f428412c7b6ac35cb105451a2052dc5680af2e8be514fa",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "presentation-maker",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 358.7,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "80df249ff0858e4e19aa8343987fe81864c0a65ad572387457f9a644b6a23a71",
+      "attachment_count": 0,
+      "produced_files": [
+        {
+          "file": "presentation.pptx",
+          "bytes": 50727,
+          "sha256": "c2d37db93c0254b99d741ef974266c446d63a5efd5c4bca792202330232f7b93",
+          "container_readable": true
+        },
+        {
+          "file": "speaker-notes.md",
+          "bytes": 4835,
+          "sha256": "debf7b27c45102f1327c91b3133bc20b9a5aa51696818bfa810590cdf519036a",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "document-writer",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 333.8,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "0a36574bd3e56e0fa29d1d91475132f13f1d53d7985cdba25172a61482a08209",
+      "attachment_count": 0,
+      "produced_files": [
+        {
+          "file": "客服案件交接SOP_正式版_教學模擬草案.docx",
+          "bytes": 39490,
+          "sha256": "a8d934aeb1b43fd94330be3490f4e9760d025a251a5db5495f55876db6ecd0db",
+          "container_readable": true
+        },
+        {
+          "file": "客服案件交接SOP_精簡版_教學模擬草案.docx",
+          "bytes": 38668,
+          "sha256": "608e9cac41fe5c90e5b6f30e840092b3d6d1e723c128472fb4fb237e5c7d1332",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "data-analyst",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 488.3,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "68fde5086b2de65c81e22610ee574fcda25a2079dd2a9035c730f9f2370dda90",
+      "attachment_count": 1,
+      "produced_files": [
+        {
+          "file": "analysis.xlsx",
+          "bytes": 14932,
+          "sha256": "6ca3c5a44d7795aa04ef067944ea4ab065aa797fe574f0f12ced4c3d87406603",
+          "container_readable": true
+        },
+        {
+          "file": "chart.png",
+          "bytes": 133656,
+          "sha256": "c97af97cca9d54621b7bc050c0e9cc2ee8b8dd7b5be5b77d549a26bcb77ecae8",
+          "container_readable": true
+        },
+        {
+          "file": "analysis.md",
+          "bytes": 4316,
+          "sha256": "7c2c43dfa9102191daa0ad7ab661688ad1d58771db6bcca313c2fc6c93973d62",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "idea-generator",
+      "skill_loaded": true,
+      "conversation_completed": false,
+      "seconds": 692.5,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "a345caba23c4a4ac9bf0e63803cf6b9ddf0304185f43c3d206ea4990bf7aff38",
+      "attachment_count": 0,
+      "produced_files": [
+        {
+          "file": "ideas.md",
+          "bytes": 28130,
+          "sha256": "10c4507eed7a368c4dad3c57f064f7d1bfa522abe5d7fafde37bd60916df9174",
+          "container_readable": true
+        },
+        {
+          "file": "comparison.csv",
+          "bytes": 15307,
+          "sha256": "0de1a0cab4b8d51a8d7b89eb01818a6c96917f698b573f6a2dad77abd72dda56",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "incomplete",
+      "semantic_review": "partial; see acceptance report",
+      "blockers": [
+        "Optional XLSX formula validation failed",
+        "Codex CLI account usage limit interrupted conversation"
+      ],
+      "readable_required_outputs": "ideas.md and comparison.csv exist; not full acceptance"
+    },
+    {
+      "skill": "research-assistant",
+      "skill_loaded": true,
+      "conversation_completed": true,
+      "seconds": 310.0,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "fbe746f9c373435d6317f77bbe54dd0d1a31b19e7900f6927e382da9a9afe3c7",
+      "attachment_count": 2,
+      "produced_files": [
+        {
+          "file": "research-report.md",
+          "bytes": 9351,
+          "sha256": "4a8cfc93c401e52b0655951e78b8e5df77a1df25a70057f814cd7cdee19b588e",
+          "container_readable": true
+        },
+        {
+          "file": "sources.csv",
+          "bytes": 710,
+          "sha256": "5e8845451ae2d70cb482febb8452af7fd8aa5fb452717c726285bb1b6275d595",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "passed",
+      "semantic_review": "completed against exact prompt and source",
+      "blockers": []
+    },
+    {
+      "skill": "legal-reviewer",
+      "skill_loaded": true,
+      "conversation_completed": false,
+      "seconds": 901.8,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "3279043516e0ee91430851f21b3b57245937067448de1481a17b3ef15df46d6f",
+      "attachment_count": 1,
+      "produced_files": [
+        {
+          "file": "合約審查報告.docx",
+          "bytes": 51991,
+          "container_readable": false,
+          "error": "PermissionError while opening actual output; not delivered as verified"
+        },
+        {
+          "file": "合約風險清單.xlsx",
+          "bytes": 29252,
+          "container_readable": false,
+          "error": "PermissionError while opening actual output; not delivered as verified"
+        },
+        {
+          "file": "條款修訂建議.md",
+          "bytes": 28306,
+          "container_readable": false,
+          "error": "PermissionError while opening actual output; not delivered as verified"
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "incomplete",
+      "semantic_review": "partial; see acceptance report",
+      "blockers": [
+        "900-second wrapper timeout",
+        "PermissionError opening all three produced files"
+      ]
+    },
+    {
+      "skill": "finance-assistant",
+      "skill_loaded": true,
+      "conversation_completed": false,
+      "seconds": 468.0,
+      "initial_input": "exact handbook prompt and listed attachments only",
+      "prompt_sha256": "9e72f0753091849df5d9aa6e5ce518b7d4a320a68fbbde3eb32e6d8881f2349a",
+      "attachment_count": 2,
+      "produced_files": [
+        {
+          "file": "銀行對帳結果.xlsx",
+          "bytes": 23959,
+          "sha256": "78a46755ef419481cb7502c561d1e4271938bfbe2a59fb9666c156576da39861",
+          "container_readable": true
+        },
+        {
+          "file": "財務分析報告.docx",
+          "bytes": 40353,
+          "sha256": "5724c352959b2b2461515f2b8d223c3c28ba2deec9654e794ec8250aee7b1e33",
+          "container_readable": true
+        }
+      ],
+      "required_files_present": true,
+      "bundled_prefilled_demo_reads_detected": false,
+      "scope": "fresh Codex CLI; attachment files staged in clean working directory; PNG also supplied with image input; no desktop UI drag-and-drop validation",
+      "end_to_end_status": "incomplete",
+      "semantic_review": "partial; see acceptance report",
+      "blockers": [
+        "Codex CLI account usage limit interrupted conversation"
+      ],
+      "readable_required_outputs": "Word and Excel opened; reconciliation content checked; final conversation incomplete"
+    }
+  ],
+  "limitations": [
+    "CLI file staging differs from desktop attachment drag-and-drop",
+    "Six passes do not mean nine skills universally work in all environments",
+    "Private raw event logs and machine paths are not published"
+  ]
+}

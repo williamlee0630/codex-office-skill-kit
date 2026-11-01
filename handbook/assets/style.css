@@ -8,3 +8,17 @@
 @media(max-width:720px){html{scroll-padding-top:85px}.sidebar{width:278px;top:64px;transform:translateX(-100%);transition:transform .18s;box-shadow:12px 0 40px #18302110}.sidebar.open{transform:translateX(0)}.sidebar>.brand{display:none}.sidebar .edition{margin-top:0}.mobile-bar{display:flex;position:sticky;top:0;height:64px;padding:12px 20px;align-items:center;justify-content:space-between;background:#f1f4edee;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:40}.mobile-brand{font-size:14px;font-weight:650;color:var(--green);text-decoration:none}.menu-button{border:1px solid #d1dcc9;background:#fff;border-radius:6px;padding:6px 11px;font-size:12px;color:var(--green)}.page{margin-left:0;padding:0 23px 25px}.topbar{padding:18px 0;font-size:10px}.topbar .updated{font-size:9px}.hero{padding:34px 0 30px}.hero h1{font-size:34px;line-height:1.55}.hero .intro{font-size:15px}.eyebrow{font-size:10px}.actions{margin-top:22px}.overview-strip{margin-bottom:32px;padding:17px 0}.overview-strip strong{font-size:13px}.overview-strip span{font-size:10px}.overview-strip>div{padding-left:12px}.skill-grid{grid-template-columns:1fr;margin-bottom:30px}.skill-card .card-top{margin-bottom:9px}.section-head h2{font-size:21px}.section-head span{font-size:10px}.start-card{padding:23px}.two-col{grid-template-columns:1fr;gap:10px}.footer{display:block;line-height:2}.footer span{display:block}.lesson-head{padding-top:32px}.lesson-head h1{font-size:29px}.lesson-deck{font-size:15px}.article section{scroll-margin-top:83px;padding-top:24px}.article section>h2{font-size:21px;gap:10px}.article p,.article li{font-size:14px}.code-block pre{padding:16px;font-size:12px}table{font-size:12px}th,td{padding:10px}.lesson-nav{gap:10px}.lesson-nav a{padding:14px;font-size:12px}.toast{left:50%;width:max-content;max-width:92vw;font-size:12px}.skip{left:20px}.skip:focus{top:70px}.note{padding:15px}.hero .quiet{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 @media print{.sidebar,.mobile-bar,.topbar,.toc,.copy-button,.lesson-nav,.footer,.toast{display:none}.page{margin:0;padding:0}.reading-layout{display:block}.article section{break-inside:avoid}.hero{display:block}.flow-card{display:none}body{background:#fff;color:#000;font-size:11pt}a{color:#000}.code-block{break-inside:avoid}h1{font-size:26pt}.checklist input{appearance:none;border:1px solid #777}a[href^="http"]:after{content:" (" attr(href) ")";font-size:9pt}}
+/* 本章工作入口：長提示詞在手機換行，附件與複製按鈕維持可點擊。 */
+.experience-card { background: #f1f7f3; border: 1px solid #b5ccbf; border-left: 4px solid #326b52; border-radius: 12px; padding: 24px; min-width: 0; }
+.experience-card h3 { margin-top: 24px; }
+.experience-card .code-block { background: #fff; }
+.experience-card pre { white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; max-height: 560px; overflow-y: auto; }
+.experience-card .code-label { position: sticky; top: 0; gap: 12px; }
+.experience-card .copy-button { min-width: 72px; min-height: 44px; flex-shrink: 0; }
+.experience-card .attachment-actions { flex-wrap: wrap; gap: 10px; }
+.experience-card .button { white-space: normal; overflow-wrap: anywhere; min-height: 44px; }
+@media (max-width: 720px) {
+  .experience-card { padding: 16px; }
+  .experience-card .attachment-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .experience-card .button { width: 100%; text-align: left; }
+}

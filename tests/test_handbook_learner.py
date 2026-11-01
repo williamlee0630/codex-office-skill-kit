@@ -82,7 +82,7 @@ class LearnerHandbookTests(unittest.TestCase):
         for number, skill, outputs, keywords in [
             (9, "legal-reviewer", ["合約審查報告.docx", "合約風險清單.xlsx", "條款修訂建議.md"],
              ["法域", "掃描", "法律來源", "高、中、低", "專業", "原始條款"]),
-            (10, "finance-assistant", ["財務報表.xlsx", "銀行對帳結果.xlsx", "財務差異分析.xlsx", "財務分析報告.docx"],
+            (10, "finance-assistant", ["銀行對帳結果.xlsx", "財務分析報告.docx"],
              ["借貸", "幣別", "同額", "零", "一對一", "data-analyst"]),
         ]:
             source = read(f"chapter-{number:02}.html")
@@ -97,7 +97,7 @@ class LearnerHandbookTests(unittest.TestCase):
         page = LearnerPage(read("chapter-01.html"))
         visible = " ".join(page.visible)
         previous = -1
-        for step in ["安裝並載入技能", "送出 $技能名稱", "依引導說明工作或提供素材", "必要時補答", "開啟並核對成果"]:
+        for step in ["安裝並載入技能", "選擇工作情境，下載附件", "複製完整提示詞", "Codex 執行，必要時補答", "開啟並核對成果"]:
             position = visible.find(step)
             self.assertGreater(position, previous, step)
             previous = position
@@ -113,13 +113,14 @@ class LearnerHandbookTests(unittest.TestCase):
                     with self.subTest(page=path.name, block=block["text"].splitlines()[0]):
                         self.assertTrue(block["collapsed"], "手動命令與原始結構應預設收合")
 
-    def test_each_visible_startup_block_is_only_the_skill_token(self):
+    def test_each_chapter_has_a_complete_visible_work_prompt(self):
         for number, skill in enumerate(SKILLS, 2):
             page = LearnerPage(read(f"chapter-{number:02}.html"))
             prompts = [b["text"] for b in page.blocks if not b["collapsed"]]
             with self.subTest(skill=skill):
                 self.assertTrue(prompts)
-                self.assertEqual(set(prompts), {f"${skill}"})
+                self.assertTrue(any(p.startswith(f"${skill}\n") and len(p) > 70 for p in prompts))
+                self.assertTrue(all(p.startswith(f"${skill}") for p in prompts))
 
     def test_daily_work_conversations_do_not_expose_internal_steps(self):
         for number in range(2, 11):

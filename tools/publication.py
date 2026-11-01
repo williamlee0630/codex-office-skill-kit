@@ -134,6 +134,28 @@ def _scan_pdf(data, label, depth):
     return list(dict.fromkeys(issues))
 
 
+def _scan_png(data, label):
+    """解析可讀中繼資料；IDAT 壓縮像素不是文字，畫面內容另做視覺核對。"""
+    from PIL import Image
+    try:
+        with Image.open(BytesIO(data)) as image:
+            if image.width * image.height > 50_000_000:
+                return [label + '：PNG尺寸超過檢查上限']
+            image.verify()
+        issues = []
+        with Image.open(BytesIO(data)) as image:
+            for key, value in image.text.items():
+                issues.extend(_scan_text(str(key) + '\n' + str(value), label + '：PNG文字中繼資料'))
+            for key, value in image.getexif().items():
+                if isinstance(value, bytes):
+                    encoding = 'utf-16le' if b'\x00' in value else 'utf-8'
+                    value = value.decode(encoding, errors='ignore')
+                issues.extend(_scan_text(str(key) + '\n' + str(value), label + '：PNG EXIF'))
+        return list(dict.fromkeys(issues))
+    except (OSError, ValueError, SyntaxError, Image.DecompressionBombError):
+        return [label + '：PNG無法完整解析']
+
+
 def scan(path_or_data, label=None, _depth=0):
     """回傳不含私密值的問題清單；掃描檔案或 bytes，遞迴 ZIP／OOXML。"""
     if isinstance(path_or_data, (str, Path)):
@@ -147,6 +169,8 @@ def scan(path_or_data, label=None, _depth=0):
         label = '[隱私檔名]'
     if data.lstrip().startswith(b'%PDF-'):
         return _scan_pdf(data, label, _depth)
+    if data.startswith(b'\x89PNG\r\n\x1a\n'):
+        return _scan_png(data, label)
     encoding = 'utf-16' if data.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8'
     is_archive = data.startswith((b'PK\x03\x04', b'PK\x05\x06', b'PK\x07\x08'))
     # 壓縮資料不是文字；掃描展開內容與中繼資料，避免隨機位元組被誤認成信箱。

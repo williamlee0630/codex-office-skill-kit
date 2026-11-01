@@ -1,0 +1,61 @@
+{
+  "teaching_only": true,
+  "files": [
+    {
+      "file": "模擬銷售資料.csv",
+      "source": "examples/data-analyst/sales.csv",
+      "conversion": "UTF-8 BOM",
+      "bytes": 395,
+      "sha256": "2c2c05dd6c061e96d53725c8c0520840af7db1c81d5e1aafa2e44d14e71bacd9",
+      "simulation": true
+    },
+    {
+      "file": "模擬公司內部帳務.csv",
+      "source": "examples/finance-assistant/reconciliation/internal.csv",
+      "conversion": "UTF-8 BOM",
+      "bytes": 981,
+      "sha256": "13c3bf634d15547b746b54735f9bd39a1d270e2a8461e344a3fcb7d15198f3d8",
+      "simulation": true
+    },
+    {
+      "file": "模擬銀行交易明細.csv",
+      "source": "examples/finance-assistant/reconciliation/bank.csv",
+      "conversion": "UTF-8 BOM",
+      "bytes": 831,
+      "sha256": "91db5565ad9094a2671cb8fde2b4e45c7c63a4bc67cd1dc11c2bcf958f59ed8a",
+      "simulation": true
+    },
+    {
+      "file": "模擬服務合約_甲方審查.docx",
+      "source": "examples/legal-reviewer/風險服務合約.docx",
+      "conversion": "原檔複製",
+      "bytes": 37914,
+      "sha256": "20fd21f78881df7ce4f3cc037563b562046252a8acb4c187aa2a670c13954dfb",
+      "simulation": true
+    },
+    {
+      "file": "模擬員工訓練方案A.docx",
+      "source": "examples/research-assistant/sources/plan-a.md",
+      "conversion": "原文轉為 Word；附教學用途說明",
+      "bytes": 37066,
+      "sha256": "0161e67d6b909478f32e7e4ac35356463f38e83999a135e6401ad9916968a774",
+      "simulation": true
+    },
+    {
+      "file": "模擬員工訓練方案B.docx",
+      "source": "examples/research-assistant/sources/plan-b.md",
+      "conversion": "原文轉為 Word；附教學用途說明",
+      "bytes": 37046,
+      "sha256": "e483a7481fa97d7c1ec7e4bbef3f9dfeddc7145d01cd85927d21a98104b09256",
+      "simulation": true
+    },
+    {
+      "file": "模擬文具收據.png",
+      "source": "原創 imagegen 模擬照片，2026-11-01；人工逐欄核對",
+      "conversion": "日期 2026-10-23；240+60+70=370 TWD；無真實個資",
+      "bytes": 2496597,
+      "sha256": "888f53e3de3324d05b4989aa94aa89b2d20bc8f978e442a7105a3f0fd796aea2",
+      "simulation": true
+    }
+  ]
+}

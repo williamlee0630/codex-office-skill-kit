@@ -1,0 +1,201 @@
+{
+  "attachments": [
+    {
+      "file": "模擬服務合約_甲方審查.docx",
+      "application": "Word 16",
+      "opened": true,
+      "pages": 1,
+      "characters": 698,
+      "pdf_export": true
+    },
+    {
+      "file": "模擬員工訓練方案A.docx",
+      "application": "Word 16",
+      "opened": true,
+      "pages": 1,
+      "characters": 141,
+      "pdf_export": true
+    },
+    {
+      "file": "模擬員工訓練方案B.docx",
+      "application": "Word 16",
+      "opened": true,
+      "pages": 1,
+      "characters": 135,
+      "pdf_export": true
+    },
+    {
+      "file": "模擬公司內部帳務.csv",
+      "application": "Excel 16",
+      "opened": true,
+      "rows": 13,
+      "columns": 6,
+      "chinese_sample": "A"
+    },
+    {
+      "file": "模擬銀行交易明細.csv",
+      "application": "Excel 16",
+      "opened": true,
+      "rows": 11,
+      "columns": 6,
+      "chinese_sample": "A"
+    },
+    {
+      "file": "模擬銷售資料.csv",
+      "application": "Excel 16",
+      "opened": true,
+      "rows": 7,
+      "columns": 5,
+      "chinese_sample": "模擬北區"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "客服案件交接SOP_正式版_教學模擬草案.docx",
+      "app": "Word 16",
+      "opened": true,
+      "pages": 2,
+      "characters": 1128
+    },
+    {
+      "file": "客服案件交接SOP_精簡版_教學模擬草案.docx",
+      "app": "Word 16",
+      "opened": true,
+      "pages": 1,
+      "characters": 571
+    },
+    {
+      "file": "analysis.xlsx",
+      "app": "Excel 16",
+      "opened": true,
+      "sheets": [
+        {
+          "name": "銷售分析",
+          "rows": 45,
+          "columns": 16
+        },
+        {
+          "name": "原始資料與品質",
+          "rows": 43,
+          "columns": 6
+        }
+      ],
+      "first_sheet_pdf": true
+    },
+    {
+      "file": "receipts.xlsx",
+      "app": "Excel 16",
+      "opened": true,
+      "sheets": [
+        {
+          "name": "教學報帳表",
+          "rows": 27,
+          "columns": 7
+        },
+        {
+          "name": "原圖與辨識依據",
+          "rows": 61,
+          "columns": 5
+        }
+      ],
+      "first_sheet_pdf": true
+    },
+    {
+      "file": "presentation.pptx",
+      "app": "PowerPoint 16",
+      "opened": true,
+      "slides": 5,
+      "all_slides_exported": true
+    },
+    {
+      "file": "document-concise.docx",
+      "app": "Word 16",
+      "opened": true,
+      "pages": 3,
+      "characters": 1726
+    },
+    {
+      "file": "document-formal.docx",
+      "app": "Word 16",
+      "opened": true,
+      "pages": 4,
+      "characters": 2259
+    },
+    {
+      "file": "財務分析報告.docx",
+      "app": "Word 16",
+      "opened": true,
+      "pages": 3,
+      "characters": 2575
+    },
+    {
+      "file": "銀行對帳結果.xlsx",
+      "app": "Excel 16",
+      "opened": true,
+      "sheets": [
+        {
+          "name": "對帳摘要",
+          "rows": 46,
+          "columns": 7
+        },
+        {
+          "name": "交易明細",
+          "rows": 22,
+          "columns": 19
+        },
+        {
+          "name": "待人工確認",
+          "rows": 22,
+          "columns": 11
+        },
+        {
+          "name": "公司原始",
+          "rows": 18,
+          "columns": 8
+        },
+        {
+          "name": "銀行原始",
+          "rows": 16,
+          "columns": 8
+        },
+        {
+          "name": "計算依據",
+          "rows": 35,
+          "columns": 2
+        }
+      ],
+      "first_sheet_pdf": true
+    },
+    {
+      "file": "comparison.csv",
+      "app": "Excel 16",
+      "opened": true,
+      "sheets": [
+        {
+          "name": "comparison",
+          "rows": 11,
+          "columns": 23
+        }
+      ],
+      "first_sheet_pdf": true
+    },
+    {
+      "file": "comparison.xlsx",
+      "app": "Excel 16",
+      "opened": true,
+      "sheets": [
+        {
+          "name": "十案比較",
+          "rows": 16,
+          "columns": 13
+        },
+        {
+          "name": "成本試算",
+          "rows": 30,
+          "columns": 16
+        }
+      ],
+      "first_sheet_pdf": true
+    }
+  ]
+}

@@ -55,6 +55,23 @@ def fixture(root):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_png_scans_real_text_metadata_instead_of_compressed_pixels(self):
+        from PIL import Image
+        from PIL.PngImagePlugin import PngInfo
+        publication = load_module('publication')
+        self.assertEqual(publication.scan(ROOT / 'examples/quickstart/模擬文具收據.png'), [])
+        private = 'person' + '@' + 'private-company.test'
+        for kind in ['text', 'compressed', 'international']:
+            info = PngInfo()
+            if kind == 'international':
+                info.add_itxt('Description', private, zip=True)
+            else:
+                info.add_text('Description', private, zip=kind == 'compressed')
+            buffer = io.BytesIO()
+            Image.new('RGB', (2, 2), 'white').save(buffer, format='PNG', pnginfo=info)
+            self.assertTrue(publication.scan(buffer.getvalue(), label='teaching.png'), kind)
+        self.assertTrue(publication.scan(b'\x89PNG\r\n\x1a\nmalformed', label='broken.png'))
+
     def pdf_bytes(self, kind, value):
         from pypdf import PdfWriter
         from pypdf.generic import (ArrayObject, DecodedStreamObject, DictionaryObject,

@@ -105,7 +105,7 @@ class HandbookTests(unittest.TestCase):
         for number, skill in enumerate(SKILLS, 2):
             filename = f"chapter-{number:02}.html"
             results = [item for item in index if item["url"].startswith(filename + "#")]
-            self.assertEqual(len(results), 10, filename)
+            self.assertEqual(len(results), 11, filename)  # 原十節加上可直接操作的立即體驗
             self.assertTrue(all(skill in item["text"] for item in results))
             source = (BOOK / filename).read_text(encoding="utf-8")
             pagination = re.search(r'<nav class="lesson-nav".*?</nav>', source).group(0)

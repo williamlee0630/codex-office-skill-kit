@@ -28,6 +28,8 @@ $email-assistant
 
 ## 環境由 Skill 處理
 
+郵件章的主要示範需要另在 Codex 外掛中連接並授權 Gmail。已安裝 v1.2.0 的 email-assistant 可繼續使用，不需因這次講義修改重新安裝；安裝 Skill 本身不會自動授權信箱。
+
 各技能自行讀取規則，檢查 Python 3.10+ 與 `scripts/requirements.txt` 所列格式套件。已有可用環境就沿用；缺少時在目前工作區準備專用環境，選參數並實際執行產檔。沒有 Python、安裝權限或連線時，才具體說明需要資訊同仁協助的部分。
 
 下載包不包含 Python 或第三方套件。講義可雙擊 handbook/index.html 離線閱讀；Codex 使用與首次套件取得依帳號、網路及組織規範。

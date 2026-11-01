@@ -12,6 +12,31 @@ sys.path.insert(0, str(ROOT / 'handbook'))
 
 
 class QuickstartTests(unittest.TestCase):
+    def test_email_primary_demo_reads_connected_mailbox_with_bounded_scope(self):
+        import experiences
+        prompt = experiences.EXPERIENCES['email-assistant']['prompt']
+        for phrase in ['已連接的 Gmail', '最近 7 天', '最多 20 封', '實際讀取', '不要寄信', '不要修改', '未連接']:
+            self.assertIn(phrase, prompt)
+        self.assertNotIn('郵件一｜', prompt)
+        self.assertNotIn('2026-10-23', prompt)
+
+    def test_email_page_explains_connection_and_keeps_pasted_demo_as_fallback(self):
+        source = (ROOT / 'handbook/chapter-02.html').read_text(encoding='utf-8')
+        main = source.split('id="try-now"', 1)[1].split('</section>', 1)[0]
+        page = LearnerPage(main)
+        visible = ' '.join(page.visible)
+        self.assertIn('先連接 Gmail', visible)
+        self.assertNotIn('素材已寫在提示詞中', visible)
+        self.assertNotIn('提示詞已包含這次工作的完整素材', visible)
+        self.assertNotIn('全部情境與附件均為原創模擬資料', visible)
+        self.assertIn('郵件一｜客戶窗口（虛構）', main)
+        fallback = [b for b in page.blocks if '郵件一｜' in b['text']]
+        self.assertTrue(fallback)
+        self.assertTrue(all(b['collapsed'] for b in fallback))
+        chapter_visible = ' '.join(LearnerPage(source).visible)
+        self.assertNotIn('不需要 Gmail、帳號授權', chapter_visible)
+        self.assertNotIn('這次練習只使用本機模擬郵件', chapter_visible)
+
     def test_first_chapter_leads_with_complete_prompt_workflow(self):
         source = (ROOT / 'handbook/chapter-01.html').read_text(encoding='utf-8')
         first = source.split('id="understand"', 1)[1].split('</section>', 1)[0]

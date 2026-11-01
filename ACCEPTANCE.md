@@ -1,5 +1,7 @@
 # 2026-11-01 講義流程更新
 
+郵件章最新主示範已改成讀取已連接 Gmail，範圍與限制見 [Gmail 示範驗收](qa/gmail-demo-acceptance.md)。先前郵件貼文情境的通過結果保留為歷史，不代表新連接流程已端到端實測。
+
 九章已改為完整提示詞與獨立附件入口；本次最新驗收請先看 [附件即用驗收](qa/attachment-first-acceptance.md) 與 [乾淨 Codex 測試記錄](qa/attachment-first-codex.json)。以下原有紀錄保留作歷史，不代表本次九項全部通過。
 
 

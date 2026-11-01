@@ -1,0 +1,292 @@
+{
+  "checked_at_taipei": "2026-11-01T10:54:16.470842+08:00",
+  "base_url": "https://williamlee0630.github.io/codex-office-skill-kit/",
+  "pages": [
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-02.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-03.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-04.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-05.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-06.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-07.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-08.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-09.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-10.html",
+      "http_status": 200,
+      "exact_current_prompt": true
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/index.html",
+      "http_status": 200
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-01.html",
+      "http_status": 200
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/chapter-11.html",
+      "http_status": 200
+    },
+    {
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/handbook/appendix.html",
+      "http_status": 200
+    }
+  ],
+  "attachments": [
+    {
+      "file": "模擬文具收據.png",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E6%96%87%E5%85%B7%E6%94%B6%E6%93%9A.png",
+      "bytes": 2496597,
+      "sha256": "888f53e3de3324d05b4989aa94aa89b2d20bc8f978e442a7105a3f0fd796aea2",
+      "content_type": "image/png",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬銷售資料.csv",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E9%8A%B7%E5%94%AE%E8%B3%87%E6%96%99.csv",
+      "bytes": 395,
+      "sha256": "2c2c05dd6c061e96d53725c8c0520840af7db1c81d5e1aafa2e44d14e71bacd9",
+      "content_type": "text/csv; charset=utf-8",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬員工訓練方案A.docx",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E5%93%A1%E5%B7%A5%E8%A8%93%E7%B7%B4%E6%96%B9%E6%A1%88A.docx",
+      "bytes": 37066,
+      "sha256": "0161e67d6b909478f32e7e4ac35356463f38e83999a135e6401ad9916968a774",
+      "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬員工訓練方案B.docx",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E5%93%A1%E5%B7%A5%E8%A8%93%E7%B7%B4%E6%96%B9%E6%A1%88B.docx",
+      "bytes": 37046,
+      "sha256": "e483a7481fa97d7c1ec7e4bbef3f9dfeddc7145d01cd85927d21a98104b09256",
+      "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬服務合約_甲方審查.docx",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E6%9C%8D%E5%8B%99%E5%90%88%E7%B4%84_%E7%94%B2%E6%96%B9%E5%AF%A9%E6%9F%A5.docx",
+      "bytes": 37914,
+      "sha256": "20fd21f78881df7ce4f3cc037563b562046252a8acb4c187aa2a670c13954dfb",
+      "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬公司內部帳務.csv",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E5%85%AC%E5%8F%B8%E5%85%A7%E9%83%A8%E5%B8%B3%E5%8B%99.csv",
+      "bytes": 981,
+      "sha256": "13c3bf634d15547b746b54735f9bd39a1d270e2a8461e344a3fcb7d15198f3d8",
+      "content_type": "text/csv; charset=utf-8",
+      "matches_reviewed_local_input": true
+    },
+    {
+      "file": "模擬銀行交易明細.csv",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/examples/quickstart/%E6%A8%A1%E6%93%AC%E9%8A%80%E8%A1%8C%E4%BA%A4%E6%98%93%E6%98%8E%E7%B4%B0.csv",
+      "bytes": 831,
+      "sha256": "91db5565ad9094a2671cb8fde2b4e45c7c63a4bc67cd1dc11c2bcf958f59ed8a",
+      "content_type": "text/csv; charset=utf-8",
+      "matches_reviewed_local_input": true
+    }
+  ],
+  "packages": [
+    {
+      "file": "practice-data-1.2.0.zip",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/practice-data-1.2.0.zip",
+      "bytes": 3401176,
+      "sha256": "504688a732ab5bc09e7e15c893e7497693ca336cf9e114a9dd8b1a490f749033",
+      "crc_manifest_and_all_seven_inputs_valid": true
+    },
+    {
+      "file": "office-skills-1.2.0.zip",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/office-skills-1.2.0.zip",
+      "bytes": 4043827,
+      "sha256": "a097495707fdbcb3da65c87d9b8d0825d5cf3d3cbbbc91a67ccf47c944260bf4",
+      "crc_manifest_and_all_seven_inputs_valid": true
+    },
+    {
+      "file": "codex-office-skill-kit-1.2.0.zip",
+      "url": "https://williamlee0630.github.io/codex-office-skill-kit/dist/codex-office-skill-kit-1.2.0.zip",
+      "bytes": 11746195,
+      "sha256": "99e8a9df0f4bd85091f93396f4c0d6a099d131ed9b92a3f88878c04988f39b5c",
+      "crc_manifest_and_all_seven_inputs_valid": true
+    }
+  ],
+  "passed": true,
+  "github_actions": {
+    "id": 41266857448,
+    "status": "completed",
+    "conclusion": "success",
+    "sha": "bd14481379a570be3dda2323bdc7abdf0f59664c",
+    "url": "https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41266857448"
+  },
+  "public_browser": {
+    "scope": "public GitHub Pages Chromium desktop/mobile emulation",
+    "base": "https://williamlee0630.github.io/codex-office-skill-kit/",
+    "results": [
+      {
+        "width": 1440,
+        "chapter": 2,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 3,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 4,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 5,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 6,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 7,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 8,
+        "copy_exact": true,
+        "downloads": 2,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 9,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 1440,
+        "chapter": 10,
+        "copy_exact": true,
+        "downloads": 2,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 2,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 3,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 4,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 5,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 6,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 7,
+        "copy_exact": true,
+        "downloads": 0,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 8,
+        "copy_exact": true,
+        "downloads": 2,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 9,
+        "copy_exact": true,
+        "downloads": 1,
+        "no_horizontal_overflow": true
+      },
+      {
+        "width": 390,
+        "chapter": 10,
+        "copy_exact": true,
+        "downloads": 2,
+        "no_horizontal_overflow": true
+      }
+    ],
+    "mobile_menu": true,
+    "clipboard_denied_fallback": "已複製，可以貼到 Codex。",
+    "errors": []
+  },
+  "scope": "Historical verification of initial content commit bd14481; documentation-only deployment may rebuild ZIP timestamps and hashes"
+}

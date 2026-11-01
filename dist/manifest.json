@@ -7,19 +7,19 @@
       "name": "practice-data-1.2.0.zip",
       "bytes": 3401177,
       "file_count": 125,
-      "sha256": "4c518a3aaefcbdeb4da21f01ee1303310a313b940f9016ce3c4b360b49a44272"
+      "sha256": "98373b8880d9502f18aa5e22171e1cf0a0fa6ec98d0721b0deb4489a12d126d5"
     },
     {
       "name": "office-skills-1.2.0.zip",
       "bytes": 4043841,
       "file_count": 261,
-      "sha256": "3eb022ab04d891317d1c017decdeb51c0cbe08b412dd1f6ce8b95cfe1002564b"
+      "sha256": "ecfabf2b6cc444e50f8e3c7ba83a83ca47fa9fed03da35f0f1fbc1eca90150e3"
     },
     {
       "name": "codex-office-skill-kit-1.2.0.zip",
-      "bytes": 11746342,
-      "file_count": 340,
-      "sha256": "cd8266a005bee45a6f964140db32549cf79e973c70e098defd90d1f7f4319aa3"
+      "bytes": 11748981,
+      "file_count": 341,
+      "sha256": "7c5402316265f640beb3589e92bf8cf81508cc1c35129dfad55330650f4edea4"
     }
   ]
 }

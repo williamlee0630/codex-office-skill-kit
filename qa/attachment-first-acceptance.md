@@ -41,3 +41,8 @@
 - ZIP 拖曳安裝在所有環境通用。
 - 法務完整語意與開檔交付，以及創意／財務的完整對話完成狀態。
 - 法律現行適用、正式會計查核與真實公司資料，不屬本次模擬驗收結論。
+
+
+## 首輪 Pages 部署證據
+
+內容提交 `bd14481` 已在原 GitHub main 與既有 Pages 成功部署。[Actions 紀錄](https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41266857448)。公開13頁、七份附件、三份ZIP已實際下載核對，公開桌面／手機寬度18次複製、14次下載通過。[首輪逐項證據](attachment-first-deployment.json) 是內容部署的歷史快照，後續僅補存紀錄重建包，ZIP雜湊以當時公開manifest為準。六項／三項的Codex結果不因此改變。

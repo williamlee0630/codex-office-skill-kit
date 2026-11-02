@@ -11,6 +11,12 @@ from pathlib import Path
 from _office import require, safe_cell, write_json, write_markdown, write_xlsx, protect_input
 
 
+def display_number(value):
+    if value is None:
+        return '不適用'
+    return f'{value:,.2f}'.rstrip('0').rstrip('.') if isinstance(value, (int, float)) else str(value)
+
+
 def blank(value):
     return value is None or (isinstance(value, str) and not value.strip())
 
@@ -110,8 +116,9 @@ def grouped(rows, key_index, value_index, dates=False):
     return {k: {'count': len(v), 'sum': math.fsum(v), 'mean': statistics.mean(v)} for k, v in sorted(buckets.items())}, omitted
 
 
-def draw_chart(path, labels, values, title, line=False):
+def draw_chart(path, labels, values, title, line=False, unit='原始數值；單位／幣別待確認', data_range='輸入資料的圖示分組，完整資料見 Excel'):
     from PIL import Image, ImageDraw, ImageFont
+    from PIL.PngImagePlugin import PngInfo
     require(len(labels) == len(values) and bool(values), '圖表沒有可用數值。')
     image = Image.new('RGB', (1200, 720), '#F5F8F8')
     draw = ImageDraw.Draw(image)
@@ -130,7 +137,7 @@ def draw_chart(path, labels, values, title, line=False):
         value = lower + fraction * span
         y = project(value)
         draw.line((left, y, right, y), fill='#DDE5E4', width=1)
-        draw.text((8, y - 12), f'{value:.3g}', fill='#385251', font=font)
+        draw.text((8, y - 12), display_number(value), fill='#385251', font=font)
     width = (right - left) / len(values)
     points = []
     for i, (label, value) in enumerate(zip(labels, values)):
@@ -140,14 +147,18 @@ def draw_chart(path, labels, values, title, line=False):
             draw.rectangle((x - width * .3, min(y, baseline), x + width * .3, max(y, baseline) + 1), fill='#187D78')
         # 圖表上限 12 組；完整資料仍保存在 JSON 與 Excel。
         draw.text((x - min(70, len(str(label)) * 7), bottom + 20), str(label)[:10], fill='#385251', font=font)
-        draw.text((x - 25, max(top, y - 30)), f'{value:.4g}', fill='#123C3B', font=font)
+        draw.text((x - 25, max(top, y - 30)), display_number(value), fill='#123C3B', font=font)
     if line and len(points) > 1:
         draw.line(points, fill='#187D78', width=5)
     if line:
         for x, y in points:
             draw.ellipse((x - 6, y - 6, x + 6, y + 6), fill='#187D78')
-    draw.text((55, 655), '來源：輸入資料；僅描述觀察值，無法推論因果', fill='#385251', font=font)
-    image.save(path)
+    draw.text((55, 620), '縱軸：' + unit, fill='#385251', font=font)
+    draw.text((55, 655), '範圍：' + data_range + '；僅描述觀察值', fill='#385251', font=font)
+    metadata = PngInfo()
+    for key, value in [('Title', title), ('ValueUnit', unit), ('DataRange', data_range)]:
+        metadata.add_itxt(key, value)
+    image.save(path, pnginfo=metadata)
 
 
 def excel_report(path, headers, rows, result):
@@ -169,6 +180,28 @@ def excel_report(path, headers, rows, result):
     source.append(['計算說明', '合計為 Python 計算的靜態結果；修改原始資料後請重新執行。'])
     source.append(['資料日期欄', safe_cell(result.get('date_column') or '未指定，待確認')])
     source.append(['限制', '異常標記需人工確認；描述統計無法證明因果。'])
+    overview = wb.create_sheet('資料概覽', 0)
+    overview.append(['資料事實', '實際結果／限制'])
+    for item in [('來源', result['source']), ('有效資料筆數', result['row_count']),
+                 ('完全相同重複列數（保留）', result['duplicate_row_count']),
+                 ('金額單位／幣別', '來源未明確提供；待確認，未自行指定幣別'),
+                 ('資料期間', '、'.join(d['date'] for d in result['trend']) or '未指定日期欄'),
+                 ('解讀限制', '短期觀察，不可推論長期趨勢；商品等分析須有對應欄位')]:
+        overview.append(item)
+    quality = wb.create_sheet('資料品質')
+    quality.append(['欄位', '型態', '缺漏', '非有效值', '非有效來源列'])
+    for name, stats in result['columns'].items():
+        quality.append([name, stats['type'], stats['missing_count'], stats.get('invalid_count', 0), ', '.join(map(str, stats.get('invalid_rows', [])))])
+    abnormal = wb.create_sheet('異常資料')
+    abnormal.append(['來源列', '欄位', '原始數值', '占該欄合計比例', '核對事項'])
+    for name, stats in result['columns'].items():
+        for row_no in stats.get('outlier_rows', []):
+            value = rows[result['source_rows'].index(row_no)][headers.index(name)]
+            total = stats.get('sum', 0)
+            abnormal.append([row_no, name, number(value), number(value) / total if total else None,
+                             'IQR 標記，原列保留；原因待人工核對，不代表錯誤'])
+    if abnormal.max_row == 1:
+        abnormal.append([None, '未標記 IQR 異常', None, None, '仍應核對來源；不是資料完全正確的證明'])
     for name, mapping in [('分組統計', result['groups']), ('日期趨勢', {d['date']: d for d in result['trend']})]:
         if mapping:
             ws = wb.create_sheet(name)
@@ -177,6 +210,8 @@ def excel_report(path, headers, rows, result):
                 ws.append([safe_cell(key), entry['count'], entry['sum'], entry['mean']])
             chart = LineChart() if name == '日期趨勢' else BarChart()
             chart.title = f"{result['value_column']} 合計"
+            chart.y_axis.title = '原始數值（單位／幣別待確認）'
+            chart.x_axis.title = '來源前述資料範圍；日期觀察不代表長期趨勢' if name == '日期趨勢' else '來源分組'
             chart.add_data(Reference(ws, min_col=3, min_row=1, max_row=ws.max_row), titles_from_data=True)
             chart.set_categories(Reference(ws, min_col=1, min_row=2, max_row=ws.max_row))
             chart.width, chart.height = 22, 12
@@ -194,7 +229,15 @@ def excel_report(path, headers, rows, result):
                 cell.font = Font(name='Microsoft JhengHei', size=11)
                 if isinstance(cell.value, (int, float)) and ws.title != '原始資料':
                     cell.number_format = '#,##0.00;[Red](#,##0.00);0.00'
+        if ws.title == '異常資料':
+            for cell in ws['D'][1:]:
+                cell.number_format = '0.0%'
+        if ws.title == '資料概覽':
+            ws.column_dimensions['B'].width = 85
+        for row in ws.iter_rows():
+            ws.row_dimensions[row[0].row].height = 36
     wb.save(path)
+    wb.close()
 
 
 def analyze(args):
@@ -209,12 +252,21 @@ def analyze(args):
     require(not (args.group_by or args.date_column) or args.value, '分組或日期趨勢需要 --value 指定數值欄位。')
     if args.value:
         require(columns[args.value]['type'] == 'number', '指定值欄位未達數值比例 60%，請先核對型態。')
-    result = {'source': str(path.resolve()), 'source_sheet': sheet, 'row_count': len(rows), 'columns': columns,
+    result = {'source': path.name, 'source_sheet': sheet, 'row_count': len(rows), 'columns': columns, 'source_rows': row_numbers,
               'duplicate_row_count': len(rows) - len({tuple(map(str, r)) for r in rows}),
               'groups': {}, 'trend': [], 'group_column': args.group_by, 'value_column': args.value,
               'date_column': args.date_column, 'group_omitted_rows': [], 'trend_omitted_rows': [],
               'method': 'Python statistics；數值欄須至少 60% 非空值可轉為有限數值；IQR inclusive，至少四筆且 IQR > 0；空白列排除。',
               'limitations': ['靜態計算，修改資料後須重新執行。', '缺漏不補零；異常列仍保留。', '描述趨勢不代表因果關係。']}
+    result['outlier_impact'] = {}
+    for name, stats in columns.items():
+        if stats.get('outlier_rows'):
+            values = [number(row[headers.index(name)]) for n, row in zip(row_numbers, rows) if n in stats['outlier_rows']]
+            subtotal = math.fsum(values)
+            result['outlier_impact'][name] = {'outlier_sum': subtotal, 'total': stats['sum'],
+                 'share_percent': subtotal / stats['sum'] * 100 if stats['sum'] else None,
+                 'sum_without_flagged_rows': stats['sum'] - subtotal,
+                 'note': '用於解讀影響；全部原始資料仍納入正式合計，未刪除異常列。'}
     if args.group_by:
         result['groups'], result['group_omitted_rows'] = grouped(zip(row_numbers, rows), headers.index(args.group_by), headers.index(args.value))
     if args.date_column:
@@ -226,11 +278,13 @@ def analyze(args):
     chart_info = '沒有數值欄位，未產生圖表。'
     if result['trend']:
         entries = result['trend'][:12]
-        draw_chart(out / 'chart.png', [d['date'] for d in entries], [d['sum'] for d in entries], f"{args.value} 日期合計（前 12 日期）", line=True)
+        draw_chart(out / 'chart.png', [d['date'] for d in entries], [d['sum'] for d in entries], f"{args.value} 日期合計（{len(entries)} 個日期）", line=True,
+                   data_range=f"{entries[0]['date']} 至 {entries[-1]['date']}；顯示前 {len(entries)} 個日期")
         chart_info = '日期合計折線圖。單一日期只有觀察點，無法判定趨勢。' if len(entries) == 1 else '日期合計折線圖，顯示前 12 個日期，完整數值見 Excel。'
     elif result['groups']:
         entries = list(result['groups'].items())[:12]
-        draw_chart(out / 'chart.png', [k for k, _ in entries], [v['sum'] for _, v in entries], f"{args.value} 分組合計（前 12 組）")
+        draw_chart(out / 'chart.png', [k for k, _ in entries], [v['sum'] for _, v in entries], f"{args.value} 分組合計（{len(entries)} 組）",
+                   data_range=f'輸入資料前 {len(entries)} 個排序分組；完整資料見 Excel')
         chart_info = '分組合計長條圖，顯示前 12 組，完整數值見 Excel。'
     elif numeric:
         name = numeric[0]
@@ -245,16 +299,30 @@ def analyze(args):
             for v in series:
                 counts[min(len(counts) - 1, int((v - lo) / width))] += 1
             labels = [f'{lo + i * width:.3g}' for i in range(len(counts))]
-        draw_chart(out / 'chart.png', labels, counts, f'{name} 分布（橫軸為區間下界，縱軸為筆數）')
+        draw_chart(out / 'chart.png', labels, counts, f'{name} 分布（橫軸為區間下界，縱軸為筆數）', unit='筆數',
+                   data_range=f'{name} 全部 {len(series)} 筆有效數值')
         chart_info = f'{name} 的等寬區間次數分布；最後區間包含最大值。'
     result['chart_note'] = chart_info
     write_json(out / 'analysis.json', result)
     excel_report(out / 'analysis.xlsx', headers, rows, result)
-    lines = ['# 資料分析報告', '', f'來源：{path.name}；工作表：{sheet or "CSV"}。資料日期：{args.date_column or "未指定，待確認"}。',
-             f'有效資料列：{len(rows)}。完全相同的重複列：{result["duplicate_row_count"]}（保留且納入計算）。', '',
-             '## 描述統計', '', '| 欄位 | 型態 | 缺漏 | 非有效值 | 合計 | 平均 | 中位數 |', '| --- | --- | ---: | ---: | ---: | ---: | ---: |']
+    lines = ['# 資料分析報告', '', '## 管理摘要', '', '### 資料事實',
+             f'本次共 {len(rows)} 筆來源資料；數值為原始單位，幣別未明確提供，不自行指定。']
     for name, stats in columns.items():
-        lines.append(f'| {name.replace("|", "／")} | {stats["type"]} | {stats["missing_count"]} | {stats.get("invalid_count", 0)} | {stats.get("sum", "不適用")} | {stats.get("mean", "不適用")} | {stats.get("median", "不適用")} |')
+        if stats['type'] == 'number':
+            lines.append(f'- {name} 合計 {display_number(stats["sum"])}；平均 {display_number(stats["mean"])}。')
+    for name, impact in result['outlier_impact'].items():
+        share = f'{impact["share_percent"]:.1f}%' if impact['share_percent'] is not None else '合計為零，不計占比'
+        lines.append(f'- {name} 標記異常值合計 {display_number(impact["outlier_sum"])}，占總合計 {share}；其餘列合計 {display_number(impact["sum_without_flagged_rows"])}。異常值仍保留並納入正式合計。')
+    lines.extend(['', '### 可能解釋（AI 推論）', '極端值可能影響平均與分組比較；本資料不能判斷是正常大額交易或輸入錯誤。',
+                  '', '### 建議', '先核對異常來源列及缺漏，再據以比較分組；不可直接刪除或修改原始數值。',
+                  '', '### 待確認事項', '請確認數值單位／幣別、每列業務意義與異常原因；日期僅涵蓋本次觀察期間，不能推論長期趨勢。'])
+    if not any(h.lower() in {'product', 'product_name', 'sku', '商品', '商品名稱'} for h in headers):
+        lines.append('未提供商品欄，無法完成商品排名；現有 category 分組不能冒充商品表現。')
+    lines.extend(['', '## 來源與範圍', '', f'來源：{path.name}；工作表：{sheet or "CSV"}。資料日期：{args.date_column or "未指定，待確認"}。',
+             f'有效資料列：{len(rows)}。完全相同的重複列：{result["duplicate_row_count"]}（保留且納入計算）。', '',
+             '## 描述統計', '', '| 欄位 | 型態 | 缺漏 | 非有效值 | 合計 | 平均 | 中位數 |', '| --- | --- | ---: | ---: | ---: | ---: | ---: |'])
+    for name, stats in columns.items():
+        lines.append(f'| {name.replace("|", "／")} | {stats["type"]} | {stats["missing_count"]} | {stats.get("invalid_count", 0)} | {display_number(stats.get("sum"))} | {display_number(stats.get("mean"))} | {display_number(stats.get("median"))} |')
     for name, stats in columns.items():
         if stats.get('outlier_rows'):
             lines.append(f'\n{name} 的 IQR 異常來源列：{stats["outlier_rows"]}，需人工確認，未刪除。\n')

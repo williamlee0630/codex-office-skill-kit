@@ -1,0 +1,39 @@
+{
+  "simulation": true,
+  "source": "examples/quickstart/模擬文具收據.png",
+  "receipts": [
+    {
+      "id": "PHOTO-1",
+      "date": "2026-10-23",
+      "vendor": "星嶼文具小舖（虛構店家）",
+      "items": "A4 影印紙",
+      "quantity": 2,
+      "amount": 240,
+      "currency": "TWD",
+      "category": "文具（依品項分類）",
+      "evidence": "原圖中段第1品項：A4 影印紙；數量2 × 單價120 = 小計240。視覺逐欄轉錄，未執行 OCR。"
+    },
+    {
+      "id": "PHOTO-2",
+      "date": "2026-10-23",
+      "vendor": "星嶼文具小舖（虛構店家）",
+      "items": "原子筆",
+      "quantity": 3,
+      "amount": 60,
+      "currency": "TWD",
+      "category": "文具（依品項分類）",
+      "evidence": "原圖中段第2品項：原子筆；數量3 × 單價20 = 小計60。視覺逐欄轉錄，未執行 OCR。"
+    },
+    {
+      "id": "PHOTO-3",
+      "date": "2026-10-23",
+      "vendor": "星嶼文具小舖（虛構店家）",
+      "items": "便利貼",
+      "quantity": 2,
+      "amount": 70,
+      "currency": "TWD",
+      "category": "文具（依品項分類）",
+      "evidence": "原圖中段第3品項：便利貼；數量2 × 單價35 = 小計70。視覺逐欄轉錄，未執行 OCR。"
+    }
+  ]
+}

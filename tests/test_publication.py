@@ -38,8 +38,8 @@ def fixture(root):
                  '.gitignore', 'docs/INSTALL.md', 'docs/ACCEPTANCE.md', 'qa/summary.md']:
         put(root, name)
     put(root, 'index.html', '<meta http-equiv="refresh" content="0; url=handbook/index.html"><a href="handbook/index.html">講義</a>')
-    put(root, 'handbook/index.html', '<a href="../dist/codex-office-skill-kit-1.2.0.zip">完整學員工具包</a>'
-        '<a href="../dist/office-skills-1.2.0.zip">技能</a><a href="../dist/practice-data-1.2.0.zip">資料</a>'
+    put(root, 'handbook/index.html', '<a href="../dist/codex-office-skill-kit-1.3.0.zip">完整學員工具包</a>'
+        '<a href="../dist/office-skills-1.3.0.zip">技能</a><a href="../dist/practice-data-1.3.0.zip">資料</a>'
         '<a href="../examples/demo/source.md">來源</a><a href="../.agents/skills/email-assistant/SKILL.md">技能原文</a>'
         '<script src="assets/app.js"></script>')
     put(root, 'handbook/assets/app.js', '"use strict";')
@@ -132,7 +132,7 @@ class PublicationTests(unittest.TestCase):
             put(root, 'docs/PROGRESS.md', '[講義](../handbook/index.html)')
             put(root, 'tests/manual/trigger-cases.md', '[驗收](../../ACCEPTANCE.md)')
             release.build(root)
-            with ZipFile(root / 'dist/office-skills-1.2.0.zip') as bundle:
+            with ZipFile(root / 'dist/office-skills-1.3.0.zip') as bundle:
                 files = {name: bundle.read(name) for name in bundle.namelist()}
             self.assertGreater(checker._check_documents(files), 0)
             self.assertIn('docs/INSTALL.md', files)
@@ -247,15 +247,15 @@ class PublicationTests(unittest.TestCase):
             public_html = (destination / 'handbook/index.html').read_text(encoding='utf-8')
             self.assertIn('href="../skills/email-assistant/SKILL.md"', public_html)
             self.assertGreater(checker.check_links(destination), 5)
-            archive = root / 'dist/codex-office-skill-kit-1.2.0.zip'
+            archive = root / 'dist/codex-office-skill-kit-1.3.0.zip'
             with ZipFile(archive) as bundle:
                 html = bundle.read('codex-office-skill-kit/handbook/index.html').decode()
-                self.assertNotIn('href="../dist/codex-office-skill-kit-1.2.0.zip"', html)
+                self.assertNotIn('href="../dist/codex-office-skill-kit-1.3.0.zip"', html)
                 self.assertIn('href="../README.md"', html)
                 self.assertIn('codex-office-skill-kit/ACCEPTANCE.md', bundle.namelist())
                 self.assertIn('codex-office-skill-kit/qa/summary.md', bundle.namelist())
                 self.assertIn('href="../.agents/skills/email-assistant/SKILL.md"', html)
-            with ZipFile(root / 'dist/office-skills-1.2.0.zip') as bundle:
+            with ZipFile(root / 'dist/office-skills-1.3.0.zip') as bundle:
                 self.assertNotIn('tests/test_publication.py', bundle.namelist())
                 self.assertNotIn('tests/test_handbook_learner.py', bundle.namelist())
 
@@ -272,16 +272,16 @@ class PublicationTests(unittest.TestCase):
                 release.build(root)
             selected.write_text('模擬驗收摘要', encoding='utf-8')
             release.build(root)
-            (root / 'dist/practice-data-1.2.0.zip').unlink()
+            (root / 'dist/practice-data-1.3.0.zip').unlink()
             with self.assertRaises((ValueError, FileNotFoundError)):
                 site.build(root)
             release.build(root)
-            with (root / 'dist/practice-data-1.2.0.zip').open('ab') as handle:
+            with (root / 'dist/practice-data-1.3.0.zip').open('ab') as handle:
                 handle.write(b'tampered')
             with self.assertRaises(ValueError):
                 checker.check(root, write_report=False)
             release.build(root)
-            (root / 'dist/codex-office-skill-kit-1.2.0.zip').unlink()
+            (root / 'dist/codex-office-skill-kit-1.3.0.zip').unlink()
             manifest_path = root / 'dist/manifest.json'
             manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
             manifest['packages'] = manifest['packages'][:2]

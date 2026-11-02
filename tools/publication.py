@@ -9,11 +9,11 @@ import re
 from zipfile import ZipFile, ZIP_DEFLATED, BadZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '1.2.0'
+VERSION = '1.3.0'
 SKILLS = ('email-assistant', 'receipt-organizer', 'presentation-maker', 'document-writer', 'data-analyst', 'idea-generator', 'research-assistant', 'legal-reviewer', 'finance-assistant')
 PACKAGES = (f'practice-data-{VERSION}.zip', f'office-skills-{VERSION}.zip', f'codex-office-skill-kit-{VERSION}.zip')
 ROOT_FILES = {'README.md', 'ACCEPTANCE.md', 'AGENTS.md', 'LICENSE', 'requirements.txt', '.gitignore', '.gitattributes', 'index.html', '.nojekyll'}
-PUBLIC_DOCS = {'INSTALL.md', 'DEVELOPMENT.md', 'ACCEPTANCE.md', 'PROGRESS.md', 'CHANGELOG.md', 'OFFICIAL_SOURCES.md', 'DESIGN.md', 'USER_REQUEST.md', 'IMPLEMENTATION_PLAN.md', 'DEPLOYMENT_PLAN.md', 'USER_REQUEST_V1.2.0.md', 'RECORDING.md'}
+PUBLIC_DOCS = {'INSTALL.md', 'DEVELOPMENT.md', 'ACCEPTANCE.md', 'PROGRESS.md', 'CHANGELOG.md', 'OFFICIAL_SOURCES.md', 'DESIGN.md', 'USER_REQUEST.md', 'IMPLEMENTATION_PLAN.md', 'DEPLOYMENT_PLAN.md', 'USER_REQUEST_V1.2.0.md', 'RECORDING.md', 'QUALITY_PLAN.md'}
 EXCLUDED = {'__pycache__', '.tmp', '.work', '.git', '.venv', 'venv', 'node_modules', '.codex', '.aws', '.cache', 'office-render', 'work'}
 TEXT = {'.md', '.txt', '.json', '.csv', '.tsv', '.py', '.ps1', '.yaml', '.yml', '.html', '.css', '.js', '.xml', '.rels', '.eml', '.svg', '.toml'}
 ASSETS = {'.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.woff', '.woff2'}
@@ -58,7 +58,7 @@ def public_files(root=ROOT):
         accepted |= len(parts) == 2 and parts[0] == 'dist' and parts[1] in {*PACKAGES, 'manifest.json'}
         accepted |= parts[:2] == ('.agents', 'skills') and path.suffix in EXAMPLE_TYPES
         accepted |= parts[0] == 'examples' and path.suffix in EXAMPLE_TYPES
-        accepted |= parts[0] == 'tools' and len(parts) == 2 and path.suffix in {'.py', '.ps1'}
+        accepted |= parts[0] == 'tools' and len(parts) == 2 and (path.suffix in {'.py', '.ps1'} or path.name == 'quality.md')
         accepted |= parts[0] == 'tests' and path.suffix in {'.py', '.md'}
         accepted |= parts[0] == 'handbook' and (path.suffix in {'.html', '.md', '.py'} or len(parts) > 2 and parts[1] == 'assets' and path.suffix in ASSETS)
         accepted |= parts[:2] == ('.github', 'workflows') and len(parts) == 3 and path.suffix in {'.yml', '.yaml'}

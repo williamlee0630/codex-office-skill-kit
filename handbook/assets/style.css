@@ -17,6 +17,10 @@
 .experience-card .copy-button { min-width: 72px; min-height: 44px; flex-shrink: 0; }
 .experience-card .attachment-actions { flex-wrap: wrap; gap: 10px; }
 .experience-card .button { white-space: normal; overflow-wrap: anywhere; min-height: 44px; }
+.output-preview { margin-top: 24px; padding-top: 1px; border-top: 1px solid #cadbce; }
+.output-preview td, .output-preview th { overflow-wrap: anywhere; }
+.output-preview .table-wrap { margin-top: 14px; }
+.output-preview table { min-width: 0; }
 @media (max-width: 720px) {
   .experience-card { padding: 16px; }
   .experience-card .attachment-actions { display: grid; grid-template-columns: minmax(0, 1fr); }

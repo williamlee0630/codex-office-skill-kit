@@ -1,0 +1,310 @@
+{
+  "version": "1.3.0",
+  "date": "2026-11-02",
+  "results": [
+    {
+      "skill": "receipt-organizer",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/quickstart/模擬文具收據.png",
+          "sha256": "888f53e3de3324d05b4989aa94aa89b2d20bc8f978e442a7105a3f0fd796aea2"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/receipt-organizer/quality-output/receipts.xlsx",
+          "bytes": 8791,
+          "sha256": "3f05e875be6bb449efb7c5d2cb11a4f8ba9c6eba7bb7414da894ead497adf9f8",
+          "worksheets": [
+            "各幣統計",
+            "人工確認",
+            "報帳明細",
+            "分類統計"
+          ],
+          "reopened": true
+        },
+        {
+          "file": "examples/receipt-organizer/quality-output/receipts-report.md",
+          "bytes": 766,
+          "sha256": "d26308240e2ba57f54892e42bd35dea0c30c6c10a7f67317722290faf2187d14",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "presentation-maker",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/presentation-maker/quality-source.md",
+          "sha256": "85e61c029c739045dfbfd46a4c30bd263429f36619df4dbeed1fa228c70905db"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/presentation-maker/quality-output/presentation.pptx",
+          "bytes": 45260,
+          "sha256": "f2d9e9c69bd12312e42043ab5d49dd644e8680dbf3d18d0933da0453dea62538",
+          "slides": 5,
+          "notes_saved": true,
+          "reopened": true
+        },
+        {
+          "file": "examples/presentation-maker/quality-output/speaker-notes.md",
+          "bytes": 2493,
+          "sha256": "56868219338687fdb19d9e872b714c51d35ebb4ef8c7f513a6fa91bbf7970ca3",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "document-writer",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/document-writer/quality-source.md",
+          "sha256": "d53e6d84a3d8c2a97e1fd0cbc7e7191d494a785e6df5020d4aabe3485ebfda60"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/document-writer/quality-output/document-formal.docx",
+          "bytes": 38487,
+          "sha256": "598c1b0040787fab7e86768bf8f7a3aef4c837e3fe5f990863cef8757ef38fc3",
+          "paragraphs": 37,
+          "editable_tables": 1,
+          "reopened": true
+        },
+        {
+          "file": "examples/document-writer/quality-output/document-concise.docx",
+          "bytes": 38296,
+          "sha256": "1ae57056ac4b1624b8544c43c2586c56acbdf51d47bec81d9f75c293dd48d2da",
+          "paragraphs": 32,
+          "editable_tables": 0,
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "data-analyst",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/quickstart/模擬銷售資料.csv",
+          "sha256": "2c2c05dd6c061e96d53725c8c0520840af7db1c81d5e1aafa2e44d14e71bacd9"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/data-analyst/quality-output/analysis.xlsx",
+          "bytes": 14676,
+          "sha256": "1b4acb4a6fd292d178cf8e66d0e0c4e006dfcdf0a17fd3c1b648b224f8dd78ca",
+          "worksheets": [
+            "資料概覽",
+            "分析摘要",
+            "原始資料",
+            "資料品質",
+            "異常資料",
+            "分組統計",
+            "日期趨勢"
+          ],
+          "reopened": true
+        },
+        {
+          "file": "examples/data-analyst/quality-output/analysis.md",
+          "bytes": 2307,
+          "sha256": "fe60d4384240ed8da3c8b583ae420045dd3b2e8fb235a6963adf7578843fb38a",
+          "reopened": true
+        },
+        {
+          "file": "examples/data-analyst/quality-output/chart.png",
+          "bytes": 39247,
+          "sha256": "dee315ef960b13380fa3eeba0ffd0c3ece419e7dc8ba937fbcf49502038938c1",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "idea-generator",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/idea-generator/quality-source.md",
+          "sha256": "59cd70310f0878f843c4c36a623f96605c6365ac7ab901e8f58bd67514fe7c51"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/idea-generator/quality-output/ideas.md",
+          "bytes": 8623,
+          "sha256": "ab0189ed61c4b9f333b3ca52a4d51a2fc02c66cbeb651d9e496d8b049fc5c7fa",
+          "reopened": true
+        },
+        {
+          "file": "examples/idea-generator/quality-output/comparison.csv",
+          "bytes": 5641,
+          "sha256": "815f0e2ed682ebe6954f00f2753aa48bbb3d10f018e94aff9942732ea5774c37",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "research-assistant",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/quickstart/模擬員工訓練方案A.docx",
+          "sha256": "0161e67d6b909478f32e7e4ac35356463f38e83999a135e6401ad9916968a774"
+        },
+        {
+          "file": "examples/quickstart/模擬員工訓練方案B.docx",
+          "sha256": "e483a7481fa97d7c1ec7e4bbef3f9dfeddc7145d01cd85927d21a98104b09256"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/research-assistant/quality-output/research-report.md",
+          "bytes": 4213,
+          "sha256": "b08b059dce5561161df27bc95e8f1cdaed7e39883da3017abb001ce5a47fd755",
+          "reopened": true
+        },
+        {
+          "file": "examples/research-assistant/quality-output/sources.csv",
+          "bytes": 424,
+          "sha256": "2ce227ad1c0e0d31450b0af766ebda979090c64c57eb96923312834768ae491a",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "legal-reviewer",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/quickstart/模擬服務合約_甲方審查.docx",
+          "sha256": "20fd21f78881df7ce4f3cc037563b562046252a8acb4c187aa2a670c13954dfb"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/legal-reviewer/quality-output/合約審查報告.docx",
+          "bytes": 42403,
+          "sha256": "1b2a32efb9e88a4191bbe2e03664a92926f8bdadf719c5c18f71aff55abbc4a9",
+          "paragraphs": 186,
+          "editable_tables": 0,
+          "reopened": true
+        },
+        {
+          "file": "examples/legal-reviewer/quality-output/合約風險清單.xlsx",
+          "bytes": 19995,
+          "sha256": "0f93442643897c27cb4009e1dda9f1c0760664d336cd414584fac2a522bc9a3e",
+          "worksheets": [
+            "審查摘要",
+            "風險清單",
+            "條款檢查",
+            "來源對照",
+            "法律來源與限制",
+            "待人工確認"
+          ],
+          "reopened": true
+        },
+        {
+          "file": "examples/legal-reviewer/quality-output/條款修訂建議.md",
+          "bytes": 11793,
+          "sha256": "b72dfe7ace07c0ab5f094048725bb760c10dcf207e36b761a8de3d65be00a789",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "finance-assistant",
+      "scenario": "current chapter teaching scenario",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/quickstart/模擬公司內部帳務.csv",
+          "sha256": "13c3bf634d15547b746b54735f9bd39a1d270e2a8461e344a3fcb7d15198f3d8"
+        },
+        {
+          "file": "examples/quickstart/模擬銀行交易明細.csv",
+          "sha256": "91db5565ad9094a2671cb8fde2b4e45c7c63a4bc67cd1dc11c2bcf958f59ed8a"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/finance-assistant/quality-output/銀行對帳結果.xlsx",
+          "bytes": 17859,
+          "sha256": "4e43c53da1a89e143ef5e2307781a02c942854e90130f27e797349b9d2030c53",
+          "worksheets": [
+            "對帳摘要",
+            "分析結果",
+            "分幣期間合計",
+            "原始資料",
+            "計算依據",
+            "待人工確認"
+          ],
+          "reopened": true
+        },
+        {
+          "file": "examples/finance-assistant/quality-output/財務分析報告.docx",
+          "bytes": 38242,
+          "sha256": "296215c4b788ce3e8bf366c78465473f9ab787607840840f87d8cadf947046bc",
+          "paragraphs": 40,
+          "editable_tables": 0,
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    },
+    {
+      "skill": "email-assistant",
+      "scenario": "three pasted simulation messages; not connected Gmail",
+      "method": "source review and deterministic generation; structured fixtures where applicable",
+      "sources": [
+        {
+          "file": "examples/email-assistant/quality-source.md",
+          "sha256": "11051d4a3bbad143f1b08458466f40a509dee816dbf8f5a40fc76b284087db81"
+        }
+      ],
+      "artifacts": [
+        {
+          "file": "examples/email-assistant/quality-output/daily-summary.md",
+          "bytes": 2389,
+          "sha256": "af0c32607d94420d722646ce971184c87d5d4cf2c755b6affe5095a64f4ca889",
+          "reopened": true
+        },
+        {
+          "file": "examples/email-assistant/quality-output/drafts.md",
+          "bytes": 3887,
+          "sha256": "e2be6b740ddc59e598fcb85f68927cb072b61d168f5d9d6641880d3552af2aa7",
+          "reopened": true
+        }
+      ],
+      "content_verified": true,
+      "full_fresh_codex_interaction": "not_verified"
+    }
+  ]
+}

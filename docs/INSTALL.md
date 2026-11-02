@@ -12,7 +12,7 @@
 研究主示範只比較兩份附件，不宣稱即時網路搜尋。財務主示範只做對帳，預算差異與報表編製留作進階練習。
 
 
-版本 1.2.0｜更新：2026-10-31（台北）
+版本 1.3.0｜更新：2026-11-02（台北）
 
 ## 安裝並載入技能
 
@@ -28,7 +28,7 @@ $email-assistant
 
 ## 環境由 Skill 處理
 
-郵件章的主要示範需要另在 Codex 外掛中連接並授權 Gmail。已安裝 v1.2.0 的 email-assistant 可繼續使用，不需因這次講義修改重新安裝；安裝 Skill 本身不會自動授權信箱。
+郵件章的主要示範需要另在 Codex 外掛中連接並授權 Gmail。本版實際改善 Skill 規則與產檔程式；使用 v1.3.0 成果規格需更新完整專案技能資料夾，保留既有客製化備份。安裝 Skill 本身不會自動授權信箱。
 
 各技能自行讀取規則，檢查 Python 3.10+ 與 `scripts/requirements.txt` 所列格式套件。已有可用環境就沿用；缺少時在目前工作區準備專用環境，選參數並實際執行產檔。沒有 Python、安裝權限或連線時，才具體說明需要資訊同仁協助的部分。
 
@@ -54,6 +54,12 @@ python -m venv .venv
 
 </details>
 
-## v1.2.0 升級
+## v1.3.0 升級
 
-本版保留九個技能，新增 legal-reviewer 與 finance-assistant。若舊工作區已安裝 v1.1.0，先備份並確認使用者修改，再由 Codex 協助移除淘汰的 meeting-assistant、project-tracker、weekly-report 與安裝新版；本專案不會自動刪除其他工作區或全域安裝。
+保留九個啟動名稱與影片操作流程。請在新的解壓資料夾使用新版；不要直接覆寫已客製化的舊技能。若要更新既有專案，先請 Codex 比較與備份，再更新完整技能資料夾，重新開啟聊天並用 `$技能名稱` 指定；本版不自動修改個人或全域安裝。第 11 章客製化副本可用 `$team-email-assistant` 避免與原版混淆。
+
+v1.2.0 影片對照包保留在[附錄歷史下載](https://williamlee0630.github.io/codex-office-skill-kit/handbook/appendix.html#recording-version)。
+
+## 歷史：v1.2.0 升級
+
+v1.2.0 保留九個技能，當時新增 legal-reviewer 與 finance-assistant。v1.1.0 的 meeting-assistant、project-tracker、weekly-report 是已移除的歷史名稱，目前不提供這三個技能；本專案不會自動刪除其他工作區或全域安裝。

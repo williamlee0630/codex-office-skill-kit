@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 import sys
 import math
+import tempfile
 import unicodedata
 from zipfile import BadZipFile
 
@@ -198,8 +199,8 @@ def basis_rows(tables):
         ['限制', '輔助工作成果，未完成正式會計查核；原因無證據時列待查，不自動過帳。'],
     ]
     for table in tables:
-        result.append(['來源', table['path'] + '；SHA256=' + table['sha256']])
-        for field, header in table['mapping'].items(): result.append(['欄位對照', f'{table["path"]}：{field} ← {header}'])
+        result.append(['來源', Path(table['path']).name + '；SHA256=' + table['sha256']])
+        for field, header in table['mapping'].items(): result.append(['欄位對照', f'{Path(table["path"]).name}：{field} ← {header}'])
     return result
 
 
@@ -307,7 +308,11 @@ def reconcile(internal, other, config):
                         'other_row': b['_row'] if b else None, 'currency': currency,
                         'period': (a or b)['period'], 'internal_amount': money(amount_a, currency),
                         'other_amount': money(amount_b, currency), 'difference': money(difference, currency),
-                        'reason': reason, 'reference': (a or b).get('reference', '')})
+                        'reason': reason, 'reference': (a or b).get('reference', ''),
+                        'internal_date': a['_date'].isoformat() if a and a['_date'] else None,
+                        'other_date': b['_date'].isoformat() if b and b['_date'] else None,
+                        'internal_counterparty': a.get('counterparty', '') if a else '',
+                        'other_counterparty': b.get('counterparty', '') if b else ''})
         if a: used_left.add(a['_row'])
         if b: used_right.add(b['_row'])
         if status != STATUSES[0]: review.append(f'{status}：內部第 {a["_row"] if a else "—"} 列／另一來源第 {b["_row"] if b else "—"} 列；{reason}')
@@ -360,7 +365,8 @@ def reconcile(internal, other, config):
     # 報表按交易來源列排序，便於回查；已配對列不再重複使用。
     results.sort(key=lambda r: (r['internal_row'] is None, r['internal_row'] or r['other_row']))
     sheet_rows = [[r['status'], r['internal_row'], r['other_row'], r['currency'], num(r['internal_amount']),
-                   num(r['other_amount']), num(r['difference']), r['reason'], r['period'], r['reference']] for r in results]
+                   num(r['other_amount']), num(r['difference']), r['reason'], r['period'], r['reference'],
+                   r['internal_date'], r['other_date'], r['internal_counterparty'], r['other_counterparty']] for r in results]
     totals = []
     for table, side in [(internal, '內部'), (other, '另一來源')]:
         grouped = defaultdict(lambda: ZERO)
@@ -368,7 +374,7 @@ def reconcile(internal, other, config):
             if row['_valid']: grouped[(row['currency'], row['period'])] += row['_amount']
         for (currency, period), value in sorted(grouped.items()): totals.append([side, currency, period, num(money(value, currency)), '包含原始重複列；不自動刪除'])
     return {'results': results, 'counts': counts, 'review': review, 'complete': counts[STATUSES[0]] == len(results)}, [
-        ('分析結果', ['核對結果', '內部原始列', '另一來源原始列', '幣別', '內部金額', '另一來源金額', '差額', '判斷依據', '期間', '交易識別碼'], sheet_rows),
+        ('分析結果', ['核對結果', '內部原始列', '另一來源原始列', '幣別', '內部金額', '另一來源金額', '差額', '判斷依據', '期間', '交易識別碼', '內部日期', '另一來源日期', '內部對象', '另一來源對象'], sheet_rows),
         ('分幣期間合計', ['來源', '幣別', '期間', '合計', '限制'], totals)], [
         ['對帳差額', '內部金額−銀行或另一來源金額；沖銷負數保留正負號。'],
         ['確定配對條件', f'同幣別同期間，唯一識別碼、相同金額、日期差不超過 {tolerance} 天；對象不得衝突。'],
@@ -475,7 +481,7 @@ def write_workbook(path, sheets):
         if title == '原始資料':
             ws.column_dimensions['D'].width = 42
             ws.column_dimensions['E'].width = 68
-        if title in {'計算依據', '待人工確認'}:
+        if title in {'計算依據', '待人工確認', '對帳摘要'}:
             ws.column_dimensions['B'].width = 90
         if title == '分析結果':
             for column in ['H', 'M']: ws.column_dimensions[column].width = 48
@@ -514,6 +520,21 @@ def write_workbook(path, sheets):
     wb.save(path)
 
 
+def reconciliation_summary(result):
+    status = '本次輸入均符合自動匹配條件；仍須財務覆核，未完成正式會計查核。' if result['complete'] else '尚有待確認交易；完成計算不代表帳務全部已對清。'
+    counts = [f'{k}：{v} 筆' for k, v in result['counts'].items()]
+    exceptions = []
+    for row in result['results']:
+        if row['status'] == STATUSES[0]:
+            continue
+        location_text = (f'內部第 {row["internal_row"]} 列' if row['internal_row'] is not None else '內部無對應列')
+        location_text += (f'／另一來源第 {row["other_row"]} 列' if row['other_row'] is not None else '／另一來源無對應列')
+        amount = (f'{row["internal_amount"]}−{row["other_amount"]}＝{row["difference"]}'
+                  if row['difference'] is not None else f'內部 {row["internal_amount"] or "待確認"}／另一來源 {row["other_amount"] or "待確認"}')
+        exceptions.append(f'{row["reference"] or "無識別碼"}｜{row["currency"] or "幣別待確認"}｜{row["status"]}：{amount}；{location_text}。{row["reason"]}')
+    return status, counts, exceptions
+
+
 def execute(config, output, base_dir):
     mode = config.get('mode')
     require(mode in {'statements', 'reconcile', 'variance'}, '請指定財務任務：statements、reconcile 或 variance。')
@@ -534,28 +555,70 @@ def execute(config, output, base_dir):
         result, sheets, basis = reconcile(tables[0], tables[1], config)
     else: result, sheets, basis = variance(tables[0], tables[1] if len(tables) > 1 else None, config)
     result.update(mode=mode, simulation=bool(config.get('simulation')), source_row_count=sum(len(t['rows']) for t in tables),
-                  sources=[{k: v for k, v in table.items() if k != 'rows'} for table in tables],
+                  sources=[{**{k: v for k, v in table.items() if k != 'rows'}, 'path': Path(table['path']).name} for table in tables],
                   formal_audit_completed=False)
     if result['simulation']: result['review'].insert(0, '教學模擬資料，非真實公司帳務。')
     sheets.extend([('原始資料', ['來源檔案', '原始列', '來源欄位', '原始值', '來源SHA256', '工作表'], sources_rows(tables)),
                    ('計算依據', ['項目', '依據與限制'], basis_rows(tables) + basis),
                    ('待人工確認', ['編號', '待確認事項'], [[n, item] for n, item in enumerate(result['review'], 1)] or [[1, '未發現輸入層級問題；正式會計查核尚未完成。']])])
-    # 所有驗證與計算先完成，才建立輸出；失敗不留下看似成功的財報。
-    output.mkdir(parents=True, exist_ok=True)
-    write_workbook(targets[0], sheets)
     summary = []
     if mode == 'statements':
         summary = [f"{g['currency']}／{g['period']}：收入減費用＝{g['profit']}；借貸合計 {g['debit_total']}／{g['credit_total']}；資產負債差額 {g['balance_difference']}。" for g in result['groups']]
     elif mode == 'reconcile': summary = [f'{k}：{v} 筆' for k, v in result['counts'].items()]
     else: summary = [f"{r['item']}／{r['currency']}：基準 {r['base'] if r['base'] is not None else '待確認'}、實際 {r['actual'] if r['actual'] is not None else '待確認'}、差額 {r['difference'] if r['difference'] is not None else '待確認'}、百分比 {r['percentage'] if r['percentage'] is not None else '無法直接計算或資料缺漏'}。" for r in result['results']]
-    write_docx(targets[1], '財務分析報告' + ('（教學模擬資料）' if result['simulation'] else ''), [
-        ('分析範圍與來源', [f'{t["path"]}；SHA256：{t["sha256"]}' for t in tables]),
-        ('計算摘要', summary or ['資料不足，僅保留來源與待確認項目。']),
+    report_sections = []
+    if mode == 'reconcile':
+        status, counts, exceptions = reconciliation_summary(result)
+        report_sections += [('對帳摘要', [status, '六類核對結果：' + '；'.join(counts),
+            '不同幣別、期間分開呈現；疑似匹配、缺漏、重複與金額不符皆需人工確認。']),
+            ('優先確認交易', exceptions or ['本次未列自動配對例外；仍需確認交易真實性與原始憑證。'])]
+        sheets.insert(0, ('對帳摘要', ['項目', '摘要及回查方式'],
+            [['核對狀態', status]] + [[k, v] for k, v in result['counts'].items()]
+            + [['差額方向', '內部金額−銀行或另一來源金額；各筆差額見分析結果；不得跨幣別合計。']]
+            + [['待確認交易', item] for item in exceptions]))
+    else:
+        report_sections.append(('計算摘要', summary or ['資料不足，僅保留來源與待確認項目。']))
+    report_sections += [
+        ('分析範圍與來源', [f'{Path(t["path"]).name}；SHA256：{t["sha256"]}' for t in tables]),
         ('計算依據', [f'{a}：{b}' for a, b in basis]),
         ('完整性與限制', ['輸入列核對狀態：' + ('可計算且通過本次輸入層級檢查' if result['complete'] else '尚有缺漏或差異，僅為部分工作底稿'),
                        '正式會計查核尚未完成；未新增交易、調整帳本或補造原因；所有明細見同名工作簿。']),
-        ('待人工確認', result['review'] or ['正式報表用途與覆核程序仍需確認。'])])
-    write_json(targets[2], result)
+        ('待人工確認', result['review'] or ['正式報表用途與覆核程序仍需確認。'])]
+    # 三個成品先在同一個可寫目錄完成並重新讀取核對，成功才交付。
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.finance-', dir=output.parent) as staging_dir:
+        staging = Path(staging_dir)
+        write_workbook(staging / filename, sheets)
+        write_docx(staging / '財務分析報告.docx', '財務分析報告' + ('（教學模擬資料）' if result['simulation'] else ''), report_sections)
+        from docx import Document
+        from openpyxl import load_workbook
+        reopened = load_workbook(staging / filename, data_only=True)
+        require(set(s[0] for s in sheets) == set(reopened.sheetnames), 'Excel 工作表未完整保存。')
+        if mode in {'reconcile', 'variance'}:
+            require(reopened['分析結果'].max_row == len(result['results']) + 1, 'Excel 分析列數與來源計算結果不符。')
+        if mode == 'reconcile':
+            written_rows = list(reopened['分析結果'].iter_rows(min_row=2, values_only=True))
+            require([r[0] for r in written_rows] == [r['status'] for r in result['results']], 'Excel 匹配分類與計算紀錄不符。')
+            require([r[9] for r in written_rows] == [safe_cell(r['reference']) or None for r in result['results']], 'Excel 交易識別碼未完整保留。')
+            require([list(r[4:7]) for r in written_rows] == [[num(r['internal_amount']), num(r['other_amount']), num(r['difference'])] for r in result['results']], 'Excel 金額或差額與 Decimal 計算不符。')
+        report_text = '\n'.join(p.text for p in Document(staging / '財務分析報告.docx').paragraphs)
+        require('正式會計查核尚未完成' in report_text, 'Word 缺少必要限制。')
+        require(all(line in report_text for _, body in report_sections for line in body), 'Word 摘要或來源內容未完整保存。')
+        reopened.close()
+        result['artifact_checks'] = {'content_reopened': True, 'native_office_opened': False,
+            'scope': 'DOCX／XLSX 重新解析、工作表及分析筆數／分類／識別碼核對；不代表原生 Office 或完整對話成功。'}
+        write_json(staging / 'finance-result.json', result)
+        require(all(not p.exists() for p in targets), '輸出檔已存在，請使用新的輸出資料夾；不覆寫既有成果。')
+        output.mkdir(parents=True, exist_ok=True)
+        moved = []
+        try:
+            for target in targets:
+                (staging / target.name).rename(target)
+                moved.append(target)
+        except OSError:
+            for target in moved:
+                target.unlink(missing_ok=True)
+            raise
     return targets
 
 

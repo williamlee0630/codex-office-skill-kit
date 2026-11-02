@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse
 import json
 import math
+import re
 import sys
 import unicodedata
 
@@ -99,6 +100,31 @@ def safe_cell(value):
     return value
 
 
+def markdown_cells(line):
+    """保留跳脫直線符號；不把合法儲存格拆開後靜默截斷。"""
+    values, current = [], []
+    index = 0
+    line = line.strip()
+    while index < len(line):
+        char = line[index]
+        if char == '\\' and index + 1 < len(line) and line[index + 1] in {'|', '\\'}:
+            current.append(line[index + 1])
+            index += 2
+            continue
+        if char == '|':
+            values.append(''.join(current).strip())
+            current = []
+        else:
+            current.append(char)
+        index += 1
+    values.append(''.join(current).strip())
+    if values and not values[0]:
+        values.pop(0)
+    if values and not values[-1]:
+        values.pop()
+    return values
+
+
 def write_xlsx(path, headers, rows, sheet_name='明細'):
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Font, PatternFill
@@ -133,6 +159,8 @@ def write_xlsx(path, headers, rows, sheet_name='明細'):
             needed = max(needed, line_count)
         ws.row_dimensions[row[0].row].height = min(409, max(24, needed * 17 + 10))
     wb.save(path)
+    wb.close()
+    verify_artifact(path)
     return path
 
 
@@ -160,14 +188,64 @@ def write_docx(path, title, sections):
     normal.paragraph_format.line_spacing = 1.25
     doc.styles['Title'].font.size = Pt(24)
     doc.styles['Heading 1'].font.size = Pt(15)
+    for name in ('Heading 1', 'Heading 2'):
+        doc.styles[name].paragraph_format.keep_with_next = True
     doc.add_paragraph(str(title), style='Title')
     for heading, body in sections:
         if heading:
             doc.add_heading(str(heading), level=1)
-        paragraphs = body if isinstance(body, (list, tuple)) else str(body).split('\n')
-        for paragraph in paragraphs:
-            doc.add_paragraph(str(paragraph))
+        paragraphs = '\n'.join(map(str, body)).splitlines() if isinstance(body, (list, tuple)) else str(body).splitlines()
+        index = 0
+        while index < len(paragraphs):
+            paragraph = str(paragraphs[index])
+            if (paragraph.strip().startswith('|') and index + 1 < len(paragraphs)
+                    and re.fullmatch(r'[\s|:\-]+', paragraphs[index + 1]) and '-' in paragraphs[index + 1]):
+                cells = markdown_cells
+                headers = cells(paragraph)
+                table = doc.add_table(rows=1, cols=len(headers))
+                table.style = 'Light Shading Accent 1'
+                for cell, value in zip(table.rows[0].cells, headers):
+                    cell.text = value
+                index += 2
+                while index < len(paragraphs) and paragraphs[index].strip().startswith('|'):
+                    values = cells(paragraphs[index])
+                    require(len(values) == len(headers), 'Word 表格欄位數與標題不符；請將儲存格內的直線符號以反斜線跳脫，避免遺失原始文字。')
+                    row = table.add_row()
+                    for cell, value in zip(row.cells, values):
+                        cell.text = value
+                    index += 1
+                continue
+            doc.add_paragraph(paragraph)
+            index += 1
     doc.save(path)
+    verify_artifact(path)
+    return path
+
+
+def verify_artifact(path):
+    """重新讀取成品；結構可讀不等於內容或原生畫面已驗收。"""
+    from zipfile import ZipFile
+    path = Path(path)
+    require(path.is_file() and path.stat().st_size > 0, '成品不存在或為空，尚未完成交付。')
+    try:
+        if path.suffix.lower() in {'.docx', '.xlsx', '.pptx'}:
+            with ZipFile(path) as archive:
+                require(archive.testzip() is None, 'Office 成品 ZIP 完整性失敗。')
+            if path.suffix.lower() == '.docx':
+                from docx import Document
+                Document(path)
+            elif path.suffix.lower() == '.xlsx':
+                from openpyxl import load_workbook
+                book = load_workbook(path, read_only=True, data_only=False)
+                require(bool(book.sheetnames), 'Excel 沒有工作表。')
+                book.close()
+            else:
+                from pptx import Presentation
+                require(bool(len(Presentation(path).slides)), '簡報沒有投影片。')
+        else:
+            path.read_bytes()
+    except PermissionError as exc:
+        raise ValueError('成品無法重新讀取；請關閉 Office 中的同名檔案，改用目前專案內新的輸出資料夾重試。保留原件及舊成果，尚未完成交付驗收。') from exc
     return path
 
 

@@ -1,0 +1,21 @@
+{
+  "scope": "actual fresh CLI attempt, not deterministic fixture generation",
+  "results": [
+    {
+      "skill": "idea-generator",
+      "method": "fresh Codex CLI, exact current chapter prompt, raw attachments only",
+      "returncode": "timeout-600s",
+      "elapsed_seconds": 600.4,
+      "prompt_sha256": "533255568345d3deba392038f3cca498a4956ffbf7c03af06206c28214d17e91",
+      "attachments": [],
+      "conversation_completed": false,
+      "content_verified": false,
+      "native_office": "unverified",
+      "failure_reason": "First restricted launch denied app-server/state access; approved retry exceeded 600 seconds; no required ideas.md/comparison.csv found.",
+      "required_artifacts": []
+    }
+  ],
+  "gmail_real_account": "not_run; tool schemas and read-only workflow reviewed only",
+  "legal_fresh_cli": "not_run_in_this_revision",
+  "finance_fresh_cli": "not_run_in_this_revision"
+}

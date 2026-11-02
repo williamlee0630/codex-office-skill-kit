@@ -13,7 +13,7 @@ from datetime import date
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-from _office import load_json, require, safe_cell, write_json, write_markdown, write_xlsx, protect_input
+from _office import load_json, require, safe_cell, write_json, write_markdown, write_xlsx, protect_input, verify_artifact
 
 
 def empty(value):
@@ -122,7 +122,18 @@ def normalize(data):
         ids.add(entry['id'])
         amount = money(entry.get('amount'), index)
         entry['amount'] = str(amount) if amount is not None else None
-        entry['missing_fields'] = [key for key in ('date', 'vendor', 'items', 'amount', 'currency', 'category', 'evidence') if empty(entry.get(key))]
+        quantity = entry.get('quantity')
+        if not empty(quantity):
+            require(not isinstance(quantity, bool), f'第 {index} 筆數量不可為布林值。')
+            try:
+                quantity = Decimal(str(quantity))
+            except InvalidOperation as exc:
+                raise ValueError(f'第 {index} 筆數量格式錯誤，請核對原圖。') from exc
+            require(quantity.is_finite() and quantity > 0, f'第 {index} 筆數量須為正數，未知請留空。')
+            entry['quantity'] = float(quantity)
+        else:
+            entry['quantity'] = None
+        entry['missing_fields'] = [key for key in ('date', 'vendor', 'items', 'quantity', 'amount', 'currency', 'category', 'evidence') if empty(entry.get(key))]
         entry['invalid_fields'] = []
         if entry['date']:
             try:
@@ -158,10 +169,10 @@ def normalize(data):
 def workbook(path, records, totals, categories, source):
     from openpyxl import load_workbook
     from openpyxl.styles import Alignment, Font, PatternFill
-    headers = ['識別碼', '日期', '店家', '品項', '金額', '幣別', '類別', '疑似重複於', '待人工確認', '缺漏欄位', '格式待核對', '辨識證據']
+    headers = ['識別碼', '日期', '店家', '品項', '金額', '幣別', '類別', '疑似重複於', '待人工確認', '缺漏欄位', '格式待核對', '辨識證據', '數量', '來源']
     rows = [[r['id'], r.get('date'), r.get('vendor'), r.get('items'), float(r['amount']) if r['amount'] is not None else None,
              r.get('currency'), r['category'], r['duplicate_of'], '是' if r['needs_review'] else '否',
-             ', '.join(r['missing_fields']), ', '.join(r['invalid_fields']), r.get('evidence')] for r in records]
+             ', '.join(r['missing_fields']), ', '.join(r['invalid_fields']), r.get('evidence'), r.get('quantity') if r.get('quantity') is not None else '待確認', source] for r in records]
     write_xlsx(path, headers, rows, sheet_name='報帳明細')
     wb = load_workbook(path)
     for cell in wb['報帳明細']['E'][1:]:
@@ -184,11 +195,25 @@ def workbook(path, records, totals, categories, source):
     cat.append(['幣別', '使用者／Codex 確認類別', '含疑似重複合計'])
     for item in categories:
         cat.append([item['currency'], safe_cell(item['category']), float(item['total_including_duplicates'])])
-    wb._sheets = [wb['各幣統計'], wb['分類統計'], wb['報帳明細']]
+    review = wb.create_sheet('人工確認')
+    review.append(['識別碼', '待確認問題', '原圖辨識依據', '來源'])
+    for r in records:
+        issues = list(r['missing_fields']) + list(r['invalid_fields'])
+        if r.get('quantity') is None:
+            issues.append('數量待確認')
+        if r['duplicate_of']:
+            issues.append('疑似重複於 ' + r['duplicate_of'] + '；原列保留')
+        if issues:
+            review.append([safe_cell(v) for v in [r['id'], ', '.join(issues), r.get('evidence') or '待確認', source]])
+    if review.max_row == 1:
+        review.append(['全部', '未列出欄位缺漏；仍須逐項對照原圖，非正式報帳憑證', '', safe_cell(source)])
+    wb._sheets = [wb['各幣統計'], wb['人工確認'], wb['報帳明細'], wb['分類統計']]
     from openpyxl.utils import get_column_letter
     for sheet in wb:
         sheet.freeze_panes = 'A2'
         sheet.auto_filter.ref = f'A1:{get_column_letter(sheet.max_column)}{len(records) + 1}' if sheet.title == '報帳明細' else f'A1:{get_column_letter(sheet.max_column)}{len(totals) + 1 if sheet.title == "各幣統計" else len(categories) + 1}'
+        if sheet.title == '人工確認':
+            sheet.auto_filter.ref = sheet.dimensions
         for cell in sheet[1]:
             cell.font = Font(name='Microsoft JhengHei', bold=True, color='FFFFFF')
             cell.fill = PatternFill('solid', fgColor='164E4A')
@@ -216,6 +241,8 @@ def workbook(path, records, totals, categories, source):
                 line_count = max(line_count, math.ceil(units / max(1, width - 2)))
             sheet.row_dimensions[row[0].row].height = min(409, max(35, line_count * 15 + 8))
     wb.save(path)
+    wb.close()
+    verify_artifact(path)
 
 
 def organize(args):
@@ -229,6 +256,7 @@ def organize(args):
         prepare_raw(path, out, tools, args.simulation)
         return
     data = load_records(path)
+    require(not (out / 'receipts.xlsx').exists(), '輸出資料夾已有收據成果；請使用新的輸出資料夾，保留舊成果。')
     if args.simulation:
         data['simulation'] = True
     records, totals, categories = normalize(data)
@@ -244,6 +272,8 @@ def organize(args):
     lines = ['# 收據整理報告', '', f'資料標示：{label}。來源：{data["source"]}',
              f'共 {len(records)} 筆，待人工確認 {result["review_count"]} 筆。未執行 OCR。', '',
              '| 幣別 | 含疑似重複合計 | 暫排除疑似重複合計 |', '| --- | ---: | ---: |']
+    if data.get('simulation'):
+        lines.insert(3, '教學模擬成果，不是正式報帳憑證。')
     for currency, info in totals.items():
         lines.append(f'| {currency} | {info["all"]} | {info["excluding_suspected_duplicates"]} |')
     lines.extend(['', '不同幣別分別合計，未換匯。沒有有效金額或幣別的收據不納入合計。', '', '## 待人工確認', ''])

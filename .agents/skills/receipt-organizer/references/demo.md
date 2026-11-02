@@ -6,7 +6,7 @@
 
 先讀 demo/receipts.json 的模擬清單及 demo/simulated-receipt.png（或同名 PDF）。只有 R1 可回查這張原圖，其餘依清單，不假稱全部看過原圖。由 Codex 轉錄並核對清楚欄位；影像流程加 --simulation，JSON 保留 simulation=true，完成 receipts.xlsx；不能把待核對模板當成果。
 
-依 operation.md 檢查環境、選擇新輸出資料夾、實際執行並開啟核對。示範的查核日與週報期間只從示範需求／來源取得，不沿用到工作任務。
+依 operation.md 檢查環境、選擇新輸出資料夾、實際執行並開啟核對。示範的資料日期與查核日只從示範需求／來源取得，不沿用到工作任務。
 
 <details><summary>維護者：保留的舊版測試與契約示例</summary>
 

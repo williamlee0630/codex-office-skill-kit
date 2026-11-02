@@ -140,6 +140,9 @@ def run(input_path, output_dir):
             text(idea.get(field), field)
         for field in ("resources", "pros", "cons"):
             require(all(isinstance(value, str) for value in array(idea.get(field), field)), f"{field} 須為文字陣列")
+        for field in ('staffing', 'cost_assumptions'):
+            nullable(idea.get(field), field)
+        require(all(isinstance(value, str) for value in array(idea.get('risks', []), 'risks')), 'risks 須為文字陣列')
         refs = array(idea.get("constraint_ids", []), "constraint_ids")
         require(all(ref in constraint_ids for ref in refs), "constraint_ids 引用不存在的限制")
     selected = data.get("selected_id")
@@ -154,7 +157,8 @@ def run(input_path, output_dir):
         text(step.get("deliverable"), "計畫 deliverable")
         nullable(step.get("owner"), "計畫 owner")
         iso(step.get("due"), "計畫 due", optional=True)
-    sections = [("問題與目標", data["goal"]),
+    sections = [("評估摘要與建議", [display(data.get('recommendation')), '方案狀態：' + ('已指定選案，執行條件仍須核准。' if selected else '尚未選定，以下為提案評估，不代表已核准。')]),
+                ("問題與目標", data["goal"]),
                 ("限制與來源", [f"{c['id']}：{c['text']}｜{cite(c)}" for c in constraints] or ["限制未提供，待確認"]),
                 ("評估方式", "以下成本、難度與預期價值均為主觀評估及規劃假設，尚未經實驗或報價驗證。")]
     rows = []
@@ -162,20 +166,26 @@ def run(input_path, output_dir):
         body = [idea["description"], f"資源：{'、'.join(idea['resources']) or UNKNOWN}",
                 f"成本：{idea['cost']}；難度：{idea['difficulty']}；預期價值：{idea['value']}（主觀評估）",
                 f"優點：{'、'.join(idea['pros']) or UNKNOWN}；缺點：{'、'.join(idea['cons']) or UNKNOWN}",
+                f"人力：{display(idea.get('staffing'))}；估算假設：{display(idea.get('cost_assumptions'))}",
+                f"主要風險：{'、'.join(idea.get('risks', [])) or '待確認；不得視為已完成風險評估'}",
                 f"評估理由：{idea['rationale']}；對應限制：{'、'.join(idea.get('constraint_ids', [])) or UNKNOWN}"]
         sections.append((f"{idea['id']} {idea['title']}", body))
-        rows.append([idea["id"], idea["title"], idea["cost"], idea["difficulty"], idea["value"], idea["rationale"], "主觀評估，尚待驗證"])
+        rows.append([idea["id"], idea["title"], idea["cost"], idea["difficulty"], idea["value"], idea["rationale"], "主觀評估，尚待驗證",
+                     idea['description'], '、'.join(idea['resources']), display(idea.get('staffing')), display(idea.get('cost_assumptions')),
+                     '、'.join(idea['pros']), '、'.join(idea['cons']), '、'.join(idea.get('risks', [])) or UNKNOWN])
     sections.append(("建議與選擇", display(data.get("recommendation"))))
+    sections.append(("後續驗證", display(data.get('validation_plan'))))
     sections += source_sections(data)
     plan_sections = [("選定方案", next((idea["title"] for idea in ideas if idea["id"] == selected), "尚未選定，待確認")),
                      ("執行計畫", [f"{index}. {step['step']}｜交付物：{step['deliverable']}｜建議負責人：{display(step.get('owner'))}｜建議期限：{display(step.get('due'))}；均須確認" for index, step in enumerate(plan, 1)] or ["請選定方案後建立步驟，待確認"]),
                      ("驗證方式", display(data.get("validation_plan")))]
     output = Path(output_dir)
     write_markdown(output / "ideas.md", markdown(data["title"], sections))
-    write_csv(output / "comparison.csv", ["編號", "方案", "成本", "難度", "預期價值", "理由", "評估性質"], rows)
-    write_markdown(output / "selected-plan.md", markdown(data["title"] + " 執行計畫", plan_sections))
+    write_csv(output / "comparison.csv", ["編號", "方案", "成本", "難度", "預期價值", "理由", "評估性質", "做法", "資源", "人力", "估算假設", "優點", "缺點", "主要風險"], rows)
+    if selected:
+        write_markdown(output / "selected-plan.md", markdown(data["title"] + " 執行計畫", plan_sections))
     write_json(output / "evidence.json", data)
-    return {"files": ["ideas.md", "comparison.csv", "selected-plan.md", "evidence.json"]}
+    return {"files": ["ideas.md", "comparison.csv"] + (["selected-plan.md"] if selected else []) + ["evidence.json"]}
 
 
 if __name__ == "__main__":

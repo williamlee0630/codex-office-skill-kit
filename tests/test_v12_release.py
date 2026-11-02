@@ -8,7 +8,7 @@ from test_publication import fixture, put, load_module, TEMP
 import tempfile
 class V12ReleaseTests(unittest.TestCase):
     def test_canonical_registry_has_exact_required_names(self):
-        self.assertEqual(VERSION,'1.2.0')
+        self.assertEqual(VERSION,'1.3.0')
         self.assertEqual(tuple(SKILLS),('email-assistant','receipt-organizer','presentation-maker','document-writer','data-analyst','idea-generator','research-assistant','legal-reviewer','finance-assistant'))
     def test_wrong_nine_names_are_rejected_before_build(self):
         release=load_module('build_release')

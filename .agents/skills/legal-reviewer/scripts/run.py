@@ -2,9 +2,11 @@
 import argparse
 from datetime import date
 import hashlib
+import math
 from pathlib import Path
 import sys
 import tempfile
+import unicodedata
 from urllib.parse import urlparse
 
 from _office import load_json, read_text, require, write_docx, write_json, write_markdown, write_xlsx, safe_cell
@@ -190,6 +192,30 @@ def cite_text(items):
     return '\n'.join(f'[{c["location"]}] {c["quote"]}' for c in items) or '缺漏條款（新增）；已檢視全文來源索引。'
 
 
+def format_workbook(wb):
+    """摘要與附表採相同格式；長證據換行，風險以文字及色彩雙重標示。"""
+    from openpyxl.styles import Alignment, Font, PatternFill
+    colors = {'高': 'FCE4D6', '中': 'FFF2CC', '低': 'E2F0D9'}
+    for ws in wb:
+        ws.freeze_panes = 'A2'
+        ws.sheet_view.showGridLines = False
+        for row in ws:
+            lines = 1
+            for cell in row:
+                cell.font = Font(name='Microsoft JhengHei', size=11, bold=cell.row == 1,
+                                 color='FFFFFF' if cell.row == 1 else '203C39')
+                cell.alignment = Alignment(wrap_text=True, vertical='top')
+                if cell.row == 1:
+                    cell.fill = PatternFill('solid', fgColor='164E4A')
+                elif isinstance(cell.value, str) and cell.value in colors:
+                    cell.fill = PatternFill('solid', fgColor=colors[cell.value])
+                width = max(8, (ws.column_dimensions[cell.column_letter].width or 24) - 2)
+                for line in str(cell.value or '').split('\n'):
+                    units = sum(2 if unicodedata.east_asian_width(c) in {'W', 'F'} else 1 for c in line)
+                    lines = max(lines, math.ceil(units / width))
+            ws.row_dimensions[row[0].row].height = min(409, max(30, lines * 17 + 8))
+
+
 def run(input_path, output_dir):
     input_path = Path(input_path).resolve()
     data = load_json(input_path)
@@ -201,15 +227,23 @@ def run(input_path, output_dir):
     label = '教學模擬資料｜' if data.get('simulation') is True else ''
     legal_limit = ('已記錄 Codex 查讀來源及日期；本產檔器未連線，不能單憑快照宣稱法規仍為最新。'
                    if data['legal_check']['status'] == 'checked' else '未完成最新法規查證：' + data['legal_check']['reason'])
+    ordered = sorted(data['findings'], key=lambda f: {'高': 0, '中': 1, '低': 2}[f['level']])
     summary = '；'.join(f'{level}風險 {sum(f["level"] == level for f in data["findings"])} 項' for level in ['高', '中', '低'])
-    sections = [('文件基本資訊', [f'名稱：{data["document_name"]}', f'類型：{data["document_type"]}', f'審閱立場：{data["perspective"]}', f'適用法域：{jurisdiction}', f'原件：{source["path"] or "使用者貼上的原文（見 audit.json）"}', f'SHA-256：{source["sha256"]}']),
+    priorities = [f'{f["id"]}｜{f["level"]}風險｜{f["issue"]}。影響：{f["impact"]}。理由：{f["reason"]}。'
+                  + ('位置：' + '、'.join(c['location'] for c in f['citations']) if f['citations'] else '依全文檢視判斷缺漏。')
+                  for f in ordered[:3]]
+    sections = [('主管風險摘要', [f'審閱立場：{data["perspective"]}｜{summary}',
+                 '優先協商：' + ('先列風險等級最高的前三項，同級依原件順序；完整高風險及修訂文字見後續明細。' if len(ordered) > 3 else '依風險等級排序，待雙方協商確認。')]
+                 + (priorities or ['本次未列需修訂風險；仍須確認附件及審查限制，不代表文件已獲安全認證。'])
+                 + [LIMIT, f'法域：{jurisdiction}。{legal_limit}']),
+                ('文件基本資訊', [f'名稱：{data["document_name"]}', f'類型：{data["document_type"]}', f'審閱立場：{data["perspective"]}', f'適用法域：{jurisdiction}', f'原件：{Path(source["path"]).name if source["path"] else "使用者貼上的原文（見 audit.json）"}', f'SHA-256：{source["sha256"]}']),
                 ('審查範圍與適用限制', [f'已逐項檢視九類條款，原文範圍共 {len(source["blocks"])} 個位置。', LIMIT, legal_limit] + source['warnings']),
                 ('風險摘要', [summary, '沒有列出風險不表示文件合法或無風險；請配合逐項分析與尚待確認事項。'])]
     status_labels = {'present': '有條款', 'missing': '缺少條款', 'not_applicable': '依文件性質不適用／待確認'}
     for t in data['review_topics']:
         sections.append(('逐項審查｜' + TOPICS[t['topic']], [status_labels[t['status']], t['analysis'], cite_text(t['citations']) if t['citations'] else '依完整來源範圍判斷；無對應原條款。']))
-    md = ['# ' + label + '條款修訂建議', '', LIMIT, '', f'文件：{data["document_name"]}；立場：{data["perspective"]}；法域：{jurisdiction}', legal_limit, '', '每項位置均對應本次原件擷取索引；【待確認】為未協議的條件，不表示已存在。']
-    for f in data['findings']:
+    md = ['# ' + label + '條款修訂建議', '', LIMIT, '', f'文件：{data["document_name"]}；立場：{data["perspective"]}；法域：{jurisdiction}', legal_limit, '', '每項位置均對應本次原件擷取索引；修訂文字屬協商建議，新增期限或金額不是既有約定。所有建議及【待確認】條件須經雙方確認後才可採用。']
+    for f in ordered:
         body = [f'原始條款：{cite_text(f["citations"])}', f'問題：{f["issue"]}', f'商業或法律影響：{f["impact"]}', f'風險：{f["level"]}；理由：{f["reason"]}', f'處理方式：{f["action"]}', f'建議修訂文字：{f["draft_terms"]}', f'修訂理由：{f["revision_reason"]}', f'法律依據狀態：{f["legal_basis_status"]}；來源：{", ".join(f["legal_source_ids"]) or "尚無已查證法規"}', f'需專業法務確認：{"是" if f["professional_confirmation"] else "否（仍屬初步審閱）"}', '待確認：' + ('；'.join(f['questions']) or '未另列，仍需確認商業條件與附件。')]
         sections.append((f'風險 {f["id"]}｜{TOPICS[f["topic"]]}', body))
         md += ['', f'## {f["id"]}｜{TOPICS[f["topic"]]}（{f["level"]}）', ''] + body
@@ -224,19 +258,21 @@ def run(input_path, output_dir):
     questions = list(dict.fromkeys(questions)) or ['請確認附件、簽署權限、實際交易背景及是否需專業法務複核。']
     sections += [('法律來源與適用限制', law_lines), ('待人工確認事項', questions), ('原始文件定位索引', [f'[{b["location"]}] {b["text"]}' for b in source['blocks']])]
     md += ['', '## 法律來源與限制', ''] + law_lines + ['', '## 待人工確認', ''] + ['- ' + q for q in questions]
-    result = {**data, 'source': source, 'legal_sources': list(laws.values()), 'network_used': False,
+    result = {**data, 'source': {**source, 'path': Path(source['path']).name if source['path'] else None},
+              'legal_sources': [{**law, 'path': Path(law['path']).name} for law in laws.values()], 'network_used': False,
+              'prioritized_finding_ids': [f['id'] for f in ordered],
               'semantic_review': 'Codex 提供分析；程式只核對資料結構、原文位置與快照，不以關鍵字判定法律風險。', 'limitations': [LIMIT, legal_limit] + source['warnings']}
     out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.legal-review-', dir=out.parent) as staging_dir:
         staging = Path(staging_dir)
         write_docx(staging / PRODUCTS[0], label + '合約審查報告', sections)
         headers = ['風險ID', '檢查項目', '原始條款／位置', '問題說明', '商業或法律影響', '風險等級', '等級理由', '處理方式', '建議修訂文字', '修訂理由', '需專業法務確認', '待確認事項', '法律依據狀態', '法律來源']
-        rows = [[f['id'], TOPICS[f['topic']], cite_text(f['citations']), f['issue'], f['impact'], f['level'], f['reason'], f['action'], f['draft_terms'], f['revision_reason'], '是' if f['professional_confirmation'] else '否（初步）', '；'.join(f['questions']), f['legal_basis_status'], ', '.join(f['legal_source_ids'])] for f in data['findings']]
+        rows = [[f['id'], TOPICS[f['topic']], cite_text(f['citations']), f['issue'], f['impact'], f['level'], f['reason'], f['action'], f['draft_terms'], f['revision_reason'], '是' if f['professional_confirmation'] else '否（初步）', '；'.join(f['questions']), f['legal_basis_status'], ', '.join(f['legal_source_ids'])] for f in ordered]
         write_xlsx(staging / PRODUCTS[1], headers, rows, '風險清單')
         from openpyxl import load_workbook
         wb = load_workbook(staging / PRODUCTS[1])
         overview = wb.create_sheet('審查摘要', 0)
-        for row in [[label + '合約審查摘要'], ['文件', data['document_name']], ['風險摘要', summary], ['法域', jurisdiction], ['法律查證限制', legal_limit], ['判斷界線', LIMIT]]:
+        for row in [[label + '合約審查摘要'], ['文件', data['document_name']], ['風險摘要', summary], ['法域', jurisdiction], ['法律查證限制', legal_limit], ['判斷界線', LIMIT]] + [['優先協商', p] for p in priorities]:
             overview.append([safe_cell(v) for v in row])
         overview.column_dimensions['A'].width = 32
         overview.column_dimensions['B'].width = 80
@@ -254,13 +290,32 @@ def run(input_path, output_dir):
                     cell.alignment = Alignment(wrap_text=True, vertical='top')
                     cell.font = Font(name='Microsoft JhengHei', size=11, bold=cell.row == 1)
                     ws.column_dimensions[cell.column_letter].width = 48
+        format_workbook(wb)
         wb.save(staging / PRODUCTS[1])
         write_markdown(staging / PRODUCTS[2], '\n'.join(md))
+        # 成品重新解析並核對內容；檔案存在本身不足以通過。
+        from docx import Document
+        reopened_report = '\n'.join(p.text for p in Document(staging / PRODUCTS[0]).paragraphs)
+        reopened_wb = load_workbook(staging / PRODUCTS[1], data_only=True)
+        require(reopened_wb['風險清單'].max_row == len(ordered) + 1, 'Excel 風險筆數與分析不符。')
+        require(all(f['issue'] in reopened_report and f['draft_terms'] in reopened_report for f in ordered), 'Word 缺少風險或具體修訂文字。')
+        require([r[0] for r in reopened_wb['風險清單'].iter_rows(min_row=2, values_only=True)] == [f['id'] for f in ordered], 'Excel 風險順序或識別碼不符。')
+        require(all(f['draft_terms'] in (staging / PRODUCTS[2]).read_text(encoding='utf-8') for f in ordered), '修訂建議檔內容不完整。')
+        reopened_wb.close()
+        result['artifact_checks'] = {'content_reopened': True, 'native_office_opened': False,
+            'scope': 'DOCX／XLSX 重新解析及逐項風險、修訂、筆數核對；未宣稱原生 Office 畫面驗收。'}
         write_json(staging / PRODUCTS[3], result)
         fresh_output(out, PRODUCTS, inputs)
         out.mkdir(parents=True, exist_ok=True)
-        for name in PRODUCTS:
-            (staging / name).rename(out / name)
+        moved = []
+        try:
+            for name in PRODUCTS:
+                (staging / name).rename(out / name)
+                moved.append(name)
+        except OSError:
+            for name in moved:
+                (out / name).unlink(missing_ok=True)
+            raise
     return result
 
 

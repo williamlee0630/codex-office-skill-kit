@@ -1,4 +1,4 @@
-﻿param([string]$OutputDirectory = 'docs/qa/office-render')
+param([string]$OutputDirectory = 'docs/qa/office-render', [string]$SourceDirectoryName = 'output')
 $ErrorActionPreference = 'Stop'
 $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $renderRoot = [IO.Path]::GetFullPath((Join-Path $projectRoot $OutputDirectory))
@@ -15,7 +15,7 @@ try {
     $word.Visible = $false
     $word.DisplayAlerts = 0
     $word.AutomationSecurity = 3
-    $wordFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.docx' -Recurse | Where-Object { $_.Directory.Name -eq 'output' }
+    $wordFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.docx' -Recurse | Where-Object { $_.Directory.Name -eq $SourceDirectoryName }
     foreach ($file in $wordFiles) {
         $doc = $null
         try {
@@ -28,7 +28,7 @@ try {
     }
     $powerpoint = New-Object -ComObject PowerPoint.Application
     $powerpoint.AutomationSecurity = 3
-    $slideFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.pptx' -Recurse | Where-Object { $_.Directory.Name -eq 'output' }
+    $slideFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.pptx' -Recurse | Where-Object { $_.Directory.Name -eq $SourceDirectoryName }
     foreach ($file in $slideFiles) {
         $deck = $null
         try {
@@ -47,7 +47,7 @@ try {
     $excel.Visible = $false
     $excel.DisplayAlerts = $false
     $excel.AutomationSecurity = 3
-    $sheetFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.xlsx' -Recurse | Where-Object { $_.Directory.Name -eq 'output' }
+    $sheetFiles = Get-ChildItem -LiteralPath (Join-Path $projectRoot 'examples') -Filter '*.xlsx' -Recurse | Where-Object { $_.Directory.Name -eq $SourceDirectoryName }
     foreach ($file in $sheetFiles) {
         $book = $null
         try {

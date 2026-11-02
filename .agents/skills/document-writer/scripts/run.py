@@ -138,12 +138,17 @@ def run(input_path, output_dir):
             require(all(ref in fact_ids for ref in refs), "fact_ids 引用不存在的原始事實")
     unknowns = array(data.get("pending_questions", []), "pending_questions")
     require(all(isinstance(value, str) for value in unknowns), "待確認事項須為文字")
+    nullable(data.get('document_version'), 'document_version')
+    approval = nullable(data.get('approval_status'), 'approval_status')
     output = Path(output_dir)
     files = []
     for version, label in (("formal", "正式版"), ("concise", "精簡版")):
-        sections = [("文件目的與讀者", f"目的：{display(purpose)}。讀者：{display(audience)}。")]
+        sections = [("文件狀態", f"文件版本：{display(data.get('document_version'))}；核准狀態：{display(approval)}。"),
+                    ("文件目的與讀者", f"目的：{display(purpose)}。讀者：{display(audience)}。")]
         sections += [(item["heading"], item["text"]) for item in versions[version]]
-        sections.append(("原始事實與來源", [f"{fact['id']}：{fact['text']}｜{cite(fact)}" for fact in facts] or ["未提供原始事實，待確認"]))
+        sections.append(("原始事實與來源", [f"{fact['id']}：{fact['text']}｜來源：" +
+                        '；'.join(f"[{ref['source_id']}]" + ('' if ref['quote'] == fact['text'] else ' ' + ref['quote'])
+                                 for ref in fact['evidence']) for fact in facts] or ["未提供原始事實，待確認"]))
         sections.append(("待確認事項", unknowns or ["未提供額外待確認事項；仍請核對原始事實與用語"]))
         sections += source_sections(data)
         name = f"document-{version}"

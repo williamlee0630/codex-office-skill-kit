@@ -23,6 +23,8 @@ Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依本技
 
 執行方式見 [內部執行](operation.md)，輸入為 Codex 自行整理的工作資料，並非預設示範。
 
-產物：ideas.md、comparison.csv、selected-plan.md、evidence.json。
+每案可加 `staffing`（具體人力分配）、`cost_assumptions`（估算條件）、`risks`（文字陣列）。Codex 新產方案應填齊；舊資料缺少則輸出待確認，不能以空白當作已評估。
+
+必要產物：ideas.md、comparison.csv。另保留 evidence.json 供回查；只有已選定方案才產 selected-plan.md，未選案不產空白計畫。不自動增加 XLSX。比較表包含做法、資源、人力、估算假設、優缺點與風險。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。

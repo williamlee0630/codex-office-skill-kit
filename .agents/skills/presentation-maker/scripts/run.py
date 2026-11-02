@@ -77,6 +77,8 @@ def generate(args):
     data = load_json(args.input)
     title, source, slides = validate(data)
     out = Path(args.output)
+    require(not any((out / name).exists() for name in ('presentation.pptx', 'speaker-notes.md', 'layout-check.json')),
+            '輸出資料夾已有簡報成果，請使用新的輸出資料夾，保留原成果。')
     require(Path(args.input).resolve() != (out / 'presentation.pptx').resolve(), '輸出不可覆寫來源檔案。')
     out.mkdir(parents=True, exist_ok=True)
     deck = Presentation()
@@ -99,7 +101,9 @@ def generate(args):
         require(units(subtitle) <= 90 and '\n' not in subtitle, '副標題過長，請縮短至 45 個全形字以內。')
         add_text(cover, subtitle, .8, 4.8, 11.5, 1.0, 22, 'DFEEEB')
     add_text(cover, '來源與資料日期見講者備註', .8, 6.55, 11.5, .4, 12, 'B6D7D1')
-    cover.notes_slide.notes_text_frame.text = f'{label}\n來源：{source}\n資料日期：{data.get("date") or "未提供，待確認"}'
+    cover_notes = data.get('cover_notes') or '請先說明本簡報目的與來源範圍；未確認事項仍須由實際使用者核定。'
+    cover_notes = text(cover_notes, '封面講者備註')
+    cover.notes_slide.notes_text_frame.text = f'{cover_notes}\n\n{label}\n來源：{source}\n資料日期：{data.get("date") or "未提供，待確認"}'
     notes_markdown.extend(['## 封面', '', cover.notes_slide.notes_text_frame.text, ''])
     for index, item in enumerate(slides, 1):
         slide = deck.slides.add_slide(deck.slide_layouts[6])
@@ -134,7 +138,10 @@ def generate(args):
     reopened = Presentation(out / 'presentation.pptx')
     require(len(reopened.slides) == len(slides) + 1, 'PPTX 重新開啟後頁數不符。')
     require(all(s.notes_slide.notes_text_frame.text.strip() for s in reopened.slides), 'PPTX 備註未完整保存。')
+    notes_review = [i + 2 for i, item in enumerate(slides) if item['notes'].startswith('待確認：')
+                    or item['notes'].strip() in {item['title'], *item['bullets']}]
     write_json(out / 'layout-check.json', {'structure_passed': True, 'visual_review_completed': False,
+               'notes_review_required': notes_review,
                'slide_count': len(reopened.slides), 'checks': checks,
                'text_rule': '32pt 頁標、24pt 內文；每點最多84寬度單位、每頁最多260單位／5點，另以保守斷行與段距預算限制預估高度260pt。',
                'remaining_review': '需要 PowerPoint 或可用渲染工具檢查實際字型替代、斷行與文字溢出。'})

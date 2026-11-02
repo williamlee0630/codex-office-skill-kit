@@ -131,8 +131,8 @@ class HandbookTests(unittest.TestCase):
 
     def test_downloads_and_boundary_are_explained(self):
         source = (BOOK / "index.html").read_text(encoding="utf-8")
-        self.assertIn("../dist/office-skills-1.2.0.zip", source)
-        self.assertIn("../dist/practice-data-1.2.0.zip", source)
+        self.assertIn("../dist/office-skills-1.3.0.zip", source)
+        self.assertIn("../dist/practice-data-1.3.0.zip", source)
         basics = (BOOK / "chapter-01.html").read_text(encoding="utf-8")
         self.assertIn("SKILL.md", basics)
         self.assertIn(".agents/skills", basics)

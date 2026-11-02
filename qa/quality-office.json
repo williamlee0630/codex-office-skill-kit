@@ -1,0 +1,196 @@
+{
+  "date": "2026-11-02",
+  "excel_native_read_only": [
+    {
+      "skill": "data-analyst",
+      "file": "analysis.xlsx",
+      "native_open": true,
+      "read_only": true,
+      "sheets": [
+        {
+          "name": "資料概覽",
+          "rows": 7,
+          "columns": 2
+        },
+        {
+          "name": "分析摘要",
+          "rows": 6,
+          "columns": 10
+        },
+        {
+          "name": "原始資料",
+          "rows": 12,
+          "columns": 5
+        },
+        {
+          "name": "資料品質",
+          "rows": 6,
+          "columns": 5
+        },
+        {
+          "name": "異常資料",
+          "rows": 2,
+          "columns": 5
+        },
+        {
+          "name": "分組統計",
+          "rows": 3,
+          "columns": 4
+        },
+        {
+          "name": "日期趨勢",
+          "rows": 7,
+          "columns": 4
+        }
+      ],
+      "visual_review": "not_performed"
+    },
+    {
+      "skill": "finance-assistant",
+      "file": "銀行對帳結果.xlsx",
+      "native_open": true,
+      "read_only": true,
+      "sheets": [
+        {
+          "name": "對帳摘要",
+          "rows": 20,
+          "columns": 2
+        },
+        {
+          "name": "分析結果",
+          "rows": 16,
+          "columns": 14
+        },
+        {
+          "name": "分幣期間合計",
+          "rows": 6,
+          "columns": 5
+        },
+        {
+          "name": "原始資料",
+          "rows": 133,
+          "columns": 6
+        },
+        {
+          "name": "計算依據",
+          "rows": 21,
+          "columns": 2
+        },
+        {
+          "name": "待人工確認",
+          "rows": 13,
+          "columns": 2
+        }
+      ],
+      "visual_review": "not_performed"
+    },
+    {
+      "skill": "legal-reviewer",
+      "file": "合約風險清單.xlsx",
+      "native_open": true,
+      "read_only": true,
+      "sheets": [
+        {
+          "name": "審查摘要",
+          "rows": 9,
+          "columns": 2
+        },
+        {
+          "name": "風險清單",
+          "rows": 10,
+          "columns": 14
+        },
+        {
+          "name": "條款檢查",
+          "rows": 10,
+          "columns": 4
+        },
+        {
+          "name": "來源對照",
+          "rows": 12,
+          "columns": 2
+        },
+        {
+          "name": "法律來源與限制",
+          "rows": 6,
+          "columns": 2
+        },
+        {
+          "name": "待人工確認",
+          "rows": 12,
+          "columns": 1
+        }
+      ],
+      "visual_review": "not_performed"
+    },
+    {
+      "skill": "receipt-organizer",
+      "file": "receipts.xlsx",
+      "native_open": true,
+      "read_only": true,
+      "sheets": [
+        {
+          "name": "各幣統計",
+          "rows": 7,
+          "columns": 4
+        },
+        {
+          "name": "人工確認",
+          "rows": 2,
+          "columns": 4
+        },
+        {
+          "name": "報帳明細",
+          "rows": 4,
+          "columns": 14
+        },
+        {
+          "name": "分類統計",
+          "rows": 2,
+          "columns": 3
+        }
+      ],
+      "visual_review": "not_performed"
+    },
+    {
+      "skill": "idea-generator",
+      "file": "comparison.csv",
+      "native_open": true,
+      "read_only": true,
+      "sheets": [
+        {
+          "name": "comparison",
+          "rows": 11,
+          "columns": 14
+        }
+      ],
+      "visual_review": "not_performed"
+    }
+  ],
+  "native_word_exports": [
+    {
+      "file": "document-writer-document-concise.pdf",
+      "pages": 3
+    },
+    {
+      "file": "document-writer-document-formal.pdf",
+      "pages": 3
+    },
+    {
+      "file": "finance-assistant-財務分析報告.pdf",
+      "pages": 3
+    },
+    {
+      "file": "legal-reviewer-合約審查報告.pdf",
+      "pages": 11
+    }
+  ],
+  "powerpoint_export_pages": 5,
+  "powerpoint_all_five_slides_visually_reviewed": true,
+  "word_visual_review": "first page of formal SOP, legal and financial report; remaining pages not visually reviewed",
+  "limitations": [
+    "Original broad Office export run was interrupted after Word/PPT and first XLSX exports; targeted Excel opening was then completed separately.",
+    "Excel native opening and sheet access passed; every worksheet visual layout was not reviewed.",
+    "Desktop Codex drag-and-drop and real mobile device are unverified."
+  ]
+}

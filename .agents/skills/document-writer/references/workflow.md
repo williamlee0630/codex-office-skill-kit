@@ -15,6 +15,8 @@
 
 `purpose`、`audience` 可為文字或 null。`facts` 每項含唯一 `id`、`text`、`evidence`。`versions` 必含 `formal`、`concise`；每版至少一段，每段含 `heading`、`text`、`fact_ids`（既有事實 id 陣列）。無事實時可空參照，但只能寫待補資訊。`pending_questions` 為文字陣列。腳本驗證參照存在，不理解改寫語意；執行前由 Codex 核對每段有無新增未有依據的主張。
 
+`document_version`、`approval_status` 可為文字或 null，兩版首頁都呈現；未提供則標待確認，不補成正式核准版。SOP 的角色、流程與例外處理從 facts 建立，精簡版仍保留全部事實與重要限制。課程品質案例另見 examples/document-writer/quality-input.json；舊 input.json 是歷史提案案例。
+
 貼上文字可由 Codex 存成來源快照；label 指回實際來源，quote 保留原句。單獨安裝不需先執行其他技能。
 
 ## 執行與產物

@@ -50,13 +50,13 @@ class LearnerHandbookTests(unittest.TestCase):
     def test_home_explains_course_review_and_three_downloads(self):
         source = read("index.html")
         for expected in ["開課方審閱版", "課程目標", "操作方式", "人工確認", "Python",
-                         "../dist/office-skills-1.2.0.zip",
-                         "../dist/practice-data-1.2.0.zip"]:
+                         "../dist/office-skills-1.3.0.zip",
+                         "../dist/practice-data-1.3.0.zip"]:
             self.assertIn(expected, source)
-        for name in ["office-skills-1.2.0.zip", "practice-data-1.2.0.zip"]:
+        for name in ["office-skills-1.3.0.zip", "practice-data-1.3.0.zip"]:
             self.assertIn(f'href="../dist/{name}"', source)
             self.assertTrue((ROOT / "dist" / name).is_file(), f"缺少可下載教材：{name}")
-        full_name = "codex-office-skill-kit-1.2.0.zip"
+        full_name = "codex-office-skill-kit-1.3.0.zip"
         if (ROOT / "dist" / full_name).is_file():
             # 原始網站仍須提供三份下載；不能用離線包說明替代完整包連結。
             self.assertIn(f'href="../dist/{full_name}"', source)

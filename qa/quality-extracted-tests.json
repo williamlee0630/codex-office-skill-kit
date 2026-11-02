@@ -1,0 +1,18 @@
+[
+  {
+    "package": "codex-office-skill-kit-1.3.0.zip",
+    "returncode": 0,
+    "tests_run": 130,
+    "success": true,
+    "seconds": 67.871,
+    "scope": "independent extraction and applicable unittest suite; not Codex UI"
+  },
+  {
+    "package": "office-skills-1.3.0.zip",
+    "returncode": 0,
+    "tests_run": 88,
+    "success": true,
+    "seconds": 74.228,
+    "scope": "independent extraction and applicable unittest suite; not Codex UI"
+  }
+]

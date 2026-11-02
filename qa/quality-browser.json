@@ -1,0 +1,138 @@
+{
+  "scope": "local Chromium desktop/mobile emulation",
+  "base": "http://127.0.0.1:8765/",
+  "results": [
+    {
+      "width": 1440,
+      "chapter": 2,
+      "copy_exact": true,
+      "downloads": 0,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 3,
+      "copy_exact": true,
+      "downloads": 3,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 4,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 5,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 7,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 8,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 9,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 1440,
+      "chapter": 10,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 2,
+      "copy_exact": true,
+      "downloads": 0,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 3,
+      "copy_exact": true,
+      "downloads": 3,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 4,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 5,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 7,
+      "copy_exact": true,
+      "downloads": 2,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 8,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 9,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    },
+    {
+      "width": 390,
+      "chapter": 10,
+      "copy_exact": true,
+      "downloads": 4,
+      "no_horizontal_overflow": true
+    }
+  ],
+  "mobile_menu": true,
+  "clipboard_denied_fallback": "已複製，可以貼到 Codex。",
+  "errors": [],
+  "customization_copy_checks": 2,
+  "extra_pages_per_viewport": 4,
+  "search_checked": true
+}

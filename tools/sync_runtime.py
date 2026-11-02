@@ -11,6 +11,9 @@ def sync():
         target = skill.parent / 'scripts/_office.py'
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / 'tools/office_common.py', target)
+        quality = skill.parent / 'references/quality.md'
+        quality.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / 'tools/quality.md', quality)
     return len(paths)
 
 

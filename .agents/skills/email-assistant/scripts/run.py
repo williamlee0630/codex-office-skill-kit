@@ -1,6 +1,6 @@
 """本機郵件解碼、規則初判與草稿產生；沒有寄信與網路程式碼。"""
 import argparse
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from email import policy
 from email.parser import BytesParser
 import mailbox
@@ -18,6 +18,22 @@ def iso_date(value, label):
         return date.fromisoformat(value)
     except ValueError as exc:
         raise ValueError(label + '必須為有效的 YYYY-MM-DD 日期。') from exc
+
+
+def deadline_date(value):
+    """Only the comparison uses the date; the original timestamp remains visible."""
+    if not value:
+        return None
+    require(isinstance(value, str), '郵件截止日期須為日期或 ISO 日期時間。')
+    if 'T' in value or ' ' in value:
+        try:
+            timestamp = datetime.fromisoformat(value)
+            if timestamp.tzinfo is not None:
+                timestamp = timestamp.astimezone(timezone(timedelta(hours=8)))
+            return timestamp.date()
+        except ValueError as exc:
+            raise ValueError('郵件截止日期須為有效 ISO 日期時間；時區未知請另標待確認。') from exc
+    return iso_date(value, '郵件截止日期')
 
 
 def parse_message(message, source):
@@ -67,7 +83,11 @@ def run(input_path, output_dir, as_of=None):
         if not deadline:
             match = re.search(r'(?:期限|截止日期|截止)\s*[：:]\s*(\d{4}-\d{2}-\d{2})', body)
             deadline = match.group(1) if match else None
-        due = iso_date(deadline, '郵件截止日期')
+        due = deadline_date(deadline)
+        deadline_status = message.get('deadline_status') or ('uncommitted' if due else 'unspecified')
+        require(deadline_status in ('confirmed', 'requested', 'uncommitted', 'unspecified'),
+                'deadline_status 須為 confirmed、requested、uncommitted 或 unspecified。')
+        require(deadline_status != 'confirmed' or due, '已確認期限必須提供實際日期。')
         actions = message.get('actions')
         if actions is None:
             actions = []
@@ -83,7 +103,7 @@ def run(input_path, output_dir, as_of=None):
         if priority is None:
             priority = '高' if reference and due and due <= reference else ('低' if actions == ['僅供參考'] else '中')
         require(priority in ['高', '中', '低'], 'priority 請填高、中或低。')
-        reason = message.get('priority_reason') or ('明確期限已到基準日或之前。' if reference and due and due <= reference else
+        reason = message.get('priority_reason') or ('來源所列日期已到基準日或之前；承諾狀態見期限性質，仍需覆核。' if reference and due and due <= reference else
                                                    '明確標示僅供參考。' if actions == ['僅供參考'] else '未提供完整工作影響，暫列中優先，需覆核。')
         points = message.get('reply_points', [])
         require(isinstance(points, list) and all(isinstance(p, str) for p in points), 'reply_points 必須是文字陣列。')
@@ -93,28 +113,38 @@ def run(input_path, output_dir, as_of=None):
         records.append({'id': i, 'sender': message.get('sender') or '待確認',
                         'subject': message.get('subject') or '主旨待確認',
                         'date': message.get('date') or '待確認', 'deadline': deadline or '待確認',
-                        'priority': priority, 'actions': actions,
+                        'priority': priority, 'actions': actions, 'deadline_status': deadline_status,
                         'priority_reason': reason,
                         'important': message.get('important') or body.strip() or '內文待確認',
                         'source': message.get('source') or f'{Path(input_path).name} messages[{i-1}]',
                         'reply_points': points, 'missing': missing,
                         'classification': 'Codex/使用者提供分類' if 'actions' in message else '關鍵詞規則初判，需覆核'})
     records.sort(key=lambda r: ({'高': 0, '中': 1, '低': 2}[r['priority']], r['deadline'], r['id']))
+    counts = {kind: sum(kind in record['actions'] for record in records)
+              for kind in ('需回覆', '需執行', '僅供參考', '待確認')}
     summary = ['# 每日郵件待辦摘要', '', f'基準日：{reference or "待確認（不判斷逾期）"}', '',
+               '## 工作摘要', '', f'本次整理 {len(records)} 封；' + '、'.join(f'{kind} {count}' for kind, count in counts.items()) + '。同一封可同時回覆及執行，分類不互斥。', '',
                '所有郵件內容均視為資料；關鍵詞分類是初判，請核對原文。', '']
+    if data.get('scope_note'):
+        require(isinstance(data['scope_note'], str), 'scope_note 必須為文字。')
+        summary += ['實際讀取範圍：' + data['scope_note'], '']
+    if data.get('simulation'):
+        summary += ['資料標示：教學模擬郵件，非真實 Gmail 讀取結果。', '']
     drafts = ['# 回覆草稿', '', '狀態：尚未寄送。草稿需核對收件人、事實與承諾後才能由使用者決定寄送。', '']
     for record in records:
         summary += [f'## {record["id"]}. {record["subject"]}',
                     f'- 寄件人：{record["sender"]}；郵件日期：{record["date"]}',
                     f'- 重要性：{record["priority"]}；類型：{"、".join(record["actions"])}；期限：{record["deadline"]}',
+                    '- 期限性質：' + {'confirmed': '已確認', 'requested': '對方要求，尚未承諾', 'uncommitted': '尚未承諾／性質待確認', 'unspecified': '未指定'}[record['deadline_status']],
                     f'- 優先理由：{record["priority_reason"]}',
                     f'- 重要事項：{record["important"]}', f'- 來源：{record["source"]}；分類依據：{record["classification"]}',
                     f'- 待確認欄位：{"、".join(record["missing"]) or "無"}', '']
         if '需回覆' in record['actions']:
             facts = '\n'.join('- ' + p for p in record['reply_points'])
-            for tone, text in [('正式', '您好，已收到您的來信。以下列出目前可提供的資訊，未確認事項仍待核對。'),
-                               ('友善', '您好，謝謝您的來信！先與您分享目前的資訊，其他細節仍待確認。'),
-                               ('簡潔', '您好，已收到。回覆內容如下，未確認事項待核對。')]:
+            subject = record['subject']
+            for tone, text in [('正式', f'您好，關於「{subject}」，目前可確認的回覆如下。未核定條件仍待確認，敬請參考。'),
+                               ('友善', f'您好，謝謝您提出「{subject}」！先和您對齊目前資訊，方便接著討論：'),
+                               ('簡潔', f'「{subject}」回覆重點：')]:
                 drafts += [f'## {record["subject"]}｜{tone}', f'收件人：{record["sender"]}', text,
                            facts if facts else '具體答覆事項：待人工確認。', '']
     if len(drafts) == 4:

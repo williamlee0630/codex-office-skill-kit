@@ -61,9 +61,9 @@ def build(root=ROOT):
         if (name.startswith(('.agents/skills/', 'examples/', 'tools/'))
                 or name in {'requirements.txt', 'LICENSE', 'docs/INSTALL.md', 'docs/DEVELOPMENT.md', 'docs/OFFICIAL_SOURCES.md'}):
             light.append((path, name))
-        elif name.startswith('tests/') and path.suffix == '.py' and not (path.name.startswith('test_handbook') or path.name in {'test_publication.py', 'test_v12_release.py'}):
+        elif name.startswith('tests/') and path.suffix == '.py' and not (path.name.startswith('test_handbook') or path.name in {'test_publication.py', 'test_v12_release.py', 'test_quality_handbook.py', 'test_quality_release.py'}):
             light.append((path, name))
-    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.2.0
+    skills = create_zip(dist / PACKAGES[1], light, {'README.md': '''# AI 辦公室技能安裝包 1.3.0
 
 此包包含九個完整技能、原創模擬資料與程式測試。完整講義請使用完整學員工具包。
 安裝並載入技能 → 送出 $技能名稱 → 依引導說明工作或提供素材 → 必要時補答 → 開啟並核對成果。

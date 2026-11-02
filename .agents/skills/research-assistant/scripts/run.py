@@ -39,7 +39,7 @@ def run(input_path, output_dir):
         status = '日期待確認'
         if published and as_of:
             status = '日期晚於基準，需確認適用時間' if published > as_of else ('超過一年，需核對是否仍適用' if (as_of-published).days > 365 else '一年內資料，仍需依主題核對時效')
-        catalog[sid] = {**source, 'path': str(path), 'content': content,
+        catalog[sid] = {**source, 'path': source['path'], 'content': content,
                         'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'freshness': status}
     checked_claims = []
     for claim in claims:
@@ -59,17 +59,33 @@ def run(input_path, output_dir):
         checked_claims.append({**claim, 'kind': kind})
     gaps = data.get('gaps', [])
     comparison = data.get('comparison', [])
+    table = data.get('comparison_table', [])
+    require(isinstance(table, list) and all(isinstance(row, dict) and all(isinstance(row.get(k), str) for k in ('dimension', 'a', 'b')) for row in table),
+            'comparison_table 須為含 dimension、a、b 文字的陣列。')
+    for row in table:
+        refs = row.get('source_ids', [])
+        require(isinstance(refs, list) and bool(refs) and all(sid in catalog for sid in refs),
+                'comparison_table 每列須有已存在的 source_ids，不能引用不存在的來源。')
+    conclusion = data.get('conclusion')
+    require(conclusion is None or isinstance(conclusion, str), 'conclusion 必須為文字。')
     require(isinstance(gaps, list) and all(isinstance(g, str) for g in gaps), 'gaps 必須為文字陣列。')
     require(isinstance(comparison, list) and all(isinstance(c, str) for c in comparison), 'comparison 必須為文字陣列。')
     report = ['# 資料研究與調查報告', '', f'研究問題：{data["question"]}',
               f'資料基準日：{as_of or "待確認"}', '',
+              '## 比較結論', '', conclusion or '尚未提供可確認的比較結論；請先核對來源與資訊缺口。', '',
               '產檔程序：離線來源核對。本程式沒有執行網路搜尋；網址記錄來源位置，Codex 另行查讀的範圍須見查讀紀錄。',
               '若來源標示模擬，結論只適用於教學情境；不能當作真實供應商或市場調查。', '',
               '## 調查方向', data.get('plan') or '比較各方案的適用範圍、限制、資料日期與仍需補證的資訊。', '',
-              '## 有來源的發現與判斷']
+              '## 方案比較', '', '| 比較項目 | 方案 A | 方案 B |', '| --- | --- | --- |']
+    escape = lambda value: value.replace('|', '／').replace('\n', '；')
+    report += [f'| {escape(row["dimension"])} | {escape(row["a"])} | {escape(row["b"])} |' for row in table]
+    if not table:
+        report += ['| 比較資料 | 尚未提供結構化比較，請見有來源的發現 | 仍須核對條件 |']
+    report += ['', '比較表為研究者整理；重要事實須對照下列來源主張與摘錄，不能只憑表格當作已查證。', '', '## 有來源的發現與判斷']
     labels = {'fact': '來源可核對事實', 'interpretation': '分析推論', 'recommendation': '建議'}
     for claim in checked_claims:
         report += [f'- 【{labels[claim["kind"]]}】{claim["text"]} [{", ".join(claim.get("source_ids", [])) or "無直接來源"}]']
+        report += [f'  - 原文 [{sid}]：{quote}' for sid, quote in claim.get('excerpts', {}).items()]
     if not checked_claims:
         report += ['無足夠來源或尚未整理主張，目前不能形成可驗證的研究結論。']
     report += ['', '## 來源比較與衝突'] + (['- ' + c for c in comparison] or ['尚未提供跨來源比較；請核對各來源適用條件，保留無法解決的差異。'])

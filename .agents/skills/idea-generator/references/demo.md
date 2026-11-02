@@ -4,9 +4,11 @@
 
 本技能可獨立安裝，示範來源位於本文件旁的 demo/，不依賴課程根目錄。
 
+此為「內部知識分享活動」歷史案例，I1已選定；第7章主示範則為TWD8,000、兩位工作人員、尚未選案的員工交流情境。兩份來源及選案狀態不得混用。
+
 先完整讀 demo/source.md 的原始模擬素材，按本技能規則自行判讀並整理新的內部資料，再執行產檔。demo/input.json 僅用來理解契約及比對，不得直接複製預填答案宣稱已獨立理解原文。
 
-依 operation.md 檢查環境、選擇新輸出資料夾、實際執行並開啟核對。示範的查核日與週報期間只從示範需求／來源取得，不沿用到工作任務。
+依 operation.md 檢查環境、選擇新輸出資料夾、實際執行並開啟核對。示範日期只從示範需求／來源取得，不沿用到工作任務。
 
 <details><summary>維護者：保留的舊版測試與契約示例</summary>
 
@@ -43,13 +45,13 @@ Python 3.10 以上；DOCX 需要 python-docx，Excel 需要 openpyxl。依工具
 python "<技能資料夾>/scripts/run.py" --input "<技能資料夾>/references/example.json" --output "./practice-out"
 ```
 
-產物：ideas.md、comparison.csv、selected-plan.md、evidence.json。
+產物：ideas.md、comparison.csv、evidence.json；只有已選案才另產selected-plan.md。
 
 來源與輸入完整保留於 evidence.json。Excel/CSV 的外來文字安全保存，避免當成公式執行。
 
 ## 預期成果
 
-正常案例剛好十案，評估標主觀且待驗證；I1 已選定，計畫有交付物但不填人名與日期。缺漏案例未選案，計畫待確認。錯誤案例九案不能靜默補成十案。
+正常歷史案例剛好十案，評估標主觀且待驗證；I1 已選定，計畫有交付物但不填人名與日期。缺漏案例未選案，不產空白執行計畫。錯誤案例九案不能靜默補成十案。
 
 ## 五項驗收
 

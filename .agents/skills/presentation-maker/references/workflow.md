@@ -8,6 +8,8 @@
 
 必填 `title`、`source` 與 1 至 60 筆 `slides`。每筆必填 `title`、`bullets`；可選 `notes`、`source`。整份可選 `subtitle`、`date`、`simulation`。日期未提供寫「未提供，待確認」，不以執行日冒充資料日。notes 未提供寫待確認，不杜撰發言。
 
+可用 `cover_notes` 補實質開場說明。`layout-check.json` 的 `notes_review_required` 列未補備註或完全重複標題／重點的頁碼，Codex 應補上來源支持的情境與說明；此為初步檢核，仍須逐頁語意核對。已有成果資料夾拒絕覆寫，請另選新資料夾。
+
 ## 字量與頁面
 
 - 16:9，封面另加一頁。指定總頁數時包含封面。

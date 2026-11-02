@@ -1,0 +1,6 @@
+{
+  "mode": "reconcile",
+  "source": "../quickstart/模擬公司內部帳務.csv",
+  "other": "../quickstart/模擬銀行交易明細.csv",
+  "simulation": true
+}

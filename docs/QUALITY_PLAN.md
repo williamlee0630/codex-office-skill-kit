@@ -14,7 +14,7 @@
 - [x] 主工作者：共用品質與產檔保護、收據／資料／簡報、發行／文件整合；每項先寫行為測試、執行確認缺口、實作、重測。
 - [x] 完整 unittest、來源案例實際產檔／內容核對、可用原生 Office／渲染與瀏覽器驗證分別記錄；不以舊版、預填輸入或結構測試冒充真實帳號／完整 Codex 成功。
 - [x] 重建 13 頁、三包、manifest、SHA-256，解壓獨立測試與連結檢查；同步 README／INSTALL／RECORDING／ACCEPTANCE／CHANGELOG。
-- [ ] 公開掃描與差異審查後 commit、push main、確認 Actions／正式頁面／下載位元。
+- [x] 公開掃描與差異審查後 commit、push main、確認 Actions／正式頁面／下載位元。
 
 ## 驗收焦點
 

@@ -29,6 +29,10 @@
 - Gmail：檢查了當前搜尋、full讀取及批次工具介面，未讀取真實信箱。無授權時明確回報、不切換模擬；不寄信、不建立信箱草稿、不變更郵件狀態。舊貼文成功不能當主示範成功。
 - 發行：三包重新建立；模擬包因新增本次來源／成果而升版，章首七附件位元不變。CRC、大小、SHA、九技能集合、相對連結及隱私白名單分層核對；最新[manifest](../dist/manifest.json)與[release-check](release-check.json)為準。正式Pages下載另核對，不以本機建置冒充部署。
 
+首輪內容提交`7a01eac`的[Actions](https://github.com/williamlee0630/codex-office-skill-kit/actions/runs/41465015901)已build／deploy成功；雲端130項全過（20.075秒）。[正式網站證據](quality-deployment.json)實際核對13頁、七附件、三ZIP與九Skill程式；公開瀏覽器20次主複製、2次備案及50次下載通過。測試腳本曾因Windows與Git標準換行差異誤報文字下載不同，改用已提交Git原始位元後全過；沒有放寬正式附件或成品內容。
+
+完整包獨立解壓130項、技能包88項適用測試全過，[解壓紀錄](quality-extracted-tests.json)；後續補圖表的單位、日期範圍與一般數字呈現，再跑完整130項通過。新版與歷史v1.2.0三包入口HTTP均可存取。
+
 ## 第11章
 
 主要操作由技術分段改成章首完整自然語言提示詞與五步，保留email→team-email的案例、原技能資源與原成果；技術內容全部收合。兩份真實比較摘要可從講義開啟。

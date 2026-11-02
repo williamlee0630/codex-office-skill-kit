@@ -27,9 +27,11 @@
         },
         {
           "file": "examples/receipt-organizer/quality-output/receipts-report.md",
-          "bytes": 766,
-          "sha256": "d26308240e2ba57f54892e42bd35dea0c30c6c10a7f67317722290faf2187d14",
-          "reopened": true
+          "bytes": 748,
+          "sha256": "3b20d4d5b9a53da4eb2f81de9d12cc436997772f684404b54a4d8eb52b17bd71",
+          "reopened": true,
+          "local_generation_sha256": "d26308240e2ba57f54892e42bd35dea0c30c6c10a7f67317722290faf2187d14",
+          "local_generation_bytes": 766
         }
       ],
       "content_verified": true,
@@ -42,7 +44,8 @@
       "sources": [
         {
           "file": "examples/presentation-maker/quality-source.md",
-          "sha256": "85e61c029c739045dfbfd46a4c30bd263429f36619df4dbeed1fa228c70905db"
+          "sha256": "375da163879383bbdcedd4e053a981553cfe8fe9b292b5e039f32cc609859485",
+          "local_generation_sha256": "85e61c029c739045dfbfd46a4c30bd263429f36619df4dbeed1fa228c70905db"
         }
       ],
       "artifacts": [
@@ -56,9 +59,11 @@
         },
         {
           "file": "examples/presentation-maker/quality-output/speaker-notes.md",
-          "bytes": 2493,
-          "sha256": "56868219338687fdb19d9e872b714c51d35ebb4ef8c7f513a6fa91bbf7970ca3",
-          "reopened": true
+          "bytes": 2447,
+          "sha256": "34d5b8f7ef68ecf7689e2216a19fbdb33e06876ebca9464669bf5299cd0854f9",
+          "reopened": true,
+          "local_generation_sha256": "56868219338687fdb19d9e872b714c51d35ebb4ef8c7f513a6fa91bbf7970ca3",
+          "local_generation_bytes": 2493
         }
       ],
       "content_verified": true,
@@ -71,7 +76,8 @@
       "sources": [
         {
           "file": "examples/document-writer/quality-source.md",
-          "sha256": "d53e6d84a3d8c2a97e1fd0cbc7e7191d494a785e6df5020d4aabe3485ebfda60"
+          "sha256": "502cf009c66dae866310011fb02c195145d36c596e5f1f0394826839e77d51bb",
+          "local_generation_sha256": "d53e6d84a3d8c2a97e1fd0cbc7e7191d494a785e6df5020d4aabe3485ebfda60"
         }
       ],
       "artifacts": [
@@ -123,9 +129,11 @@
         },
         {
           "file": "examples/data-analyst/quality-output/analysis.md",
-          "bytes": 2307,
-          "sha256": "fe60d4384240ed8da3c8b583ae420045dd3b2e8fb235a6963adf7578843fb38a",
-          "reopened": true
+          "bytes": 2257,
+          "sha256": "2dfa3ee73287ceb914bcb6cce4ffe69fae45e074b06a1c567165b768c68674ab",
+          "reopened": true,
+          "local_generation_sha256": "fe60d4384240ed8da3c8b583ae420045dd3b2e8fb235a6963adf7578843fb38a",
+          "local_generation_bytes": 2307
         },
         {
           "file": "examples/data-analyst/quality-output/chart.png",
@@ -144,21 +152,26 @@
       "sources": [
         {
           "file": "examples/idea-generator/quality-source.md",
-          "sha256": "59cd70310f0878f843c4c36a623f96605c6365ac7ab901e8f58bd67514fe7c51"
+          "sha256": "8d8171b8e9a9e6e5ce1af7ceacca2132e7acc3bf96c9983a22c4745dcbe89f63",
+          "local_generation_sha256": "59cd70310f0878f843c4c36a623f96605c6365ac7ab901e8f58bd67514fe7c51"
         }
       ],
       "artifacts": [
         {
           "file": "examples/idea-generator/quality-output/ideas.md",
-          "bytes": 8623,
-          "sha256": "ab0189ed61c4b9f333b3ca52a4d51a2fc02c66cbeb651d9e496d8b049fc5c7fa",
-          "reopened": true
+          "bytes": 8492,
+          "sha256": "4973d90e477764ab184bd63f1faca183a228c39cfeb628fa9f48b263eeae3742",
+          "reopened": true,
+          "local_generation_sha256": "ab0189ed61c4b9f333b3ca52a4d51a2fc02c66cbeb651d9e496d8b049fc5c7fa",
+          "local_generation_bytes": 8623
         },
         {
           "file": "examples/idea-generator/quality-output/comparison.csv",
-          "bytes": 5641,
-          "sha256": "815f0e2ed682ebe6954f00f2753aa48bbb3d10f018e94aff9942732ea5774c37",
-          "reopened": true
+          "bytes": 5630,
+          "sha256": "09429784ac4bbec9fbe1224e7f54e4dca075537af1fb3007a5092492671345a7",
+          "reopened": true,
+          "local_generation_sha256": "815f0e2ed682ebe6954f00f2753aa48bbb3d10f018e94aff9942732ea5774c37",
+          "local_generation_bytes": 5641
         }
       ],
       "content_verified": true,
@@ -181,15 +194,19 @@
       "artifacts": [
         {
           "file": "examples/research-assistant/quality-output/research-report.md",
-          "bytes": 4213,
-          "sha256": "b08b059dce5561161df27bc95e8f1cdaed7e39883da3017abb001ce5a47fd755",
-          "reopened": true
+          "bytes": 4150,
+          "sha256": "7f4da12dbade4cb4e90bc74ab74c0f3ec6ec306e65fc865e840141a33d1f50aa",
+          "reopened": true,
+          "local_generation_sha256": "b08b059dce5561161df27bc95e8f1cdaed7e39883da3017abb001ce5a47fd755",
+          "local_generation_bytes": 4213
         },
         {
           "file": "examples/research-assistant/quality-output/sources.csv",
-          "bytes": 424,
-          "sha256": "2ce227ad1c0e0d31450b0af766ebda979090c64c57eb96923312834768ae491a",
-          "reopened": true
+          "bytes": 421,
+          "sha256": "3c1a9b45488441492303b30774953a3f9172492a44727613ff54d23cdd48b365",
+          "reopened": true,
+          "local_generation_sha256": "2ce227ad1c0e0d31450b0af766ebda979090c64c57eb96923312834768ae491a",
+          "local_generation_bytes": 424
         }
       ],
       "content_verified": true,
@@ -230,9 +247,11 @@
         },
         {
           "file": "examples/legal-reviewer/quality-output/條款修訂建議.md",
-          "bytes": 11793,
-          "sha256": "b72dfe7ace07c0ab5f094048725bb760c10dcf207e36b761a8de3d65be00a789",
-          "reopened": true
+          "bytes": 11650,
+          "sha256": "bf27cecdafd46a47a212be98b5b98d0bd138ac6183f5900a286d23f844ed9429",
+          "reopened": true,
+          "local_generation_sha256": "b72dfe7ace07c0ab5f094048725bb760c10dcf207e36b761a8de3d65be00a789",
+          "local_generation_bytes": 11793
         }
       ],
       "content_verified": true,
@@ -286,25 +305,31 @@
       "sources": [
         {
           "file": "examples/email-assistant/quality-source.md",
-          "sha256": "11051d4a3bbad143f1b08458466f40a509dee816dbf8f5a40fc76b284087db81"
+          "sha256": "46f78ae812a2dd9a6e9a7f734f195821ea0dc69d846feccc7c7d48ce5beb28f3",
+          "local_generation_sha256": "11051d4a3bbad143f1b08458466f40a509dee816dbf8f5a40fc76b284087db81"
         }
       ],
       "artifacts": [
         {
           "file": "examples/email-assistant/quality-output/daily-summary.md",
-          "bytes": 2389,
-          "sha256": "af0c32607d94420d722646ce971184c87d5d4cf2c755b6affe5095a64f4ca889",
-          "reopened": true
+          "bytes": 2349,
+          "sha256": "89714287f730704940f1ae61346ec05409844bde05978f2fd1da81426935d04f",
+          "reopened": true,
+          "local_generation_sha256": "af0c32607d94420d722646ce971184c87d5d4cf2c755b6affe5095a64f4ca889",
+          "local_generation_bytes": 2389
         },
         {
           "file": "examples/email-assistant/quality-output/drafts.md",
-          "bytes": 3887,
-          "sha256": "e2be6b740ddc59e598fcb85f68927cb072b61d168f5d9d6641880d3552af2aa7",
-          "reopened": true
+          "bytes": 3821,
+          "sha256": "b1bc9e9d23ddcd40e95eb45f16a377bd72a096b0e5df00f10471eb9fabfe63b9",
+          "reopened": true,
+          "local_generation_sha256": "e2be6b740ddc59e598fcb85f68927cb072b61d168f5d9d6641880d3552af2aa7",
+          "local_generation_bytes": 3887
         }
       ],
       "content_verified": true,
       "full_fresh_codex_interaction": "not_verified"
     }
-  ]
+  ],
+  "checksum_scope": "sha256 and bytes describe committed/published file bytes. When Git normalizes Windows text line endings, local_generation_sha256 and local_generation_bytes preserve the original generated snapshot."
 }
